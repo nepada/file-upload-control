@@ -33,16 +33,25 @@
         "@rollup/plugin-commonjs": "^11.0.2",
         "@rollup/plugin-json": "^4.0.2",
         "@rollup/plugin-node-resolve": "^6.0.0",
+        "autoprefixer": "^9.7.6",
+        "bootstrap": "^4.4.1",
+        "clean-css-cli": "^4.3.0",
         "eslint": "^6.8.0",
         "eslint-plugin-import": "^2.20.2",
+        "jquery": ">=1.7",
+        "nette-forms": "^3.0.3",
+        "node-sass": "^4.13.1",
+        "postcss-cli": "^7.1.0",
         "rollup": "^1.32.1",
         "rollup-plugin-babel": "^4.4.0",
         "rollup-plugin-node-builtins": "^2.1.2",
         "rollup-plugin-node-globals": "^1.4.0",
         "rollup-plugin-terser": "^5.3.0"
     },
-    "main": "dist/commonjs/index.js",
-    "module": "src/assets/index.js",
+    "style": "dist/css/file-upload-control.css",
+    "sass": "src/assets/scss/file-upload-control.scss",
+    "main": "dist/js/commonjs/index.js",
+    "module": "src/assets/js/index.js",
     "files": [
         "src/assets",
         "dist"
@@ -50,8 +59,12 @@
     "scripts": {
         "lint": "eslint src/assets build",
         "clean": "rm -rf ./dist/*",
+        "css:compile": "node-sass --output-style expanded --source-map true --source-map-contents true --precision 6 src/assets/scss/ -o dist/css/",
+        "css:prefix": "postcss --config build/postcss.config.js --replace \"dist/css/*.css\" \"!dist/css/*.min.css\"",
+        "css:minify": "cleancss --level 1 --format breakWith=lf --source-map --source-map-inline-sources --output dist/css/file-upload-control.min.css dist/css/file-upload-control.css",
+        "build:css": "npm run css:compile && npm run css:prefix && npm run css:minify",
         "build:cjs": "rollup --config build/rollup.config.cjs.js",
         "build:umd": "rollup --config build/rollup.config.umd.js",
-        "build": "npm run clean && npm run build:cjs && npm run build:umd"
+        "build": "npm run clean && npm run build:css && npm run build:cjs && npm run build:umd"
     }
 }

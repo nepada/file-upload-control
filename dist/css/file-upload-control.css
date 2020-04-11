@@ -1,0 +1,152 @@
+.fuc-buttons .btn {
+  margin-bottom: 0.5rem;
+}
+
+.fuc-add {
+  position: relative;
+  overflow: hidden;
+}
+
+.fuc-add input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  opacity: 0;
+  font-size: 200px;
+  direction: ltr;
+  cursor: pointer;
+}
+
+.fuc-container {
+  border: 2px dashed #dee2e6;
+  border-radius: 0.3rem;
+  background: #f8f9fa;
+  padding: 2rem 1rem;
+}
+
+.fuc-files.row {
+  justify-content: center;
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
+.fuc-files.row > .col-auto {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.fuc-file .card {
+  width: 12rem;
+  max-width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-size: 0.875rem;
+}
+
+.fuc-file .card .card-header {
+  background: #fff;
+  border-bottom: 0;
+}
+
+.fuc-file .card .card-header .col {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fuc-file .card .card-header .close {
+  margin-left: 0.25rem;
+}
+
+.fuc-file .card .card-body {
+  height: 9rem;
+  padding-top: 0;
+}
+
+.fuc-file .card .card-body .progress {
+  margin: 3rem 0;
+}
+
+.fuc-file[data-file-upload-status=done] .card-body {
+  padding: 0;
+}
+
+.fuc-file[data-file-upload-status=failed] .card {
+  border-color: #dc3545 !important;
+}
+
+.fuc-file-thumbnail {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.fuc-file-thumbnail > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.fuc-file-thumbnail > img {
+  display: block;
+  position: absolute;
+  width: auto;
+  height: auto;
+  max-height: 100%;
+  max-width: 100%;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.fuc-dropzone {
+  text-align: center;
+  font-weight: bold;
+}
+
+.fuc-file-thumbnail > span {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%23ced4da' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M4 1h5v1H4a1 1 0 00-1 1v10a1 1 0 001 1h8a1 1 0 001-1V6h1v7a2 2 0 01-2 2H4a2 2 0 01-2-2V3a2 2 0 012-2z'/%3e%3cpath d='M9 4.5V1l5 5h-3.5A1.5 1.5 0 019 4.5z'/%3e%3c/svg%3e");
+}
+
+[data-content-type="text/plain"] .fuc-file-thumbnail > span,
+[data-content-type="application/rtf"] .fuc-file-thumbnail > span,
+[data-content-type="application/pdf"] .fuc-file-thumbnail > span,
+[data-content-type="application/msword"] .fuc-file-thumbnail > span,
+[data-content-type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"] .fuc-file-thumbnail > span,
+[data-content-type="application/vnd.oasis.opendocument.text"] .fuc-file-thumbnail > span {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%23ced4da' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M4 1h5v1H4a1 1 0 00-1 1v10a1 1 0 001 1h8a1 1 0 001-1V6h1v7a2 2 0 01-2 2H4a2 2 0 01-2-2V3a2 2 0 012-2z'/%3e%3cpath d='M9 4.5V1l5 5h-3.5A1.5 1.5 0 019 4.5z'/%3e%3cpath fill-rule='evenodd' d='M5 11.5a.5.5 0 01.5-.5h2a.5.5 0 010 1h-2a.5.5 0 01-.5-.5zm0-2a.5.5 0 01.5-.5h5a.5.5 0 010 1h-5a.5.5 0 01-.5-.5zm0-2a.5.5 0 01.5-.5h5a.5.5 0 010 1h-5a.5.5 0 01-.5-.5z' clip-rule='evenodd'/%3e%3c/svg%3e");
+}
+
+[data-content-type="application/vnd.ms-excel"] .fuc-file-thumbnail > span,
+[data-content-type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"] .fuc-file-thumbnail > span,
+[data-content-type="application/vnd.oasis.opendocument.spreadsheet"] .fuc-file-thumbnail > span {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%23ced4da' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' d='M13 9H3V8h10v1zm0 3H3v-1h10v1z' clip-rule='evenodd'/%3e%3cpath fill-rule='evenodd' d='M5 14V9h1v5H5zm4 0V9h1v5H9z' clip-rule='evenodd'/%3e%3cpath d='M4 1h5v1H4a1 1 0 00-1 1v10a1 1 0 001 1h8a1 1 0 001-1V6h1v7a2 2 0 01-2 2H4a2 2 0 01-2-2V3a2 2 0 012-2z'/%3e%3cpath d='M9 4.5V1l5 5h-3.5A1.5 1.5 0 019 4.5z'/%3e%3c/svg%3e");
+}
+
+[data-content-type^="audio/"] .fuc-file-thumbnail > span {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%23ced4da' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M6 13c0 1.105-1.12 2-2.5 2S1 14.105 1 13c0-1.104 1.12-2 2.5-2s2.5.896 2.5 2zm9-2c0 1.105-1.12 2-2.5 2s-2.5-.895-2.5-2 1.12-2 2.5-2 2.5.895 2.5 2z'/%3e%3cpath fill-rule='evenodd' d='M14 11V2h1v9h-1zM6 3v10H5V3h1z' clip-rule='evenodd'/%3e%3cpath d='M5 2.905a1 1 0 01.9-.995l8-.8a1 1 0 011.1.995V3L5 4V2.905z'/%3e%3c/svg%3e");
+}
+
+[data-content-type^="video/"] .fuc-file-thumbnail > span {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%23ced4da' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' d='M2.667 3.5c-.645 0-1.167.522-1.167 1.167v6.666c0 .645.522 1.167 1.167 1.167h6.666c.645 0 1.167-.522 1.167-1.167V4.667c0-.645-.522-1.167-1.167-1.167H2.667zM.5 4.667C.5 3.47 1.47 2.5 2.667 2.5h6.666c1.197 0 2.167.97 2.167 2.167v6.666c0 1.197-.97 2.167-2.167 2.167H2.667A2.167 2.167 0 01.5 11.333V4.667z' clip-rule='evenodd'/%3e%3cpath fill-rule='evenodd' d='M11.25 5.65l2.768-1.605a.318.318 0 01.482.263v7.384c0 .228-.26.393-.482.264l-2.767-1.605-.502.865 2.767 1.605c.859.498 1.984-.095 1.984-1.129V4.308c0-1.033-1.125-1.626-1.984-1.128L10.75 4.785l.502.865z' clip-rule='evenodd'/%3e%3c/svg%3e");
+}
+
+[data-content-type$="/x-7z-compressed"] .fuc-file-thumbnail > span,
+[data-content-type$="/vnd.rar"] .fuc-file-thumbnail > span,
+[data-content-type$="/x-tar"] .fuc-file-thumbnail > span,
+[data-content-type$="/zip"] .fuc-file-thumbnail > span,
+[data-content-type$="/gzip"] .fuc-file-thumbnail > span,
+[data-content-type$="/x-bzip2"] .fuc-file-thumbnail > span,
+[data-content-type$="/x-bzip"] .fuc-file-thumbnail > span,
+[data-content-type$="/x-7z-compressed"] .fuc-file-thumbnail > span {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%23ced4da' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M4 1h5v1H4a1 1 0 00-1 1v10a1 1 0 001 1h8a1 1 0 001-1V6h1v7a2 2 0 01-2 2H4a2 2 0 01-2-2V3a2 2 0 012-2z'/%3e%3cpath d='M9 4.5V1l5 5h-3.5A1.5 1.5 0 019 4.5z'/%3e%3cpath fill-rule='evenodd' d='M5 8.5a1 1 0 011-1h1a1 1 0 011 1v.938l.4 1.599a1 1 0 01-.416 1.074l-.93.62a1 1 0 01-1.11 0l-.929-.62a1 1 0 01-.415-1.074L5 9.438V8.5zm2 0H6v.938a1 1 0 01-.03.243l-.4 1.598.93.62.929-.62-.4-1.598A1 1 0 017 9.438V8.5z' clip-rule='evenodd'/%3e%3cpath d='M6 2h1.5v1H6zM5 3h1.5v1H5zm1 1h1.5v1H6zM5 5h1.5v1H5zm1 1h1.5v1H6V6z'/%3e%3c/svg%3e");
+}
+/*# sourceMappingURL=file-upload-control.css.map */
