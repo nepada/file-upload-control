@@ -1,0 +1,55 @@
+{
+    "name": "nepada/file-upload-control",
+    "type": "library",
+    "license": "BSD-3-Clause",
+    "description": "File upload control for Nette forms: multi-file AJAX upload via blueimp-file-upload, Bootstrap 4 template.",
+    "keywords": ["file", "upload", "form", "nette"],
+    "support": {
+        "email": "petr@pada.cz",
+        "issues": "https://github.com/nepada/file-upload-control/issues"
+    },
+    "authors": [
+        {
+            "name": "Petr Morávek",
+            "email": "petr@pada.cz"
+        }
+    ],
+    "require": {
+        "php": ">=7.4.0",
+        "nette/utils": "^3.0@dev",
+        "nette/http": "^3.0@dev",
+        "nette/forms": "^3.0@dev"
+    },
+    "require-dev": {
+        "nette/tester": "^2.3.2",
+        "mockery/mockery": "^1.3.1",
+        "phpstan/phpstan": "^0.12.18",
+        "phpstan/phpstan-strict-rules": "^0.12.2",
+        "pepakriz/phpstan-exception-rules": "^0.10.1",
+        "phpstan/phpstan-nette": "^0.12.6",
+        "nepada/phpstan-nette-tester": "^0.3.0",
+        "spaze/phpstan-disallowed-calls": "^0.12.1",
+        "phpstan/phpstan-mockery": "^0.12.4",
+        "php-parallel-lint/php-parallel-lint": "^1.2",
+        "nepada/coding-standard": "^7.0.1",
+        "nette/bootstrap": "^3.0@dev",
+        "nette/di": "^3.0.1@dev",
+        "nette/schema": "^1.0@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nepada\\Bridges\\": "src/Bridges/",
+            "Nepada\\FileUploadControl\\": "src/FileUploadControl/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "NepadaTests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
