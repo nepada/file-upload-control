@@ -14,3 +14,9 @@ parameters:
         uncheckedExceptions:
             - LogicException
             - Nette\InvalidStateException
+            - Nette\IOException
+
+    ignoreErrors:
+        -
+            message: '~Missing @throws Exception annotation~'
+            path: src/FileUploadControl/Utils/NetteFileSystem.php
