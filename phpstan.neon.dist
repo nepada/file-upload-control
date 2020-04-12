@@ -15,6 +15,7 @@ parameters:
             - LogicException
             - Nette\InvalidStateException
             - Nette\IOException
+            - Nette\Utils\UnknownImageFileException
 
     ignoreErrors:
         -

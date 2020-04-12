@@ -16,9 +16,10 @@
     ],
     "require": {
         "php": ">=7.4.0",
-        "nette/utils": "^3.1@dev",
+        "nette/application": "^3.0@dev",
+        "nette/forms": "^3.0@dev",
         "nette/http": "^3.0@dev",
-        "nette/forms": "^3.0@dev"
+        "nette/utils": "^3.1@dev"
     },
     "require-dev": {
         "nette/tester": "^2.3.2",
@@ -35,6 +36,9 @@
         "nette/bootstrap": "^3.0@dev",
         "nette/di": "^3.0.1@dev",
         "nette/schema": "^1.0@dev"
+    },
+    "suggest": {
+        "ext-gd": "to use image thumbnails"
     },
     "autoload": {
         "psr-4": {
