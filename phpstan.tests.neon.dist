@@ -23,4 +23,4 @@ parameters:
         - tests/temp/*
 
     ignoreErrors:
-#        - '~Call to static method Tester\\Assert::(type|count|same|notSame)\(\) with .* and .* will always evaluate to true\.~'
+        - '~Call to static method Tester\\Assert::(type|count|same|notSame)\(\) with .* and .* will always evaluate to true\.~'

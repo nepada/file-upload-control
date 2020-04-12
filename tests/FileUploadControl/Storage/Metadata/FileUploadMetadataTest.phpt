@@ -4,9 +4,10 @@ declare(strict_types = 1);
 namespace NepadaTests\FileUploadControl\Storage\Metadata;
 
 use Nepada\FileUploadControl\Storage\ContentRange;
+use Nepada\FileUploadControl\Storage\FileUploadChunk;
 use Nepada\FileUploadControl\Storage\Metadata\FileUploadMetadata;
+use NepadaTests\FileUploadControl\FileUploadFactory;
 use NepadaTests\TestCase;
-use Nette\Http\FileUpload;
 use Tester\Assert;
 
 require_once __DIR__ . '/../../../bootstrap.php';
@@ -32,9 +33,9 @@ class FileUploadMetadataTest extends TestCase
     {
         $name = 'foo';
         $size = 42;
-        $fileUpload = new FileUpload(['name' => $name, 'tmp_name' => 'tmp', 'size' => 2, 'error' => UPLOAD_ERR_OK]);
+        $fileUpload = FileUploadFactory::createWithSize(2, $name);
         $contentRange = ContentRange::fromHttpHeaderValue('bytes 0-1/' . $size);
-        $metadata = FileUploadMetadata::fromFileUploadAndContentRange($fileUpload, $contentRange);
+        $metadata = FileUploadMetadata::fromFileUploadChunk(FileUploadChunk::partialUpload($fileUpload, $contentRange));
         Assert::same($name, $metadata->getName());
         Assert::same($size, $metadata->getSize());
     }

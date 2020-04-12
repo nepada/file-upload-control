@@ -3,10 +3,9 @@ declare(strict_types = 1);
 
 namespace Nepada\FileUploadControl\Storage\Metadata;
 
-use Nepada\FileUploadControl\Storage\ContentRange;
+use Nepada\FileUploadControl\Storage\FileUploadChunk;
 use Nepada\FileUploadControl\Storage\FileUploadId;
 use Nette;
-use Nette\Http\FileUpload;
 use Nette\Utils\Json;
 
 final class FileUploadMetadata
@@ -27,9 +26,9 @@ final class FileUploadMetadata
         $this->size = $size;
     }
 
-    public static function fromFileUploadAndContentRange(FileUpload $fileUpload, ContentRange $contentRange): FileUploadMetadata
+    public static function fromFileUploadChunk(FileUploadChunk $fileUploadChunk): FileUploadMetadata
     {
-        return new self($fileUpload->getName(), $contentRange->getSize());
+        return new self($fileUploadChunk->getFileUpload()->getName(), $fileUploadChunk->getContentRange()->getSize());
     }
 
     /**

@@ -13,6 +13,8 @@ parameters:
     exceptionRules:
         uncheckedExceptions:
             - LogicException
+            - Nette\Application\AbortException
+            - Nette\Application\UI\InvalidLinkException
             - Nette\InvalidStateException
             - Nette\IOException
             - Nette\Utils\JsonException
@@ -22,3 +24,57 @@ parameters:
         -
             message: '~Missing @throws Exception annotation~'
             path: src/FileUploadControl/Utils/NetteFileSystem.php
+
+        -
+            message: "#^PHPDoc tag @throws with type Nette\\\\Application\\\\BadRequestException is not compatible with parent$#"
+            count: 2
+            path: src/FileUploadControl/FileUploadControl.php
+        -
+            message: "#^Parameter \\#1 \\$value \\(bool\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:setDisabled\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:setDisabled\\(\\)$#"
+            count: 1
+            path: src/FileUploadControl/FileUploadControl.php
+        -
+            message: "#^Variable property access on Nette\\\\Utils\\\\Html\\.$#"
+            count: 1
+            path: src/FileUploadControl/FileUploadControl.php
+        -
+            message: "#^Parameter \\#1 \\$caption \\(Nette\\\\Utils\\\\Html\\|string\\|null\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:getLabel\\(\\) should be contravariant with parameter \\$caption \\(object\\|string\\|null\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:getLabel\\(\\)$#"
+            count: 1
+            path: src/FileUploadControl/FileUploadControl.php
+        -
+            message: "#^Parameter \\#2 \\$errorMessage \\(Nette\\\\Utils\\\\Html\\|string\\|null\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:addRule\\(\\) should be contravariant with parameter \\$errorMessage \\(object\\|string\\|null\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:addRule\\(\\)$#"
+            count: 2
+            path: src/FileUploadControl/FileUploadControl.php
+        -
+            message: "#^Throwable is never thrown in the corresponding try block$#"
+            count: 1
+            path: src/FileUploadControl/FileUploadControl.php
+        -
+            message: "#^Parameter \\#1 \\$validator \\(\\(callable\\)\\|string\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:addCondition\\(\\) should be contravariant with parameter \\$validator \\(mixed\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:addCondition\\(\\)$#"
+            count: 1
+            path: src/FileUploadControl/FileUploadControl.php
+        -
+            message: "#^Parameter \\#2 \\$validator \\(\\(callable\\)\\|string\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:addConditionOn\\(\\) should be contravariant with parameter \\$validator \\(mixed\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:addConditionOn\\(\\)$#"
+            count: 1
+            path: src/FileUploadControl/FileUploadControl.php
+        -
+            message: "#^Parameter \\#1 \\$value \\(bool\\|Nette\\\\Utils\\\\Html\\|string\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:setRequired\\(\\) should be contravariant with parameter \\$value \\(bool\\|object\\|string\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:setRequired\\(\\)$#"
+            count: 1
+            path: src/FileUploadControl/FileUploadControl.php
+        -
+            message: "#^Parameter \\#1 \\$value of method Nette\\\\Forms\\\\Rules\\:\\:setRequired\\(\\) expects bool\\|string, bool\\|Nette\\\\Utils\\\\Html\\|string given\\.$#"
+            count: 1
+            path: src/FileUploadControl/FileUploadControl.php
+        -
+            message: "#^Return type \\(Nette\\\\Utils\\\\Html\\|string\\|null\\) of method Nepada\\\\FileUploadControl\\\\Validation\\\\FakeUploadControl\\:\\:getCaption\\(\\) should be covariant with return type \\(object\\|string\\) of method Nette\\\\Forms\\\\Controls\\\\BaseControl\\:\\:getCaption\\(\\)$#"
+            count: 1
+            path: src/FileUploadControl/Validation/FakeUploadControl.php
+        -
+            message: "#^Method Nepada\\\\FileUploadControl\\\\Validation\\\\FakeUploadControl\\:\\:getCaption\\(\\) should return Nette\\\\Utils\\\\Html\\|string\\|null but returns object\\|string\\.$#"
+            count: 1
+            path: src/FileUploadControl/Validation/FakeUploadControl.php
+        -
+            message: "#^Parameter \\#1 \\$message \\(Nette\\\\Utils\\\\Html\\|string\\) of method Nepada\\\\FileUploadControl\\\\Validation\\\\FakeUploadControl\\:\\:addError\\(\\) should be contravariant with parameter \\$message \\(object\\|string\\) of method Nette\\\\Forms\\\\Controls\\\\BaseControl\\:\\:addError\\(\\)$#"
+            count: 1
+            path: src/FileUploadControl/Validation/FakeUploadControl.php
+

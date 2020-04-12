@@ -5,8 +5,8 @@ namespace NepadaTests\FileUploadControl\Thumbnail;
 
 use Nepada\FileUploadControl\Thumbnail\ImageLoader;
 use Nepada\FileUploadControl\Thumbnail\ImageThumbnailProvider;
+use NepadaTests\FileUploadControl\FileUploadFactory;
 use NepadaTests\TestCase;
-use Nette\Http\FileUpload;
 use Nette\Utils\Image;
 use Tester\Assert;
 
@@ -21,7 +21,7 @@ class ImageThumbnailProviderTest extends TestCase
 
     public function testNotSupported(): void
     {
-        $fileUpload = $this->createFileUpload(__FILE__);
+        $fileUpload = FileUploadFactory::createFromFile(__FILE__);
         $imageThumbnailProvider = new ImageThumbnailProvider(new ImageLoader());
 
         Assert::false($imageThumbnailProvider->isSupported($fileUpload));
@@ -43,7 +43,7 @@ class ImageThumbnailProviderTest extends TestCase
      */
     public function testImages(string $file, string $expectedName, string $expectedContentType, int $expectedWidth, int $expectedHeight): void
     {
-        $fileUpload = $this->createFileUpload($file);
+        $fileUpload = FileUploadFactory::createFromFile($file);
         $imageThumbnailProvider = new ImageThumbnailProvider(new ImageLoader());
 
         Assert::true($imageThumbnailProvider->isSupported($fileUpload));
@@ -83,16 +83,6 @@ class ImageThumbnailProviderTest extends TestCase
                 'expectedHeight' => 150,
             ],
         ];
-    }
-
-    private function createFileUpload(string $file): FileUpload
-    {
-        return new FileUpload([
-            'tmp_name' => $file,
-            'name' => basename($file),
-            'size' => filesize($file),
-            'error' => UPLOAD_ERR_OK,
-        ]);
     }
 
 }

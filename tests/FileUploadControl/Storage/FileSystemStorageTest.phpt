@@ -10,12 +10,11 @@ use Nepada\FileUploadControl\Storage\FileUploadNotFoundException;
 use Nepada\FileUploadControl\Storage\Metadata\FileUploadMetadata;
 use Nepada\FileUploadControl\Storage\UnableToSaveFileUploadException;
 use Nepada\FileUploadControl\Utils\NetteFileSystem;
+use NepadaTests\FileUploadControl\FileUploadFactory;
 use NepadaTests\FileUploadControl\Storage\Metadata\InMemoryMetadataJournal;
 use NepadaTests\TestCase;
 use Nette;
-use Nette\Http\FileUpload;
 use Tester\Assert;
-use Tester\FileMock;
 
 require_once __DIR__ . '/../../bootstrap.php';
 
@@ -36,7 +35,7 @@ class FileSystemStorageTest extends TestCase
     public function testNotOkFileUploadIsRejected(): void
     {
         $storage = $this->createStorage();
-        $chunk = FileUploadChunk::completeUpload(new FileUpload(['name' => 'name', 'tmp_name' => 'tmp', 'size' => 42, 'error' => UPLOAD_ERR_PARTIAL]));
+        $chunk = FileUploadChunk::completeUpload(FileUploadFactory::create('name', 42, 'tmp', UPLOAD_ERR_PARTIAL));
         Assert::exception(
             function () use ($storage, $chunk): void {
                 $storage->save($chunk);
@@ -51,7 +50,7 @@ class FileSystemStorageTest extends TestCase
         $metadata = FileUploadMetadata::fromArray(['name' => 'orphaned.txt', 'size' => 42]);
         $storage = $this->createStorage([$metadata->createFileUploadId()->toString() => $metadata]);
 
-        $chunk = FileUploadChunk::partialUpload($this->createFileUpload('Bar', 'orphaned.txt'), ContentRange::fromHttpHeaderValue('bytes 3-5/42'));
+        $chunk = FileUploadChunk::partialUpload(FileUploadFactory::createWithContents('Bar', 'orphaned.txt'), ContentRange::fromHttpHeaderValue('bytes 3-5/42'));
         Assert::exception(
             function () use ($storage, $chunk): void {
                 $storage->save($chunk);
@@ -65,7 +64,7 @@ class FileSystemStorageTest extends TestCase
     {
         $storage = $this->createStorage();
 
-        $chunk = FileUploadChunk::partialUpload($this->createFileUpload('Bar', 'doesNotExist.txt'), ContentRange::fromHttpHeaderValue('bytes 3-5/42'));
+        $chunk = FileUploadChunk::partialUpload(FileUploadFactory::createWithContents('Bar', 'doesNotExist.txt'), ContentRange::fromHttpHeaderValue('bytes 3-5/42'));
         Assert::exception(
             function () use ($storage, $chunk): void {
                 $storage->save($chunk);
@@ -81,7 +80,7 @@ class FileSystemStorageTest extends TestCase
         $idValue = 'Qs7fEwsBY-b47AZKRCEcYfbouPA';
         $name = 'foobar.txt';
         $contents = 'FooBar';
-        $chunk = FileUploadChunk::completeUpload($this->createFileUpload($contents, $name));
+        $chunk = FileUploadChunk::completeUpload(FileUploadFactory::createWithContents($contents, $name));
 
         $savedFileUploadItem = $storage->save($chunk);
         $id = $savedFileUploadItem->getId();
@@ -124,7 +123,7 @@ class FileSystemStorageTest extends TestCase
         $idValue = 'Qs7fEwsBY-b47AZKRCEcYfbouPA';
         $name = 'foobar.txt';
 
-        $chunk1 = FileUploadChunk::partialUpload($this->createFileUpload('Foo', $name), ContentRange::fromHttpHeaderValue('bytes 0-2/6'));
+        $chunk1 = FileUploadChunk::partialUpload(FileUploadFactory::createWithContents('Foo', $name), ContentRange::fromHttpHeaderValue('bytes 0-2/6'));
         $savedUploadItemChunk1 = $storage->save($chunk1);
         $id = $savedUploadItemChunk1->getId();
         Assert::same($idValue, $id->toString());
@@ -148,7 +147,7 @@ class FileSystemStorageTest extends TestCase
         );
 
         // attempt to resume upload at wrong offset fails
-        $chunkInvalid = FileUploadChunk::partialUpload($this->createFileUpload('r', $name), ContentRange::fromHttpHeaderValue('bytes 5-5/6'));
+        $chunkInvalid = FileUploadChunk::partialUpload(FileUploadFactory::createWithContents('r', $name), ContentRange::fromHttpHeaderValue('bytes 5-5/6'));
         Assert::exception(
             function () use ($storage, $chunkInvalid): void {
                 $storage->save($chunkInvalid);
@@ -158,7 +157,7 @@ class FileSystemStorageTest extends TestCase
         );
 
         // successfully complete upload
-        $chunk2 = FileUploadChunk::partialUpload($this->createFileUpload('Bar', $name), ContentRange::fromHttpHeaderValue('bytes 3-5/6'));
+        $chunk2 = FileUploadChunk::partialUpload(FileUploadFactory::createWithContents('Bar', $name), ContentRange::fromHttpHeaderValue('bytes 3-5/6'));
         $savedUploadItemChunk2 = $storage->save($chunk2);
         Assert::equal($id, $savedUploadItemChunk2->getId());
         $completedFileUpload = $savedUploadItemChunk2->getFileUpload();
@@ -192,16 +191,6 @@ class FileSystemStorageTest extends TestCase
         $journal = new InMemoryMetadataJournal($journalData);
 
         return new FileSystemStorage($journal, new NetteFileSystem(), $directory);
-    }
-
-    private function createFileUpload(string $contents, string $name): FileUpload
-    {
-        return new FileUpload([
-            'name' => $name,
-            'tmp_name' => FileMock::create($contents),
-            'size' => strlen($contents),
-            'error' => UPLOAD_ERR_OK,
-        ]);
     }
 
 }

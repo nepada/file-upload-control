@@ -27,14 +27,6 @@ final class InMemoryMetadataJournal implements MetadataJournal
     }
 
     /**
-     * @return array<string, FileUploadMetadata>
-     */
-    public function getData(): array
-    {
-        return $this->data;
-    }
-
-    /**
      * @return FileUploadId[]
      */
     public function list(): array

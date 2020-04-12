@@ -94,16 +94,14 @@ final class FileSystemStorage implements Storage
      */
     public function save(FileUploadChunk $fileUploadChunk): FileUploadItem
     {
-        $fileUpload = $fileUploadChunk->getFileUpload();
-        if (! $fileUpload->isOk()) {
+        if (! $fileUploadChunk->getFileUpload()->isOk()) {
             throw UnableToSaveFileUploadException::withUploadError();
         }
 
-        $contentRange = $fileUploadChunk->getContentRange();
-        if ($contentRange->containsFirstByte()) {
-            $id = $this->saveNewUpload($fileUpload, $contentRange);
+        if ($fileUploadChunk->getContentRange()->containsFirstByte()) {
+            $id = $this->saveNewUpload($fileUploadChunk);
         } else {
-            $id = $this->resumeExistingUpload($fileUpload, $contentRange);
+            $id = $this->resumeExistingUpload($fileUploadChunk);
         }
 
         try {
@@ -125,14 +123,13 @@ final class FileSystemStorage implements Storage
     }
 
     /**
-     * @param FileUpload $fileUpload
-     * @param ContentRange $contentRange
+     * @param FileUploadChunk $fileUploadChunk
      * @return FileUploadId
      * @throws UnableToSaveFileUploadException
      */
-    private function saveNewUpload(FileUpload $fileUpload, ContentRange $contentRange): FileUploadId
+    private function saveNewUpload(FileUploadChunk $fileUploadChunk): FileUploadId
     {
-        $metadata = FileUploadMetadata::fromFileUploadAndContentRange($fileUpload, $contentRange);
+        $metadata = FileUploadMetadata::fromFileUploadChunk($fileUploadChunk);
         $id = $metadata->createFileUploadId();
         try {
             $this->metadataJournal->save($id, $metadata);
@@ -141,7 +138,7 @@ final class FileSystemStorage implements Storage
         }
 
         $file = $this->getFilePath($id);
-        $contents = $fileUpload->getContents();
+        $contents = $fileUploadChunk->getFileUpload()->getContents();
         assert(is_string($contents));
         $this->fileSystem->write($file, $contents);
 
@@ -149,14 +146,13 @@ final class FileSystemStorage implements Storage
     }
 
     /**
-     * @param FileUpload $fileUpload
-     * @param ContentRange $contentRange
+     * @param FileUploadChunk $fileUploadChunk
      * @return FileUploadId
      * @throws UnableToSaveFileUploadException
      */
-    private function resumeExistingUpload(FileUpload $fileUpload, ContentRange $contentRange): FileUploadId
+    private function resumeExistingUpload(FileUploadChunk $fileUploadChunk): FileUploadId
     {
-        $metadata = FileUploadMetadata::fromFileUploadAndContentRange($fileUpload, $contentRange);
+        $metadata = FileUploadMetadata::fromFileUploadChunk($fileUploadChunk);
         $id = $metadata->createFileUploadId();
         try {
             $storedMetadata = $this->metadataJournal->load($id);
@@ -171,11 +167,11 @@ final class FileSystemStorage implements Storage
         if (! $this->fileSystem->fileExists($file)) {
             throw UnableToSaveFileUploadException::withFailedChunk($id, 'missing previously uploaded file part');
         }
-        if ($this->fileSystem->fileSize($file) !== $contentRange->getStart()) {
+        if ($this->fileSystem->fileSize($file) !== $fileUploadChunk->getContentRange()->getStart()) {
             throw UnableToSaveFileUploadException::withFailedChunk($id, 'previously uploaded file part size does not match given content-range value');
         }
 
-        $contents = $fileUpload->getContents();
+        $contents = $fileUploadChunk->getFileUpload()->getContents();
         assert(is_string($contents));
         $this->fileSystem->append($file, $contents);
 
