@@ -1,0 +1,9 @@
+includes:
+    - config.default.neon
+
+fileUploadControl:
+    registerExtensionMethod: true
+
+decorator:
+    Nette\Application\UI\Form:
+        inject: true

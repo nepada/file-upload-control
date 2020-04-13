@@ -1,0 +1,6 @@
+includes:
+    - config.default.neon
+
+fileUploadControl:
+    thumbnails:
+        enable: false

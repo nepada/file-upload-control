@@ -1,0 +1,11 @@
+extensions:
+    fileUploadControl: Nepada\Bridges\FileUploadControlDI\FileUploadControlExtension
+
+fileUploadControl:
+    uploadDirectory: %tempDir%/uploads
+
+di:
+    debugger: false
+
+services:
+    - NepadaTests\Bridges\FileUploadControlDI\Fixtures\FormFactory
