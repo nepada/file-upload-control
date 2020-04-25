@@ -197,7 +197,7 @@ class FileUploadControl extends BaseControl
         $fileUploadItems = $storage->list();
         $uniqueFilenames = array_map(fn (FileUploadItem $fileUploadItem): string => $fileUploadItem->getFileUpload()->getName(), $fileUploadItems);
         $completedFiles = array_map(
-            fn(FileUploadItem $fileUploadItem): Response => $this->createUploadSuccessResponse($fileUploadItem),
+            fn (FileUploadItem $fileUploadItem): Response => $this->createUploadSuccessResponse($fileUploadItem),
             array_filter($fileUploadItems, fn (FileUploadItem $fileUploadItem): bool => $fileUploadItem->getFileUpload()->isOk()),
         );
 
