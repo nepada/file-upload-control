@@ -1,4 +1,4 @@
-import babel from 'rollup-plugin-babel';
+import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import nodeBuiltins from 'rollup-plugin-node-builtins';
@@ -33,6 +33,7 @@ export default [
             babel({
                 babelrc: false,
                 presets: [['@babel/preset-env', {targets: '> 1%, cover 95%, not dead'}]],
+                babelHelpers: 'bundled',
             }),
         ],
     },
@@ -61,6 +62,7 @@ export default [
             babel({
                 babelrc: false,
                 presets: [['@babel/preset-env', {targets: '> 1%, cover 95%, not dead'}]],
+                babelHelpers: 'bundled',
             }),
             terser(),
         ],
