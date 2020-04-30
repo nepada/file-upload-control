@@ -123,7 +123,14 @@ function initializeFileUploadControl(Nette) {
         return $(elem).data('files');
     };
 
-    // Init form
+    // Initialize all forms on document ready
+    $(() => {
+        $('form').each((idx, form) => {
+            initializeForm(form);
+        });
+    });
+
+    // Tap into Nette.initForm() to provide AJAX snippet support via e.g. Naja
     const originalInitForm = Nette.initForm;
     Nette.initForm = (form) => {
         originalInitForm(form);

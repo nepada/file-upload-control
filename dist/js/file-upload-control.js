@@ -367,8 +367,14 @@
       }
 
       return $(elem).data('files');
-    }; // Init form
+    }; // Initialize all forms on document ready
 
+
+    $(function () {
+      $('form').each(function (idx, form) {
+        initializeForm(form);
+      });
+    }); // Tap into Nette.initForm() to provide AJAX snippet support via e.g. Naja
 
     var originalInitForm = Nette.initForm;
 
