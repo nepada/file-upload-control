@@ -1,6 +1,6 @@
 {
     "name": "@nepada/file-upload-control",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Client side script of File upload control for Nette forms.",
     "keywords": [
         "file",
