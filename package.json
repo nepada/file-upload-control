@@ -20,7 +20,7 @@
     "bugs": "https://github.com/nepada/file-upload-control/issues",
     "peerDependencies": {
         "blueimp-file-upload": "^10.10.0",
-        "jquery": ">=1.7",
+        "jquery": ">=1.12",
         "nette-forms": "^3.0.3"
     },
     "devDependencies": {
@@ -37,7 +37,7 @@
         "clean-css-cli": "^4.3.0",
         "eslint": "^6.8.0",
         "eslint-plugin-import": "^2.20.2",
-        "jquery": ">=1.7",
+        "jquery": ">=1.12",
         "nette-forms": "^3.0.3",
         "node-sass": "^4.13.1",
         "postcss-cli": "^7.1.0",
