@@ -10,6 +10,7 @@ use Nepada\FileUploadControl\Storage\Metadata\FileUploadMetadataAlreadyExistsExc
 use Nepada\FileUploadControl\Storage\Metadata\FileUploadMetadataNotFoundException;
 use Nepada\FileUploadControl\Utils\NetteFileSystem;
 use Nepada\FileUploadControl\Utils\NetteFinder;
+use NepadaTests\Environment;
 use NepadaTests\TestCase;
 use Nette;
 use Tester\Assert;
@@ -85,7 +86,7 @@ class FileSystemMetadataJournalTest extends TestCase
 
     private function createJournal(): FileSystemMetadataJournal
     {
-        $directory = TEMP_DIR . '/' . uniqid();
+        $directory = Environment::getTempDir() . '/' . uniqid();
         Nette\Utils\FileSystem::createDir($directory);
 
         return new FileSystemMetadataJournal(new NetteFileSystem(), new NetteFinder(), $directory);

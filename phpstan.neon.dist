@@ -43,7 +43,7 @@ parameters:
             path: src/FileUploadControl/FileUploadControl.php
         -
             message: "#^Parameter \\#2 \\$errorMessage \\(Nette\\\\Utils\\\\Html\\|string\\|null\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:addRule\\(\\) should be contravariant with parameter \\$errorMessage \\(object\\|string\\|null\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:addRule\\(\\)$#"
-            count: 2
+            count: 1
             path: src/FileUploadControl/FileUploadControl.php
         -
             message: "#^Throwable is never thrown in the corresponding try block$#"

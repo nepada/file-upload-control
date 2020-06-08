@@ -8,6 +8,7 @@ use Nepada\FileUploadControl\Storage\FileSystemStorageManager;
 use Nepada\FileUploadControl\Thumbnail\ImageThumbnailProvider;
 use Nepada\FileUploadControl\Thumbnail\NullThumbnailProvider;
 use NepadaTests\Bridges\FileUploadControlDI\Fixtures\FormFactory;
+use NepadaTests\Environment;
 use NepadaTests\TestCase;
 use Nette;
 use Nette\MemberAccessException;
@@ -63,7 +64,7 @@ class FileUploadControlExtensionTest extends TestCase
     private function createContainer(string $config = __DIR__ . '/Fixtures/config.default.neon'): Nette\DI\Container
     {
         $configurator = new Nette\Configurator();
-        $configurator->setTempDirectory(TEMP_DIR);
+        $configurator->setTempDirectory(Environment::getTempDir());
         $configurator->setDebugMode(true);
         $configurator->addConfig($config);
         return $configurator->createContainer();

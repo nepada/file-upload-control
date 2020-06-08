@@ -5,6 +5,7 @@ namespace NepadaTests\FileUploadControl;
 
 use Nepada\FileUploadControl\FileUploadControl;
 use Nepada\FileUploadControl\Storage\Storage;
+use NepadaTests\Environment;
 use NepadaTests\FileUploadControl\Fixtures\TestPresenter;
 use NepadaTests\FileUploadControl\Storage\InMemoryStorage;
 use NepadaTests\FileUploadControl\Storage\InMemoryStorageManager;
@@ -135,7 +136,7 @@ class FileUploadControlValidationTest extends TestCase
         $control = $this->createFileUploadControl();
         $control->addRule(Form::IMAGE, 'only PNG is allowed');
 
-        $file = TEMP_DIR . '/' . uniqid();
+        $file = Environment::getTempDir() . '/' . uniqid();
         FileSystem::write($file, $this->readChunk(__DIR__ . '/Fixtures/image.png', 64));
 
         $files = ['fileUpload' => ['upload' => [

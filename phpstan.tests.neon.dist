@@ -15,12 +15,9 @@ parameters:
         - php
         - phpt
 
-    autoload_directories:
-        - tests
-
     excludes_analyse:
-        - tests/bootstrap.php
         - tests/temp/*
+        - tests/FileUploadControl/Fixtures/DummyTranslator.php # see issue phpstan/phpstan#3403
 
     ignoreErrors:
         - '~Call to static method Tester\\Assert::(type|count|same|notSame)\(\) with .* and .* will always evaluate to true\.~'

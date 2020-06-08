@@ -10,6 +10,7 @@ use Nepada\FileUploadControl\Storage\FileUploadNotFoundException;
 use Nepada\FileUploadControl\Storage\Metadata\FileUploadMetadata;
 use Nepada\FileUploadControl\Storage\UnableToSaveFileUploadException;
 use Nepada\FileUploadControl\Utils\NetteFileSystem;
+use NepadaTests\Environment;
 use NepadaTests\FileUploadControl\FileUploadFactory;
 use NepadaTests\FileUploadControl\Storage\Metadata\InMemoryMetadataJournal;
 use NepadaTests\TestCase;
@@ -185,7 +186,7 @@ class FileSystemStorageTest extends TestCase
      */
     private function createStorage(array $journalData = []): FileSystemStorage
     {
-        $directory = TEMP_DIR . '/' . uniqid();
+        $directory = Environment::getTempDir() . '/' . uniqid();
         Nette\Utils\FileSystem::createDir($directory);
 
         $journal = new InMemoryMetadataJournal($journalData);
