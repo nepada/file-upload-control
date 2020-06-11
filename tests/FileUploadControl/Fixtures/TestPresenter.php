@@ -14,7 +14,9 @@ final class TestPresenter extends Nette\Application\UI\Presenter
 
     public ?Nette\Application\IResponse $response = null;
 
-    /** @var callable|null */
+    /**
+     * @var callable|null
+     */
     private $formConfigurator;
 
     public static function create(?Nette\Http\IRequest $httpRequest = null, ?callable $formConfigurator = null): TestPresenter

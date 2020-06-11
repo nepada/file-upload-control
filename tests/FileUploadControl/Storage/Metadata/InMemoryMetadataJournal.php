@@ -15,7 +15,9 @@ final class InMemoryMetadataJournal implements MetadataJournal
 
     use Nette\SmartObject;
 
-    /** @var array<string, FileUploadMetadata> */
+    /**
+     * @var array<string, FileUploadMetadata>
+     */
     private array $data;
 
     /**

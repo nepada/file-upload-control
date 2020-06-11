@@ -17,7 +17,9 @@ final class InMemoryStorage implements Storage
 
     use Nette\SmartObject;
 
-    /** @var array<string, FileUploadItem> */
+    /**
+     * @var array<string, FileUploadItem>
+     */
     private array $data;
 
     /**

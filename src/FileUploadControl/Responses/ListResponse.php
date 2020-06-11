@@ -10,7 +10,9 @@ final class ListResponse implements Response
 
     use Nette\SmartObject;
 
-    /** @var Response[] */
+    /**
+     * @var Response[]
+     */
     private array $responses;
 
     public function __construct(Response ...$responses)

@@ -17,7 +17,9 @@ final class InMemoryStorageManager implements StorageManager
 
     public const TEST_NAMESPACE = 'testStorage';
 
-    /** @var array<string, Storage> */
+    /**
+     * @var array<string, Storage>
+     */
     private array $storages = [];
 
     public static function createWithTestNamespace(?Storage $storage): StorageManager
