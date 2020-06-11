@@ -17,7 +17,6 @@ parameters:
 
     excludes_analyse:
         - tests/temp/*
-        - tests/FileUploadControl/Fixtures/DummyTranslator.php # see issue phpstan/phpstan#3403
 
     ignoreErrors:
         - '~Call to static method Tester\\Assert::(type|count|same|notSame)\(\) with .* and .* will always evaluate to true\.~'
