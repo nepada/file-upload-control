@@ -1,7 +1,7 @@
 File Upload form control
 ========================
 
-[![Build Status](https://travis-ci.org/nepada/file-upload-control.svg?branch=master)](https://travis-ci.org/nepada/file-upload-control)
+[![Build Status](https://github.com/nepada/file-upload-control/workflows/CI/badge.svg)](https://github.com/nepada/file-upload-control/actions?query=workflow%3ACI+branch%3Amaster)
 [![Coverage Status](https://coveralls.io/repos/github/nepada/file-upload-control/badge.svg?branch=master)](https://coveralls.io/github/nepada/file-upload-control?branch=master)
 [![Downloads this Month](https://img.shields.io/packagist/dm/nepada/file-upload-control.svg)](https://packagist.org/packages/nepada/file-upload-control)
 [![Latest stable](https://img.shields.io/packagist/v/nepada/file-upload-control.svg)](https://packagist.org/packages/nepada/file-upload-control)
