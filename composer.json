@@ -55,6 +55,9 @@
             "NepadaTests\\": "tests/"
         }
     },
+    "config": {
+        "platform-check": false
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
