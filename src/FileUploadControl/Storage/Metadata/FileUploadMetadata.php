@@ -69,7 +69,7 @@ final class FileUploadMetadata
     public function createFileUploadId(): FileUploadId
     {
         $data = $this->toArray();
-        sort($data);
+        ksort($data);
         $serialized = Json::encode($data);
         $hash = sha1($serialized, true);
         $id = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($hash));

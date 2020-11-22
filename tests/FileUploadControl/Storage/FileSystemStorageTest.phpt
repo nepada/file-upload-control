@@ -57,7 +57,7 @@ class FileSystemStorageTest extends TestCase
                 $storage->save($chunk);
             },
             UnableToSaveFileUploadException::class,
-            "Unable to continue in file upload 'uAWoNJFv2uxKRucd-ZyINSthqWc': missing previously uploaded file part",
+            "Unable to continue in file upload 'amZD9mYK5ctbvHQ8LW5_f9oydFc': missing previously uploaded file part",
         );
     }
 
@@ -71,14 +71,14 @@ class FileSystemStorageTest extends TestCase
                 $storage->save($chunk);
             },
             UnableToSaveFileUploadException::class,
-            "Unable to continue in file upload 'wp80gtOmZRhKFKk8TUPz3ncbrBI': failed to load metadata",
+            "Unable to continue in file upload 'cxQdOwzyQ6VFS2NSrryizaXuT80': failed to load metadata",
         );
     }
 
     public function testCompleteUpload(): void
     {
         $storage = $this->createStorage();
-        $idValue = 'Qs7fEwsBY-b47AZKRCEcYfbouPA';
+        $idValue = 'bh6Y1srroiEubcXek_F9zheSYgM';
         $name = 'foobar.txt';
         $contents = 'FooBar';
         $chunk = FileUploadChunk::completeUpload(FileUploadFactory::createWithContents($contents, $name));
@@ -121,7 +121,7 @@ class FileSystemStorageTest extends TestCase
     public function testChunkedUpload(): void
     {
         $storage = $this->createStorage();
-        $idValue = 'Qs7fEwsBY-b47AZKRCEcYfbouPA';
+        $idValue = 'bh6Y1srroiEubcXek_F9zheSYgM';
         $name = 'foobar.txt';
 
         $chunk1 = FileUploadChunk::partialUpload(FileUploadFactory::createWithContents('Foo', $name), ContentRange::fromHttpHeaderValue('bytes 0-2/6'));

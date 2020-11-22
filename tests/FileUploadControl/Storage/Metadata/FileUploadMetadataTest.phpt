@@ -59,7 +59,7 @@ class FileUploadMetadataTest extends TestCase
     public function testCreateFileUploadId(): void
     {
         $id = FileUploadMetadata::fromArray(['name' => 'foo', 'size' => 1])->createFileUploadId();
-        Assert::same('YKUl2ElBmvHv95bYwi6nvagChSs', $id->toString());
+        Assert::same('myrRdBHgHZfmhpEsR_xfk5y4Uus', $id->toString());
     }
 
     public function testInvalidSize(): void
