@@ -1,8 +1,10 @@
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var $ = require('jquery');
 
-var $ = _interopDefault(require('jquery'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var $__default = /*#__PURE__*/_interopDefaultLegacy($);
 
 class Button {
 
@@ -13,7 +15,7 @@ class Button {
 
         this.button.click(() => {
             // Trigger click from the newest to oldest to mitigate race condition bug with limitConcurrentUploads
-            $(this.$fileUpload.find(this.targetSelector).get().reverse()).click();
+            $__default['default'](this.$fileUpload.find(this.targetSelector).get().reverse()).click();
         });
     }
 

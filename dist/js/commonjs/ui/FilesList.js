@@ -1,8 +1,10 @@
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var $ = require('jquery');
 
-var $ = _interopDefault(require('jquery'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var $__default = /*#__PURE__*/_interopDefaultLegacy($);
 
 class FilesList {
 
@@ -27,7 +29,7 @@ class FilesList {
     }
 
     remove(fileUrl) {
-        this.getInput().data(this.dataAttribute, $.grep(
+        this.getInput().data(this.dataAttribute, $__default['default'].grep(
             this.list(),
             (file) => {
                 return file.url !== fileUrl;

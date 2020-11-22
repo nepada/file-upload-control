@@ -1,11 +1,13 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('nette-forms'), require('jquery'), require('blueimp-file-upload')) :
   typeof define === 'function' && define.amd ? define(['nette-forms', 'jquery', 'blueimp-file-upload'], factory) :
-  (global = global || self, factory(global.Nette, global.jQuery));
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Nette, global.jQuery));
 }(this, (function (Nette, $) { 'use strict';
 
-  Nette = Nette && Object.prototype.hasOwnProperty.call(Nette, 'default') ? Nette['default'] : Nette;
-  $ = $ && Object.prototype.hasOwnProperty.call($, 'default') ? $['default'] : $;
+  function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+  var Nette__default = /*#__PURE__*/_interopDefaultLegacy(Nette);
+  var $__default = /*#__PURE__*/_interopDefaultLegacy($);
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -40,7 +42,7 @@
       this.targetSelector = targetSelector;
       this.button.click(function () {
         // Trigger click from the newest to oldest to mitigate race condition bug with limitConcurrentUploads
-        $(_this.$fileUpload.find(_this.targetSelector).get().reverse()).click();
+        $__default['default'](_this.$fileUpload.find(_this.targetSelector).get().reverse()).click();
       });
     }
 
@@ -102,7 +104,7 @@
     }, {
       key: "remove",
       value: function remove(fileUrl) {
-        this.getInput().data(this.dataAttribute, $.grep(this.list(), function (file) {
+        this.getInput().data(this.dataAttribute, $__default['default'].grep(this.list(), function (file) {
           return file.url !== fileUrl;
         }));
       }
@@ -118,7 +120,7 @@
       var name = '';
       var size = 0;
       var type = '';
-      $.each(files, function (index, file) {
+      $__default['default'].each(files, function (index, file) {
         name = name + (index ? ', ' : '') + file.name;
         size = size + file.size;
         type = type || file.type;
@@ -146,8 +148,8 @@
     _createClass(FileUpload, [{
       key: "createUI",
       value: function createUI() {
-        var $file = $(this.$filesContainer.data('templateFile'));
-        $file.find('[data-file-upload-role=file-status]').append($(this.$filesContainer.data('templateProcessing')));
+        var $file = $__default['default'](this.$filesContainer.data('templateFile'));
+        $file.find('[data-file-upload-role=file-status]').append($__default['default'](this.$filesContainer.data('templateProcessing')));
         $file.hide();
         return $file;
       }
@@ -180,7 +182,7 @@
           this.error = file.error;
         }
 
-        var $error = $(this.$filesContainer.data('templateFailed'));
+        var $error = $__default['default'](this.$filesContainer.data('templateFailed'));
         this.updateFileInfoUI($error);
         this.$file.find('[data-file-upload-role=file-status]').html($error);
         this.updateFileInfoUI();
@@ -190,7 +192,7 @@
       value: function done(file) {
         this.status = 'done';
         this.updateFileInfo(file);
-        var $done = $(this.$filesContainer.data('templateDone'));
+        var $done = $__default['default'](this.$filesContainer.data('templateDone'));
         this.updateFileInfoUI($done);
         this.$file.find('[data-file-upload-role=file-status]').html($done);
         this.updateFileInfoUI();
@@ -201,7 +203,7 @@
         this.$file.attr('data-file-upload-status', this.status);
         this.$file.attr('data-content-type', this.type);
         this.$file.attr('title', this.name);
-        var $element = $(element || this.$file);
+        var $element = $__default['default'](element || this.$file);
         $element.find('[data-file-upload-role=file-name]').text(this.name);
         $element.find('[data-file-upload-role=file-size]').text(this.formatBytes(this.size));
         $element.find('[data-file-upload-role=file-progress-bar]').attr('aria-valuenow', Math.floor(this.progress)).css('width', this.progress.toFixed(2) + '%');
@@ -225,10 +227,10 @@
             $thumbnail.attr('src', this.thumbnailUrl);
           } else if ($thumbnail.length > 0) {
             var thumbnailAttributes = {};
-            $.each($thumbnail.get(0).attributes, function (idx, attribute) {
+            $__default['default'].each($thumbnail.get(0).attributes, function (idx, attribute) {
               thumbnailAttributes[attribute.name] = attribute.value;
             });
-            $thumbnail.replaceWith($('<img>').attr(thumbnailAttributes).attr('src', this.thumbnailUrl));
+            $thumbnail.replaceWith($__default['default']('<img>').attr(thumbnailAttributes).attr('src', this.thumbnailUrl));
           }
         }
       }
@@ -256,7 +258,7 @@
   }();
 
   function initializeControl(container) {
-    var $fileUpload = $(container);
+    var $fileUpload = $__default['default'](container);
 
     if ($fileUpload.data('blueimpFileupload')) {
       return;
@@ -326,7 +328,7 @@
     }).on('fileuploadchunksend', function (e, data) {
       return !data.fileUpload || data.fileUpload.status !== 'failed';
     }).on('click', '[data-file-upload-role=file-delete]', function () {
-      var $this = $(this);
+      var $this = $__default['default'](this);
       var $file = $this.closest('[data-file-upload-role=file]');
       var upload = $file.data('upload');
 
@@ -335,7 +337,7 @@
       }
 
       if ($this.is('[data-url]')) {
-        $.get($this.data('url'));
+        $__default['default'].get($this.data('url'));
       }
 
       var fileUrl = $file.find('[data-file-upload-role=file-download]').attr('href');
@@ -348,30 +350,30 @@
   }
 
   function initializeForm(form) {
-    $(form).find('[data-file-upload-url]').each(function (idx, container) {
+    $__default['default'](form).find('[data-file-upload-url]').each(function (idx, container) {
       initializeControl(container);
     });
   }
 
   function initializeFileUploadControl(Nette) {
     // Disable default browser drop event
-    $(document).on('drop dragover', function (e) {
+    $__default['default'](document).on('drop dragover', function (e) {
       e.preventDefault();
     }); // Effective value
 
     var originalGetEffectiveValue = Nette.getEffectiveValue;
 
     Nette.getEffectiveValue = function (elem, filter) {
-      if (!elem || !elem.nodeName || elem.nodeName.toLowerCase() !== 'input' || !$(elem).data('files')) {
+      if (!elem || !elem.nodeName || elem.nodeName.toLowerCase() !== 'input' || !$__default['default'](elem).data('files')) {
         return originalGetEffectiveValue(elem, filter);
       }
 
-      return $(elem).data('files');
+      return $__default['default'](elem).data('files');
     }; // Initialize all forms on document ready
 
 
-    $(function () {
-      $('form').each(function (idx, form) {
+    $__default['default'](function () {
+      $__default['default']('form').each(function (idx, form) {
         initializeForm(form);
       });
     }); // Tap into Nette.initForm() to provide AJAX snippet support via e.g. Naja
@@ -384,7 +386,7 @@
     };
   }
 
-  initializeFileUploadControl(Nette);
+  initializeFileUploadControl(Nette__default['default']);
 
 })));
 //# sourceMappingURL=file-upload-control.js.map
