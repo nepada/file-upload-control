@@ -44,8 +44,8 @@ class FileUploadControlRenderingTest extends TestCase
         $control->setRequired();
 
         Assert::same(
-            FileSystem::read(__DIR__ . '/Fixtures/FileUploadControl.files.html'),
-            (string) $control->getControl(),
+            trim(FileSystem::read(__DIR__ . '/Fixtures/FileUploadControl.files.html')),
+            trim((string) $control->getControl()),
         );
     }
 
@@ -56,8 +56,8 @@ class FileUploadControlRenderingTest extends TestCase
         $control->addRule(Form::IMAGE);
         $control->addError('some error');
         Assert::same(
-            FileSystem::read(__DIR__ . '/Fixtures/FileUploadControl.errors.html'),
-            (string) $control->getControl(),
+            trim(FileSystem::read(__DIR__ . '/Fixtures/FileUploadControl.errors.html')),
+            trim((string) $control->getControl()),
         );
     }
 
@@ -67,8 +67,8 @@ class FileUploadControlRenderingTest extends TestCase
 
         $control->setDisabled();
         Assert::same(
-            FileSystem::read(__DIR__ . '/Fixtures/FileUploadControl.disabled.html'),
-            (string) $control->getControl(),
+            trim(FileSystem::read(__DIR__ . '/Fixtures/FileUploadControl.disabled.html')),
+            trim((string) $control->getControl()),
         );
     }
 
