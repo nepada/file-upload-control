@@ -95,7 +95,7 @@ final class FileSystemStorageManager implements StorageManager
         $currentTimestamp = $this->dateTimeProvider->getNow()->getTimestamp();
         /** @var \SplFileInfo $directory */
         foreach ($this->finder->findDirectoriesInDirectory($this->directory, '*' . self::NAMESPACE_DIRECTORY_SUFFIX) as $directory) {
-            $age = $currentTimestamp - (int) $directory->getMTime();
+            $age = $currentTimestamp - $directory->getMTime();
             if ($age < $this->namespaceTtl) {
                 continue;
             }
