@@ -207,9 +207,13 @@ class FileUploadControlValidationTest extends TestCase
      */
     private function runTestPresenter(FileUploadControl $control, array $post = [], array $files = [], array $parameters = [], array $headers = []): void
     {
+        $cookies = [
+            'nette-samesite' => true, // nette/http <3.1
+            '_nss' => true, // nette/http >=3.1
+        ];
         $parameters['action'] = 'default';
         $url = (new UrlScript('https://example.com'))->withQuery($parameters);
-        $httpRequest = new Request($url, $post, $files, ['nette-samesite' => true], $headers);
+        $httpRequest = new Request($url, $post, $files, $cookies, $headers);
         $request = new Application\Request('Test', IRequest::POST, $parameters, $post, $files);
         TestPresenter::create(
             $httpRequest,
