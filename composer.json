@@ -29,7 +29,7 @@
         "nette/tester": "^2.3.4",
         "mockery/mockery": "^1.4.2",
         "phpstan/phpstan": "^0.12.63",
-        "phpstan/phpstan-strict-rules": "^0.12.7",
+        "phpstan/phpstan-strict-rules": "^0.12.9",
         "pepakriz/phpstan-exception-rules": "^0.11.6",
         "phpstan/phpstan-nette": "^0.12.12",
         "nepada/phpstan-nette-tester": "^0.3.1",
