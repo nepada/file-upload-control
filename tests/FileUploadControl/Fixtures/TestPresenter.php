@@ -54,6 +54,9 @@ final class TestPresenter extends Nette\Application\UI\Presenter
             call_user_func($this->formConfigurator, $form);
         }
 
+        $form->onSubmit[] = function (): void {
+        };
+
         return $form;
     }
 
