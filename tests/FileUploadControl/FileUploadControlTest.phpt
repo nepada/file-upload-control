@@ -8,6 +8,7 @@ use NepadaTests\FileUploadControl\Fixtures\TestPresenter;
 use NepadaTests\FileUploadControl\Storage\InMemoryStorage;
 use NepadaTests\FileUploadControl\Storage\InMemoryStorageManager;
 use NepadaTests\TestCase;
+use Nette;
 use Nette\Application\Responses\FileResponse;
 use Tester\Assert;
 
@@ -32,7 +33,11 @@ class FileUploadControlTest extends TestCase
     public function testDownload(): void
     {
         $control = $this->createFileUploadControl();
-        $control->handleDownload(InMemoryStorageManager::TEST_NAMESPACE, 'image-png');
+        try {
+            $control->handleDownload(InMemoryStorageManager::TEST_NAMESPACE, 'image-png');
+        } catch (Nette\Application\AbortException $exception) {
+            // noop
+        }
         /** @var TestPresenter $presenter */
         $presenter = $control->getPresenter();
         /** @var FileResponse $response */

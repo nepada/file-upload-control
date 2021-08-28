@@ -72,6 +72,7 @@ final class TestPresenter extends Nette\Application\UI\Presenter
     public function sendResponse(Nette\Application\IResponse $response): void
     {
         $this->response ??= $response;
+        parent::sendResponse($response);
     }
 
     private function createTemplateFactory(): Nette\Bridges\ApplicationLatte\TemplateFactory

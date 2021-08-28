@@ -215,12 +215,18 @@ class FileUploadControlValidationTest extends TestCase
         $url = (new UrlScript('https://example.com'))->withQuery($parameters);
         $httpRequest = new Request($url, $post, $files, $cookies, $headers);
         $request = new Application\Request('Test', IRequest::POST, $parameters, $post, $files);
-        TestPresenter::create(
+        $presenter = TestPresenter::create(
             $httpRequest,
             function (Form $form) use ($control): void {
                 $form['fileUpload'] = $control;
             },
-        )->run($request);
+        );
+
+        try {
+            $presenter->run($request);
+        } catch (Application\AbortException $exception) {
+            // noop
+        }
     }
 
     private function createFileUploadControl(?Storage $storage = null): FileUploadControl
