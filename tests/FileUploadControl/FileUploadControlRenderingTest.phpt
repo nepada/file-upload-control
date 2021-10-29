@@ -13,6 +13,7 @@ use NepadaTests\FileUploadControl\Storage\InMemoryStorageManager;
 use NepadaTests\TestCase;
 use Nette\Application\UI\Form;
 use Nette\Utils\FileSystem;
+use Nette\Utils\Strings;
 use Tester\Assert;
 
 require_once __DIR__ . '/../bootstrap.php';
@@ -45,7 +46,7 @@ class FileUploadControlRenderingTest extends TestCase
 
         Assert::same(
             trim(FileSystem::read(__DIR__ . '/Fixtures/FileUploadControl.files.html')),
-            trim((string) $control->getControl()),
+            Strings::replace(trim((string) $control->getControl()), '~&#123;~', '{'), // escaping changed in latte 2.10.5
         );
     }
 
