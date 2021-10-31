@@ -15,7 +15,7 @@
         }
     ],
     "require": {
-        "php": ">=7.4.0",
+        "php": ">=7.4.0 <8.2",
         "ext-fileinfo": "*",
         "ext-json": "*",
         "latte/latte": "^2.7.0",
