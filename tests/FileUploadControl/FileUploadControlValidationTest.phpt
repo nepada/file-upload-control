@@ -235,6 +235,10 @@ class FileUploadControlValidationTest extends TestCase
         return new FileUploadControl($storageManager, 'Test control');
     }
 
+    /**
+     * @param string $file
+     * @param int<0, max> $size
+     */
     private function readChunk(string $file, int $size): string
     {
         $fp = fopen($file, 'r');

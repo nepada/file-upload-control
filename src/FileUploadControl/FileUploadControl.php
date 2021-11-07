@@ -487,7 +487,7 @@ class FileUploadControl extends BaseControl
     protected function getFileUploadChunks(): array
     {
         $httpRequest = $this->getHttpRequest();
-        /** @var FileUpload[] $files */
+        /** @var array<int, FileUpload> $files */
         $files = Nette\Forms\Helpers::extractHttpData($httpRequest->getFiles(), $this->getUploadControl()->getHtmlName() . '[]', Form::DATA_FILE);
         if (count($files) === 0) {
             return [];
