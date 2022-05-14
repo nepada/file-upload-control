@@ -4,6 +4,9 @@ includes:
     - vendor/phpstan/phpstan-nette/rules.neon
     - vendor/spaze/phpstan-disallowed-calls/extension.neon
     - vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
+    - vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
+    - vendor/spaze/phpstan-disallowed-calls/disallowed-insecure-calls.neon
+    - vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
     - tests/PHPStan/disallowedCalls.neon
     - tests/PHPStan/conditional.config.php
 
@@ -96,5 +99,9 @@ parameters:
             path: src/FileUploadControl/Storage/Metadata/FileUploadMetadata.php
         -
             message: "#^Parameter \\#2 \\$size of class Nepada\\\\FileUploadControl\\\\Storage\\\\Metadata\\\\FileUploadMetadata constructor expects int, mixed given\\.$#"
+            count: 1
+            path: src/FileUploadControl/Storage/Metadata/FileUploadMetadata.php
+        - # Used for checksum only
+            message: "#^Calling sha1\\(\\) is forbidden, use hash\\(\\) with at least SHA\\-256 for secure hash, or password_hash\\(\\) for passwords$#"
             count: 1
             path: src/FileUploadControl/Storage/Metadata/FileUploadMetadata.php
