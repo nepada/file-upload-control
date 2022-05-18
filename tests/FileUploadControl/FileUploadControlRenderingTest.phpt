@@ -12,7 +12,6 @@ use NepadaTests\FileUploadControl\Storage\InMemoryStorage;
 use NepadaTests\FileUploadControl\Storage\InMemoryStorageManager;
 use NepadaTests\TestCase;
 use Nette\Application\UI\Form;
-use Nette\Utils\FileSystem;
 use Nette\Utils\Strings;
 use Tester\Assert;
 
@@ -44,8 +43,8 @@ class FileUploadControlRenderingTest extends TestCase
         $control->setThumbnailProvider(new ImageThumbnailProvider(new ImageLoader()));
         $control->setRequired();
 
-        Assert::same(
-            trim(FileSystem::read(__DIR__ . '/Fixtures/FileUploadControl.files.html')),
+        HtmlAssert::matchFile(
+            __DIR__ . '/Fixtures/FileUploadControl.files.html',
             Strings::replace(trim((string) $control->getControl()), '~&#123;~', '{'), // escaping changed in latte 2.10.5
         );
     }
@@ -56,8 +55,8 @@ class FileUploadControlRenderingTest extends TestCase
 
         $control->addRule(Form::IMAGE);
         $control->addError('some error');
-        Assert::same(
-            trim(FileSystem::read(__DIR__ . '/Fixtures/FileUploadControl.errors.html')),
+        HtmlAssert::matchFile(
+            __DIR__ . '/Fixtures/FileUploadControl.errors.html',
             trim((string) $control->getControl()),
         );
     }
@@ -67,8 +66,8 @@ class FileUploadControlRenderingTest extends TestCase
         $control = $this->createFileUploadControl();
 
         $control->setDisabled();
-        Assert::same(
-            trim(FileSystem::read(__DIR__ . '/Fixtures/FileUploadControl.disabled.html')),
+        HtmlAssert::matchFile(
+            __DIR__ . '/Fixtures/FileUploadControl.disabled.html',
             trim((string) $control->getControl()),
         );
     }
