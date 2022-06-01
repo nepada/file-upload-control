@@ -43,7 +43,7 @@ final class ImageThumbnailProvider implements ThumbnailProvider
         $image = $this->imageLoader->load($fileUpload->getTemporaryFile());
         $image->resize($this->width, $this->height, Image::SHRINK_ONLY);
 
-        $name = $fileUpload->getName();
+        $name = $fileUpload->getUntrustedName();
         if (in_array($fileUpload->getContentType(), ['image/gif', 'image/png'], true)) {
             $contents = $image->toString(Image::PNG);
             $contentType = 'image/png';

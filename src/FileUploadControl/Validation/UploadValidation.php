@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace Nepada\FileUploadControl\Validation;
 
 use Nepada\FileUploadControl\FileUploadControl;
-use Nette\Forms\IControl;
+use Nette\Forms\Control;
 use Nette\Forms\Rules;
 use Nette\Utils\Html;
 
@@ -41,12 +41,12 @@ trait UploadValidation
     }
 
     /**
-     * @param IControl $control
+     * @param Control $control
      * @param callable|string $validator
      * @param mixed $value
      * @return Rules
      */
-    public function addConditionOn(IControl $control, $validator, $value = null): Rules
+    public function addConditionOn(Control $control, $validator, $value = null): Rules
     {
         return $this->rules->addConditionOn($control, $validator, $value);
     }

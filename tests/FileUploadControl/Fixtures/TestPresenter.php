@@ -7,12 +7,12 @@ use Latte;
 use Nette;
 use Nette\Application\Routers\SimpleRouter;
 use Nette\Application\UI\Form;
-use Nette\Application\UI\ITemplate;
+use Nette\Application\UI\Template;
 
 final class TestPresenter extends Nette\Application\UI\Presenter
 {
 
-    public ?Nette\Application\IResponse $response = null;
+    public ?Nette\Application\Response $response = null;
 
     /**
      * @var callable|null
@@ -64,12 +64,12 @@ final class TestPresenter extends Nette\Application\UI\Presenter
     {
     }
 
-    public function sendTemplate(?ITemplate $template = null): void
+    public function sendTemplate(?Template $template = null): void
     {
         $this->sendResponse(new Nette\Application\Responses\TextResponse(''));
     }
 
-    public function sendResponse(Nette\Application\IResponse $response): void
+    public function sendResponse(Nette\Application\Response $response): void
     {
         $this->response ??= $response;
         parent::sendResponse($response);
@@ -80,9 +80,9 @@ final class TestPresenter extends Nette\Application\UI\Presenter
         return new Nette\Bridges\ApplicationLatte\TemplateFactory($this->createLatteFactory());
     }
 
-    private function createLatteFactory(): Nette\Bridges\ApplicationLatte\ILatteFactory
+    private function createLatteFactory(): Nette\Bridges\ApplicationLatte\LatteFactory
     {
-        return new class () implements Nette\Bridges\ApplicationLatte\ILatteFactory {
+        return new class () implements Nette\Bridges\ApplicationLatte\LatteFactory {
 
             public function create(): Latte\Engine
             {

@@ -87,7 +87,7 @@ class FileSystemStorageTest extends TestCase
         $id = $savedFileUploadItem->getId();
         Assert::same($idValue, $id->toString());
         $fileUpload = $savedFileUploadItem->getFileUpload();
-        Assert::same($name, $fileUpload->getName());
+        Assert::same($name, $fileUpload->getUntrustedName());
         Assert::same($contents, $fileUpload->getContents());
         Assert::same(strlen($contents), $fileUpload->getSize());
         Assert::true($fileUpload->isOk());
@@ -129,7 +129,7 @@ class FileSystemStorageTest extends TestCase
         $id = $savedUploadItemChunk1->getId();
         Assert::same($idValue, $id->toString());
         $partialFileUpload = $savedUploadItemChunk1->getFileUpload();
-        Assert::same($name, $partialFileUpload->getName());
+        Assert::same($name, $partialFileUpload->getUntrustedName());
         Assert::same(6, $partialFileUpload->getSize());
         Assert::false($partialFileUpload->isOk());
         Assert::same(UPLOAD_ERR_PARTIAL, $partialFileUpload->getError());
@@ -162,7 +162,7 @@ class FileSystemStorageTest extends TestCase
         $savedUploadItemChunk2 = $storage->save($chunk2);
         Assert::equal($id, $savedUploadItemChunk2->getId());
         $completedFileUpload = $savedUploadItemChunk2->getFileUpload();
-        Assert::same($name, $completedFileUpload->getName());
+        Assert::same($name, $completedFileUpload->getUntrustedName());
         Assert::same(6, $completedFileUpload->getSize());
         Assert::true($completedFileUpload->isOk());
         Assert::same('FooBar', $completedFileUpload->getContents());

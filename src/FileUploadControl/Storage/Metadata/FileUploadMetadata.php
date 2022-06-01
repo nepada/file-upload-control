@@ -28,7 +28,7 @@ final class FileUploadMetadata
 
     public static function fromFileUploadChunk(FileUploadChunk $fileUploadChunk): FileUploadMetadata
     {
-        return new self($fileUploadChunk->getFileUpload()->getName(), $fileUploadChunk->getContentRange()->getSize());
+        return new self($fileUploadChunk->getFileUpload()->getUntrustedName(), $fileUploadChunk->getContentRange()->getSize());
     }
 
     /**

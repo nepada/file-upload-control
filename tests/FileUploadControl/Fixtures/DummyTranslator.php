@@ -5,7 +5,7 @@ namespace NepadaTests\FileUploadControl\Fixtures;
 
 use Nette;
 
-class DummyTranslator implements Nette\Localization\ITranslator
+class DummyTranslator implements Nette\Localization\Translator
 {
 
     use Nette\SmartObject;

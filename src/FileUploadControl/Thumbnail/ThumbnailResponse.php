@@ -4,9 +4,9 @@ declare(strict_types = 1);
 namespace Nepada\FileUploadControl\Thumbnail;
 
 use Nette;
-use Nette\Application\IResponse;
+use Nette\Application\Response;
 
-final class ThumbnailResponse implements IResponse
+final class ThumbnailResponse implements Response
 {
 
     use Nette\SmartObject;

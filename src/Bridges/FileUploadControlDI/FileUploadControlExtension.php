@@ -27,6 +27,9 @@ use Nette\PhpGenerator\ClassType;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
 
+/**
+ * @property-read \stdClass $config
+ */
 class FileUploadControlExtension extends CompilerExtension
 {
 
@@ -46,8 +49,6 @@ class FileUploadControlExtension extends CompilerExtension
 
     public function loadConfiguration(): void
     {
-        /** @var \stdClass $config */
-        $config = $this->getConfig();
         $container = $this->getContainerBuilder();
 
         $container->addDefinition($this->prefix('utils.dateTimeProvider'))
@@ -67,9 +68,9 @@ class FileUploadControlExtension extends CompilerExtension
             ->setType(ImageLoader::class);
         $thumbnailProvider = $container->addDefinition($this->prefix('thumbnail.thumbnailProvider'))
             ->setType(ThumbnailProvider::class);
-        if ($config->thumbnails->enable) {
+        if ($this->config->thumbnails->enable) {
             $thumbnailProvider->setFactory(ImageThumbnailProvider::class)
-                ->setArguments(['width' => $config->thumbnails->width, 'height' => $config->thumbnails->height]);
+                ->setArguments(['width' => $this->config->thumbnails->width, 'height' => $this->config->thumbnails->height]);
         } else {
             $thumbnailProvider->setFactory(NullThumbnailProvider::class);
         }
@@ -77,31 +78,26 @@ class FileUploadControlExtension extends CompilerExtension
         $container->addDefinition($this->prefix('storage.metadataJournalProvider'))
             ->setType(MetadataJournalProvider::class)
             ->setFactory(FileSystemMetadataJournalProvider::class)
-            ->setArguments(['directory' => $config->uploadDirectory]);
+            ->setArguments(['directory' => $this->config->uploadDirectory]);
         $container->addDefinition($this->prefix('storage.storageManager'))
             ->setType(StorageManager::class)
             ->setFactory(FileSystemStorageManager::class)
-            ->setArguments(['directory' => $config->uploadDirectory]);
+            ->setArguments(['directory' => $this->config->uploadDirectory]);
 
         $container->addFactoryDefinition($this->prefix('fileUploadControlFactory'))
             ->setImplement(FileUploadControlFactory::class)
             ->getResultDefinition()
             ->addSetup('setThumbnailProvider')
-            ->addSetup('setTemplateFile', [$config->templateFile]);
+            ->addSetup('setTemplateFile', [$this->config->templateFile]);
     }
 
     public function afterCompile(ClassType $class): void
     {
-        /** @var \stdClass $config */
-        $config = $this->getConfig();
-
-        if ($config->registerExtensionMethod) {
-            $initialize = $class->getMethod('initialize');
-            $container = $this->getContainerBuilder();
-            $initialize->addBody($container->formatPhp(
-                ExtensionMethodRegistrator::class . '::register(?);',
-                [$container->getDefinitionByType(FileUploadControlFactory::class)],
-            ));
+        if ($this->config->registerExtensionMethod) {
+            $this->initialization->addBody(
+                ExtensionMethodRegistrator::class . '::register($this->getService(?));',
+                [$this->prefix('fileUploadControlFactory')],
+            );
         }
     }
 

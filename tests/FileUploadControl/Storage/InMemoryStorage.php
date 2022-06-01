@@ -61,9 +61,9 @@ final class InMemoryStorage implements Storage
         $fileUpload = $fileUploadChunk->getFileUpload();
         $contentRange = $fileUploadChunk->getContentRange();
         // assume unique enough names
-        $idValue = Strings::webalize($fileUploadChunk->getFileUpload()->getName());
+        $idValue = Strings::webalize($fileUploadChunk->getFileUpload()->getUntrustedName());
         $fileUpload = new Nette\Http\FileUpload([
-            'name' => $fileUpload->getName(),
+            'name' => $fileUpload->getUntrustedName(),
             'tmp_name' => $fileUpload->getTemporaryFile(),
             'size' => $contentRange->getSize(),
             'error' => filesize($fileUpload->getTemporaryFile()) === $contentRange->getSize() ? UPLOAD_ERR_OK : UPLOAD_ERR_PARTIAL,
