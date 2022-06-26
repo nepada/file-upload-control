@@ -12,6 +12,7 @@ use NepadaTests\FileUploadControl\Storage\InMemoryStorage;
 use NepadaTests\FileUploadControl\Storage\InMemoryStorageManager;
 use NepadaTests\TestCase;
 use Nette\Application\UI\Form;
+use Nette\Forms\Controls\BaseControl;
 use Nette\Utils\Strings;
 use Tester\Assert;
 
@@ -79,7 +80,8 @@ class FileUploadControlRenderingTest extends TestCase
         $form = TestPresenter::create()->getForm();
         $control = new FileUploadControl($storageManager, 'Test control');
         $form['fileUpload'] = $control;
-        $control->getComponent('namespace')->setValue(InMemoryStorageManager::TEST_NAMESPACE);
+        assert($control['namespace'] instanceof BaseControl);
+        $control['namespace']->setValue(InMemoryStorageManager::TEST_NAMESPACE);
 
         return $control;
     }

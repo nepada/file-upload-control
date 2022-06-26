@@ -319,7 +319,7 @@ class FileUploadControl extends BaseControl
         try {
             $fileUploadItem = $this->getStorage()->load($id);
         } catch (StorageDoesNotExistException | FileUploadNotFoundException $exception) {
-            throw new Nette\Application\BadRequestException('File upload not found.');
+            throw new Nette\Application\BadRequestException('File upload not found.', 0, $exception);
         }
 
         $fileUpload = $fileUploadItem->getFileUpload();
@@ -344,7 +344,7 @@ class FileUploadControl extends BaseControl
         try {
             $fileUpload = $this->getStorage()->load($id)->getFileUpload();
         } catch (StorageDoesNotExistException | FileUploadNotFoundException $exception) {
-            throw new Nette\Application\BadRequestException('Source file for thumbnail not found.');
+            throw new Nette\Application\BadRequestException('Source file for thumbnail not found.', 0, $exception);
         }
 
         if (! $this->thumbnailProvider->isSupported($fileUpload)) {
