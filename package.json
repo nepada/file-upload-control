@@ -1,6 +1,7 @@
 {
     "name": "@nepada/file-upload-control",
     "version": "1.1.0",
+    "type": "module",
     "description": "Client side script of File upload control for Nette forms.",
     "keywords": [
         "file",
@@ -60,7 +61,7 @@
         "lint": "eslint src/assets build",
         "clean": "rm -rf ./dist/*",
         "css:compile": "node-sass --output-style expanded --source-map true --source-map-contents true --precision 6 src/assets/scss/ -o dist/css/",
-        "css:prefix": "postcss --config build/postcss.config.js --replace \"dist/css/*.css\" \"!dist/css/*.min.css\"",
+        "css:prefix": "postcss --config build/postcss.config.cjs --replace \"dist/css/*.css\" \"!dist/css/*.min.css\"",
         "css:minify": "cd dist/css && ../../node_modules/.bin/cleancss -O1 --format breakWith=lf --source-map --source-map-inline-sources --output file-upload-control.min.css file-upload-control.css",
         "build:css": "npm run css:compile && npm run css:prefix && npm run css:minify",
         "build:cjs": "rollup --config build/rollup.config.cjs.js",
