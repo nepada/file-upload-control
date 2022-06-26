@@ -19,9 +19,9 @@
     },
     "bugs": "https://github.com/nepada/file-upload-control/issues",
     "peerDependencies": {
-        "blueimp-file-upload": "^10.10.0",
+        "blueimp-file-upload": "^10.16.0",
         "jquery": ">=1.12",
-        "nette-forms": "^3.0.3"
+        "nette-forms": "^3.1.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.12.7",
@@ -39,7 +39,7 @@
         "eslint": "^6.8.0",
         "eslint-plugin-import": "^2.20.2",
         "jquery": ">=1.12",
-        "nette-forms": "^3.0.3",
+        "nette-forms": "^3.1.0",
         "node-sass": "^5.0.0",
         "postcss": "^8.1.9",
         "postcss-cli": "^8.3.0",
