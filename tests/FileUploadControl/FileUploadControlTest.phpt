@@ -39,9 +39,8 @@ class FileUploadControlTest extends TestCase
         } catch (Nette\Application\AbortException $exception) {
             // noop
         }
-        /** @var TestPresenter $presenter */
         $presenter = $control->getPresenter();
-        /** @var FileResponse $response */
+        Assert::type(TestPresenter::class, $presenter);
         $response = $presenter->response;
         Assert::type(FileResponse::class, $response);
         Assert::same(__DIR__ . '/Fixtures/image.png', $response->getFile());

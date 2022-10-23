@@ -161,8 +161,8 @@ class FileUploadControlValidationTest extends TestCase
 
     private function extractJsonResponsePayload(FileUploadControl $control): string
     {
-        /** @var TestPresenter $presenter */
         $presenter = $control->getPresenter();
+        Assert::type(TestPresenter::class, $presenter);
 
         $response = $presenter->response;
         Assert::type(JsonResponse::class, $response);

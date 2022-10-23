@@ -172,8 +172,8 @@ class FileUploadControl extends BaseControl
         }
 
         if ($key === 'upload') {
-            /** @var Html $control */
             $control = $this->getUploadControl()->getControl();
+            assert($control instanceof Html);
             $control->{'data-nette-rules'} = Nette\Forms\Helpers::exportRules($this->getRules());
             return $control;
         }
@@ -250,8 +250,8 @@ class FileUploadControl extends BaseControl
      */
     public function handleUpload(string $namespace): void
     {
-        $namespace = $this->parseUploadNamespace($namespace);
-        $this->setUploadNamespace($namespace);
+        $uploadNamespace = $this->parseUploadNamespace($namespace);
+        $this->setUploadNamespace($uploadNamespace);
 
         $fileUploadChunks = $this->getFileUploadChunks();
         $responses = [];
@@ -293,12 +293,12 @@ class FileUploadControl extends BaseControl
      */
     public function handleDelete(string $namespace, string $id): void
     {
-        $id = $this->parseFileUploadId($id);
-        $namespace = $this->parseUploadNamespace($namespace);
-        $this->setUploadNamespace($namespace);
+        $fileUploadId = $this->parseFileUploadId($id);
+        $uploadNamespace = $this->parseUploadNamespace($namespace);
+        $this->setUploadNamespace($uploadNamespace);
 
         try {
-            $this->getStorage()->delete($id);
+            $this->getStorage()->delete($fileUploadId);
         } catch (StorageDoesNotExistException $exception) {
             // noop
         }
@@ -312,12 +312,12 @@ class FileUploadControl extends BaseControl
      */
     public function handleDownload(string $namespace, string $id): void
     {
-        $id = $this->parseFileUploadId($id);
-        $namespace = $this->parseUploadNamespace($namespace);
-        $this->setUploadNamespace($namespace);
+        $fileUploadId = $this->parseFileUploadId($id);
+        $uploadNamespace = $this->parseUploadNamespace($namespace);
+        $this->setUploadNamespace($uploadNamespace);
 
         try {
-            $fileUploadItem = $this->getStorage()->load($id);
+            $fileUploadItem = $this->getStorage()->load($fileUploadId);
         } catch (StorageDoesNotExistException | FileUploadNotFoundException $exception) {
             throw new Nette\Application\BadRequestException('File upload not found.', 0, $exception);
         }
@@ -337,12 +337,12 @@ class FileUploadControl extends BaseControl
      */
     public function handleThumbnail(string $namespace, string $id): void
     {
-        $id = $this->parseFileUploadId($id);
-        $namespace = $this->parseUploadNamespace($namespace);
-        $this->setUploadNamespace($namespace);
+        $fileUploadId = $this->parseFileUploadId($id);
+        $uploadNamespace = $this->parseUploadNamespace($namespace);
+        $this->setUploadNamespace($uploadNamespace);
 
         try {
-            $fileUpload = $this->getStorage()->load($id)->getFileUpload();
+            $fileUpload = $this->getStorage()->load($fileUploadId)->getFileUpload();
         } catch (StorageDoesNotExistException | FileUploadNotFoundException $exception) {
             throw new Nette\Application\BadRequestException('Source file for thumbnail not found.', 0, $exception);
         }
