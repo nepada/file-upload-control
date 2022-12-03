@@ -2,17 +2,13 @@
 
 var $ = require('jquery');
 
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
-
-var $__default = /*#__PURE__*/_interopDefaultLegacy($);
-
 class FileUpload {
 
     constructor($fileUpload, files) {
         let name = '';
         let size = 0;
         let type = '';
-        $__default['default'].each(files, (index, file) => {
+        $.each(files, (index, file) => {
             name = name + (index ? ', ' : '') + file.name;
             size = size + file.size;
             type = type || file.type;
@@ -39,8 +35,8 @@ class FileUpload {
     }
 
     createUI() {
-        const $file = $__default['default'](this.$filesContainer.data('templateFile'));
-        $file.find('[data-file-upload-role=file-status]').append($__default['default'](this.$filesContainer.data('templateProcessing')));
+        const $file = $(this.$filesContainer.data('templateFile'));
+        $file.find('[data-file-upload-role=file-status]').append($(this.$filesContainer.data('templateProcessing')));
         $file.hide();
         return $file;
     }
@@ -67,7 +63,7 @@ class FileUpload {
         if (file && file.error) {
             this.error = file.error;
         }
-        const $error = $__default['default'](this.$filesContainer.data('templateFailed'));
+        const $error = $(this.$filesContainer.data('templateFailed'));
         this.updateFileInfoUI($error);
         this.$file.find('[data-file-upload-role=file-status]').html($error);
         this.updateFileInfoUI();
@@ -76,7 +72,7 @@ class FileUpload {
     done(file) {
         this.status = 'done';
         this.updateFileInfo(file);
-        const $done = $__default['default'](this.$filesContainer.data('templateDone'));
+        const $done = $(this.$filesContainer.data('templateDone'));
         this.updateFileInfoUI($done);
         this.$file.find('[data-file-upload-role=file-status]').html($done);
         this.updateFileInfoUI();
@@ -87,7 +83,7 @@ class FileUpload {
         this.$file.attr('data-content-type', this.type);
         this.$file.attr('title', this.name);
 
-        const $element = $__default['default'](element || this.$file);
+        const $element = $(element || this.$file);
         $element.find('[data-file-upload-role=file-name]').text(this.name);
         $element.find('[data-file-upload-role=file-size]').text(this.formatBytes(this.size));
         $element.find('[data-file-upload-role=file-progress-bar]')
@@ -108,10 +104,10 @@ class FileUpload {
                 $thumbnail.attr('src', this.thumbnailUrl);
             } else if ($thumbnail.length > 0) {
                 const thumbnailAttributes = {};
-                $__default['default'].each($thumbnail.get(0).attributes, (idx, attribute) => {
+                $.each($thumbnail.get(0).attributes, (idx, attribute) => {
                     thumbnailAttributes[attribute.name] = attribute.value;
                 });
-                $thumbnail.replaceWith($__default['default']('<img>').attr(thumbnailAttributes).attr('src', this.thumbnailUrl));
+                $thumbnail.replaceWith($('<img>').attr(thumbnailAttributes).attr('src', this.thumbnailUrl));
             }
         }
     }

@@ -2,10 +2,6 @@
 
 var $ = require('jquery');
 
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
-
-var $__default = /*#__PURE__*/_interopDefaultLegacy($);
-
 class FilesList {
 
     constructor($fileUpload) {
@@ -29,7 +25,7 @@ class FilesList {
     }
 
     remove(fileUrl) {
-        this.getInput().data(this.dataAttribute, $__default['default'].grep(
+        this.getInput().data(this.dataAttribute, $.grep(
             this.list(),
             (file) => {
                 return file.url !== fileUrl;

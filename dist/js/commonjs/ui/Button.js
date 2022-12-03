@@ -2,10 +2,6 @@
 
 var $ = require('jquery');
 
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
-
-var $__default = /*#__PURE__*/_interopDefaultLegacy($);
-
 class Button {
 
     constructor($fileUpload, buttonSelector, targetSelector) {
@@ -15,7 +11,7 @@ class Button {
 
         this.button.click(() => {
             // Trigger click from the newest to oldest to mitigate race condition bug with limitConcurrentUploads
-            $__default['default'](this.$fileUpload.find(this.targetSelector).get().reverse()).click();
+            $(this.$fileUpload.find(this.targetSelector).get().reverse()).click();
         });
     }
 

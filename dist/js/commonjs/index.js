@@ -6,12 +6,8 @@ var Buttons = require('./ui/Buttons.js');
 var FilesList = require('./ui/FilesList.js');
 var FileUpload = require('./ui/FileUpload.js');
 
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
-
-var $__default = /*#__PURE__*/_interopDefaultLegacy($);
-
 function initializeControl(container) {
-    const $fileUpload = $__default['default'](container);
+    const $fileUpload = $(container);
     if ($fileUpload.data('blueimpFileupload')) {
         return;
     }
@@ -86,14 +82,14 @@ function initializeControl(container) {
         return !data.fileUpload || data.fileUpload.status !== 'failed';
 
     }).on('click', '[data-file-upload-role=file-delete]', function () {
-        const $this = $__default['default'](this);
+        const $this = $(this);
         const $file = $this.closest('[data-file-upload-role=file]');
         const upload = $file.data('upload');
         if (upload) {
             upload.abort();
         }
         if ($this.is('[data-url]')) {
-            $__default['default'].get($this.data('url'));
+            $.get($this.data('url'));
         }
         const fileUrl = $file.find('[data-file-upload-role=file-download]').attr('href');
         filesList.remove(fileUrl);
@@ -107,7 +103,7 @@ function initializeControl(container) {
 
 
 function initializeForm(form) {
-    $__default['default'](form)
+    $(form)
         .find('[data-file-upload-url]')
         .each((idx, container) => {
             initializeControl(container);
@@ -117,22 +113,22 @@ function initializeForm(form) {
 
 function initializeFileUploadControl(Nette) {
     // Disable default browser drop event
-    $__default['default'](document).on('drop dragover', (e) => {
+    $(document).on('drop dragover', (e) => {
         e.preventDefault();
     });
 
     // Effective value
     const originalGetEffectiveValue = Nette.getEffectiveValue;
     Nette.getEffectiveValue = (elem, filter) => {
-        if (!elem || !elem.nodeName || elem.nodeName.toLowerCase() !== 'input' || !$__default['default'](elem).data('files')) {
+        if (!elem || !elem.nodeName || elem.nodeName.toLowerCase() !== 'input' || !$(elem).data('files')) {
             return originalGetEffectiveValue(elem, filter);
         }
-        return $__default['default'](elem).data('files');
+        return $(elem).data('files');
     };
 
     // Initialize all forms on document ready
-    $__default['default'](() => {
-        $__default['default']('form').each((idx, form) => {
+    $(() => {
+        $('form').each((idx, form) => {
             initializeForm(form);
         });
     });
