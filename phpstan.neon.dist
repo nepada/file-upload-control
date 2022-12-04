@@ -27,6 +27,7 @@ parameters:
             - Nette\Application\UI\InvalidLinkException
             - Nette\InvalidStateException
             - Nette\IOException
+            - Nette\MemberAccessException
             - Nette\Utils\JsonException
             - Nette\Utils\UnknownImageFileException
 
