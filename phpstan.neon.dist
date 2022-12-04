@@ -32,9 +32,6 @@ parameters:
             - Nette\Utils\UnknownImageFileException
 
     ignoreErrors:
-        - # config pre-validated by schema
-            message: "~Property fetch ->.* is prohibited on unknown type \\(\\$this->config->.*\\)~"
-            path: src/Bridges/FileUploadControlDI/FileUploadControlExtension.php
         -
             message: "~Method Nepada\\\\FileUploadControl\\\\Utils\\\\NetteFileSystem::.* throws checked exception Exception but it's missing from the PHPDoc @throws tag~"
             path: src/FileUploadControl/Utils/NetteFileSystem.php
