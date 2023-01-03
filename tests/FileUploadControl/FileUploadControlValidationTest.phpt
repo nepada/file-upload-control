@@ -19,6 +19,7 @@ use Nette\Http\UrlScript;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Helpers;
 use Nette\Utils\Json;
+use Nette\Utils\Random;
 use Tester\Assert;
 
 require_once __DIR__ . '/../bootstrap.php';
@@ -136,7 +137,7 @@ class FileUploadControlValidationTest extends TestCase
         $control = $this->createFileUploadControl();
         $control->addRule(Form::IMAGE, 'only PNG is allowed');
 
-        $file = Environment::getTempDir() . '/' . uniqid();
+        $file = Environment::getTempDir() . '/' . Random::generate();
         FileSystem::write($file, $this->readChunk(__DIR__ . '/Fixtures/image.png', 64));
 
         $files = ['fileUpload' => ['upload' => [

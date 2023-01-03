@@ -15,6 +15,7 @@ use NepadaTests\FileUploadControl\FileUploadFactory;
 use NepadaTests\FileUploadControl\Storage\Metadata\InMemoryMetadataJournal;
 use NepadaTests\TestCase;
 use Nette;
+use Nette\Utils\Random;
 use Tester\Assert;
 
 require_once __DIR__ . '/../../bootstrap.php';
@@ -186,7 +187,7 @@ class FileSystemStorageTest extends TestCase
      */
     private function createStorage(array $journalData = []): FileSystemStorage
     {
-        $directory = Environment::getTempDir() . '/' . uniqid();
+        $directory = Environment::getTempDir() . '/' . Random::generate();
         Nette\Utils\FileSystem::createDir($directory);
 
         $journal = new InMemoryMetadataJournal($journalData);

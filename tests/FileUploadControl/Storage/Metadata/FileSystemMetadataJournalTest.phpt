@@ -13,6 +13,7 @@ use Nepada\FileUploadControl\Utils\NetteFinder;
 use NepadaTests\Environment;
 use NepadaTests\TestCase;
 use Nette;
+use Nette\Utils\Random;
 use Tester\Assert;
 
 require_once __DIR__ . '/../../../bootstrap.php';
@@ -86,7 +87,7 @@ class FileSystemMetadataJournalTest extends TestCase
 
     private function createJournal(): FileSystemMetadataJournal
     {
-        $directory = Environment::getTempDir() . '/' . uniqid();
+        $directory = Environment::getTempDir() . '/' . Random::generate();
         Nette\Utils\FileSystem::createDir($directory);
 
         return new FileSystemMetadataJournal(new NetteFileSystem(), new NetteFinder(), $directory);

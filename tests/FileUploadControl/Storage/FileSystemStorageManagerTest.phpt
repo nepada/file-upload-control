@@ -13,6 +13,7 @@ use Nepada\FileUploadControl\Utils\NetteFinder;
 use Nepada\FileUploadControl\Utils\NetteRandomProvider;
 use NepadaTests\Environment;
 use NepadaTests\TestCase;
+use Nette\Utils\Random;
 use Tester\Assert;
 
 require_once __DIR__ . '/../../bootstrap.php';
@@ -37,7 +38,7 @@ class FileSystemStorageManagerTest extends TestCase
 
     public function testGarbageCollection(): void
     {
-        $directory = Environment::getTempDir() . '/' . uniqid();
+        $directory = Environment::getTempDir() . '/' . Random::generate();
         $ttl = 2;
 
         $oldNamespace = $this->createStorageManager($directory, $ttl)->createNewNamespace();
@@ -66,7 +67,7 @@ class FileSystemStorageManagerTest extends TestCase
 
     private function createStorageManager(?string $directory = null, int $ttl = FileSystemStorageManager::DEFAULT_TTL): FileSystemStorageManager
     {
-        $directory ??= Environment::getTempDir() . '/' . uniqid();
+        $directory ??= Environment::getTempDir() . '/' . Random::generate();
         $fileSystem = new NetteFileSystem();
         $finder = new NetteFinder();
         $dateTimeProvider = new DefaultDateTimeProvider();
