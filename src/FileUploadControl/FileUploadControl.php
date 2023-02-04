@@ -238,7 +238,8 @@ class FileUploadControl extends BaseControl
         if ($validator === Form::IMAGE) {
             $this->getUploadControl()->setHtmlAttribute('accept', implode(',', FileUpload::IMAGE_MIME_TYPES));
         } elseif ($validator === Form::MIME_TYPE) {
-            $this->getUploadControl()->setHtmlAttribute('accept', implode(',', (array) $arg));
+            $mimeTypes = is_array($arg) ? $arg : ($arg === null ? [] : [$arg]);
+            $this->getUploadControl()->setHtmlAttribute('accept', implode(',', $mimeTypes));
         }
 
         return $this->_addRule($validator, $errorMessage, $arg);

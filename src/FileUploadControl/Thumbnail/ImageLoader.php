@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace Nepada\FileUploadControl\Thumbnail;
 
 use Nette;
-use Nette\Utils\Arrays;
 use Nette\Utils\Image;
 
 final class ImageLoader
@@ -26,7 +25,12 @@ final class ImageLoader
             return $image;
         }
 
-        $orientation = Arrays::get((array) @exif_read_data($path), 'Orientation', 1);
+        $exifData = @exif_read_data($path);
+        if ($exifData === false) {
+            return $image;
+        }
+
+        $orientation = $exifData['Orientation'] ?? 1;
         switch ($orientation) {
             case 2:
                 $image->resize('-100%', null);
