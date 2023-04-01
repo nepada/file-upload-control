@@ -26,7 +26,7 @@ final class FileUploadMetadata
         $this->size = $size;
     }
 
-    public static function fromFileUploadChunk(FileUploadChunk $fileUploadChunk): FileUploadMetadata
+    public static function fromFileUploadChunk(FileUploadChunk $fileUploadChunk): self
     {
         return new self($fileUploadChunk->getFileUpload()->getUntrustedName(), $fileUploadChunk->getContentRange()->getSize());
     }
@@ -35,7 +35,7 @@ final class FileUploadMetadata
      * @param mixed[] $data
      * @return FileUploadMetadata
      */
-    public static function fromArray(array $data): FileUploadMetadata
+    public static function fromArray(array $data): self
     {
         return new self($data['name'], $data['size']);
     }
@@ -61,7 +61,7 @@ final class FileUploadMetadata
         return $this->size;
     }
 
-    public function equals(FileUploadMetadata $other): bool
+    public function equals(self $other): bool
     {
         return $this->name === $other->name && $this->size === $other->size;
     }

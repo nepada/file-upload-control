@@ -30,7 +30,7 @@ final class InMemoryStorage implements Storage
         $this->data = $data;
     }
 
-    public static function createWithFiles(string ...$files): InMemoryStorage
+    public static function createWithFiles(string ...$files): self
     {
         $storage = new self();
         foreach ($files as $file) {

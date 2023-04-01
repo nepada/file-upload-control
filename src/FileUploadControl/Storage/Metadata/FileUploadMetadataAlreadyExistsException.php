@@ -8,7 +8,7 @@ use Nepada\FileUploadControl\Storage\FileUploadId;
 class FileUploadMetadataAlreadyExistsException extends \RuntimeException
 {
 
-    public static function withId(FileUploadId $id): FileUploadMetadataAlreadyExistsException
+    public static function withId(FileUploadId $id): self
     {
         return new self("File upload metadata '{$id->toString()}' already exists.");
     }

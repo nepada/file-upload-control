@@ -33,12 +33,12 @@ final class ContentRange
         $this->size = $size;
     }
 
-    public static function ofSize(int $size): ContentRange
+    public static function ofSize(int $size): self
     {
         return new self(0, $size - 1, $size);
     }
 
-    public static function fromHttpHeaderValue(string $header): ContentRange
+    public static function fromHttpHeaderValue(string $header): self
     {
         $match = Strings::match($header, '~^\s*bytes\s+(\d+)-(\d+)/(\d+)\s*$~i');
         if ($match === null) {

@@ -28,12 +28,12 @@ final class FileUploadChunk
         $this->contentRange = $contentRange;
     }
 
-    public static function completeUpload(Nette\Http\FileUpload $fileUpload): FileUploadChunk
+    public static function completeUpload(Nette\Http\FileUpload $fileUpload): self
     {
         return new self($fileUpload, ContentRange::ofSize($fileUpload->getSize()));
     }
 
-    public static function partialUpload(Nette\Http\FileUpload $fileUpload, ContentRange $contentRange): FileUploadChunk
+    public static function partialUpload(Nette\Http\FileUpload $fileUpload, ContentRange $contentRange): self
     {
         return new self($fileUpload, $contentRange);
     }

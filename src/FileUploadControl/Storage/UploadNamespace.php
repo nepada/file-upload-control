@@ -29,12 +29,12 @@ final class UploadNamespace
         return Validators::is($id, 'pattern:[A-Za-z0-9]+');
     }
 
-    public static function generate(RandomProvider $randomProvider): UploadNamespace
+    public static function generate(RandomProvider $randomProvider): self
     {
         return new self($randomProvider->generateAlphanumeric(self::DEFAULT_LENGTH));
     }
 
-    public static function fromString(string $id): UploadNamespace
+    public static function fromString(string $id): self
     {
         return new self($id);
     }
