@@ -6,17 +6,17 @@ namespace Nepada\FileUploadControl\Storage;
 class UnableToSaveFileUploadException extends \RuntimeException
 {
 
-    public static function withUploadError(): UnableToSaveFileUploadException
+    public static function withUploadError(): self
     {
         return new self('Unable to save file upload, because of pre-existing upload error.');
     }
 
-    public static function withConflict(FileUploadId $id): UnableToSaveFileUploadException
+    public static function withConflict(FileUploadId $id): self
     {
         return new self("Unable to save file upload '{$id->toString()}', because of conflict with existing data.");
     }
 
-    public static function withFailedChunk(FileUploadId $id, string $reason): UnableToSaveFileUploadException
+    public static function withFailedChunk(FileUploadId $id, string $reason): self
     {
         return new self("Unable to continue in file upload '{$id->toString()}': $reason");
     }

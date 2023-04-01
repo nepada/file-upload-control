@@ -26,7 +26,7 @@ final class FileUploadId
         return Validators::is($id, 'pattern:[A-Za-z0-9_-]+');
     }
 
-    public static function fromString(string $id): FileUploadId
+    public static function fromString(string $id): self
     {
         return new self($id);
     }

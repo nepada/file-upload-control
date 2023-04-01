@@ -8,7 +8,7 @@ use Nepada\FileUploadControl\Storage\FileUploadId;
 class FileUploadMetadataNotFoundException extends \RuntimeException
 {
 
-    public static function withId(FileUploadId $id): FileUploadMetadataNotFoundException
+    public static function withId(FileUploadId $id): self
     {
         return new self("File upload metadata '{$id->toString()}' not found.");
     }
