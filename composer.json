@@ -22,7 +22,7 @@
         "nette/application": "^3.1.8@dev",
         "nette/forms": "^3.1.6@dev",
         "nette/http": "^3.1@dev",
-        "nette/utils": "^3.2.2@dev",
+        "nette/utils": "^3.2.2@dev || ^4.0@dev",
         "nextras/form-components": "^1.0@dev"
     },
     "require-dev": {
