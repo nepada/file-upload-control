@@ -92,6 +92,7 @@ final class FileSystemStorageManager implements StorageManager
             return;
         }
 
+        $expiredNamespaces = [];
         $currentTimestamp = $this->dateTimeProvider->getNow()->getTimestamp();
         /** @var \SplFileInfo $directory */
         foreach ($this->finder->findDirectoriesInDirectory($this->directory, '*' . self::NAMESPACE_DIRECTORY_SUFFIX) as $directory) {
@@ -99,9 +100,12 @@ final class FileSystemStorageManager implements StorageManager
             if ($age < $this->namespaceTtl) {
                 continue;
             }
+            $expiredNamespaces[] = UploadNamespace::fromString($directory->getBasename(self::NAMESPACE_DIRECTORY_SUFFIX));
+        }
+
+        foreach ($expiredNamespaces as $expiredNamespace) {
             try {
-                $namespace = UploadNamespace::fromString($directory->getBasename(self::NAMESPACE_DIRECTORY_SUFFIX));
-                $storage = $this->getStorage($namespace);
+                $storage = $this->getStorage($expiredNamespace);
                 $storage->destroy();
             } catch (StorageDoesNotExistException $exception) {
                 // noop
