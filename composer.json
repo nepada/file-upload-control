@@ -18,7 +18,7 @@
         "php": ">=8.1.0 <8.4",
         "ext-fileinfo": "*",
         "ext-json": "*",
-        "latte/latte": "^2.9.0@dev || ^3.0.0@dev",
+        "latte/latte": "^3.0.0@dev",
         "nette/application": "^3.1.9@dev",
         "nette/forms": "^3.1.6@dev",
         "nette/http": "^3.1@dev",
