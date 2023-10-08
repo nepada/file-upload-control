@@ -19,7 +19,7 @@
         "ext-fileinfo": "*",
         "ext-json": "*",
         "latte/latte": "^2.9.0@dev || ^3.0.0@dev",
-        "nette/application": "^3.1.8@dev",
+        "nette/application": "^3.1.9@dev",
         "nette/forms": "^3.1.6@dev",
         "nette/http": "^3.1@dev",
         "nette/utils": "^3.2.2@dev || ^4.0@dev",
