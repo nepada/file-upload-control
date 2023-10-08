@@ -56,8 +56,6 @@ final class FileSystemMetadataJournal implements MetadataJournal
     }
 
     /**
-     * @param FileUploadId $id
-     * @return FileUploadMetadata
      * @throws FileUploadMetadataNotFoundException
      */
     public function load(FileUploadId $id): FileUploadMetadata
@@ -71,8 +69,6 @@ final class FileSystemMetadataJournal implements MetadataJournal
     }
 
     /**
-     * @param FileUploadId $id
-     * @param FileUploadMetadata $metadata
      * @throws FileUploadMetadataAlreadyExistsException
      */
     public function save(FileUploadId $id, FileUploadMetadata $metadata): void

@@ -53,8 +53,6 @@ final class FileSystemStorage implements Storage
     }
 
     /**
-     * @param FileUploadId $id
-     * @return FileUploadItem
      * @throws FileUploadNotFoundException
      */
     public function load(FileUploadId $id): FileUploadItem
@@ -88,8 +86,6 @@ final class FileSystemStorage implements Storage
     }
 
     /**
-     * @param FileUploadChunk $fileUploadChunk
-     * @return FileUploadItem
      * @throws UnableToSaveFileUploadException
      */
     public function save(FileUploadChunk $fileUploadChunk): FileUploadItem
@@ -123,8 +119,6 @@ final class FileSystemStorage implements Storage
     }
 
     /**
-     * @param FileUploadChunk $fileUploadChunk
-     * @return FileUploadId
      * @throws UnableToSaveFileUploadException
      */
     private function saveNewUpload(FileUploadChunk $fileUploadChunk): FileUploadId
@@ -146,8 +140,6 @@ final class FileSystemStorage implements Storage
     }
 
     /**
-     * @param FileUploadChunk $fileUploadChunk
-     * @return FileUploadId
      * @throws UnableToSaveFileUploadException
      */
     private function resumeExistingUpload(FileUploadChunk $fileUploadChunk): FileUploadId

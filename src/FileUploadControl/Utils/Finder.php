@@ -7,15 +7,11 @@ interface Finder
 {
 
     /**
-     * @param string $path
-     * @param string $mask
      * @return iterable<\SplFileInfo>
      */
     public function findFilesInDirectory(string $path, string $mask = '*'): iterable;
 
     /**
-     * @param string $path
-     * @param string $mask
      * @return iterable<\SplFileInfo>
      */
     public function findDirectoriesInDirectory(string $path, string $mask = '*'): iterable;

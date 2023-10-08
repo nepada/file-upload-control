@@ -40,8 +40,6 @@ class ContentRangeTest extends TestCase
 
     /**
      * @dataProvider getInvalidHttpHeaders
-     * @param string $headerValue
-     * @param string $expectedError
      */
     public function testFromHttpHeaderValueFailure(string $headerValue, string $expectedError): void
     {

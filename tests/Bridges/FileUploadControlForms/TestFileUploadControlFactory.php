@@ -14,11 +14,7 @@ final class TestFileUploadControlFactory implements FileUploadControlFactory
 
     use Nette\SmartObject;
 
-    /**
-     * @param Html|string|null $caption
-     * @return FileUploadControl
-     */
-    public function create($caption): FileUploadControl
+    public function create(Html|string|null $caption): FileUploadControl
     {
         $storageManager = new InMemoryStorageManager();
         return new FileUploadControl($storageManager, $caption);

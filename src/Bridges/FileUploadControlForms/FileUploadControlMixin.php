@@ -17,12 +17,7 @@ trait FileUploadControlMixin
         $this->fileUploadControlFactory = $factory;
     }
 
-    /**
-     * @param string|int $name
-     * @param string|Html|null $label
-     * @return FileUploadControl
-     */
-    public function addFileUpload($name, $label = null): FileUploadControl
+    public function addFileUpload(string|int $name, string|Html|null $label = null): FileUploadControl
     {
         return $this[$name] = $this->fileUploadControlFactory->create($label);
     }

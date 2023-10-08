@@ -19,34 +19,31 @@ trait UploadValidation
     private Rules $rules;
 
     /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @param callable|string $validator
-     * @param string|Html $errorMessage
-     * @param mixed $arg
-     * @return static
+     * @param string|Html|null $errorMessage
+     * @return $this
      */
-    public function addRule($validator, $errorMessage = null, $arg = null): self
+    public function addRule($validator, $errorMessage = null, mixed $arg = null): static
     {
         $this->rules->addRule($validator, $errorMessage, $arg);
         return $this;
     }
 
     /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @param callable|string $validator
-     * @param mixed $value
-     * @return Rules
      */
-    public function addCondition($validator, $value = null): Rules
+    public function addCondition($validator, mixed $value = null): Rules
     {
         return $this->rules->addCondition($validator, $value);
     }
 
     /**
-     * @param Control $control
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @param callable|string $validator
-     * @param mixed $value
-     * @return Rules
      */
-    public function addConditionOn(Control $control, $validator, $value = null): Rules
+    public function addConditionOn(Control $control, $validator, mixed $value = null): Rules
     {
         return $this->rules->addConditionOn($control, $validator, $value);
     }
@@ -57,10 +54,11 @@ trait UploadValidation
     }
 
     /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @param bool|string|Html $value
-     * @return static
+     * @return $this
      */
-    public function setRequired($value = true): self
+    public function setRequired($value = true): static
     {
         $this->rules->setRequired($value);
         return $this;

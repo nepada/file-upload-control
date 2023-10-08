@@ -12,15 +12,11 @@ interface Storage
     public function list(): array;
 
     /**
-     * @param FileUploadId $id
-     * @return FileUploadItem
      * @throws FileUploadNotFoundException
      */
     public function load(FileUploadId $id): FileUploadItem;
 
     /**
-     * @param FileUploadChunk $fileUploadChunk
-     * @return FileUploadItem
      * @throws UnableToSaveFileUploadException
      */
     public function save(FileUploadChunk $fileUploadChunk): FileUploadItem;

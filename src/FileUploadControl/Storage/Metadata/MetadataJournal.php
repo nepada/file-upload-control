@@ -16,15 +16,11 @@ interface MetadataJournal
     public function list(): array;
 
     /**
-     * @param FileUploadId $id
-     * @return FileUploadMetadata
      * @throws FileUploadMetadataNotFoundException
      */
     public function load(FileUploadId $id): FileUploadMetadata;
 
     /**
-     * @param FileUploadId $id
-     * @param FileUploadMetadata $metadata
      * @throws FileUploadMetadataAlreadyExistsException
      */
     public function save(FileUploadId $id, FileUploadMetadata $metadata): void;

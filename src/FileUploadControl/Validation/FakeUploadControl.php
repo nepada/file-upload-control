@@ -38,10 +38,7 @@ final class FakeUploadControl extends UploadControl
         return $this->fileUploadControl;
     }
 
-    /**
-     * @return Html|string|null
-     */
-    public function getCaption()
+    public function getCaption(): Html|string|null
     {
         return $this->fileUploadControl->getCaption();
     }
@@ -69,8 +66,8 @@ final class FakeUploadControl extends UploadControl
     }
 
     /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @param Html|string $message
-     * @param bool $translate
      */
     public function addError($message, bool $translate = true): void
     {

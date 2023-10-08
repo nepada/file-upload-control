@@ -8,10 +8,6 @@ use Nette\Utils\Html;
 interface FileUploadControlFactory
 {
 
-    /**
-     * @param string|Html|null $caption
-     * @return FileUploadControl
-     */
-    public function create($caption): FileUploadControl;
+    public function create(string|Html|null $caption): FileUploadControl;
 
 }

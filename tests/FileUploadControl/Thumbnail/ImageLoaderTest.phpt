@@ -19,9 +19,6 @@ class ImageLoaderTest extends TestCase
 
     /**
      * @dataProvider getImageData
-     * @param string $file
-     * @param string $expectedColors
-     * @param bool $autoRotate
      */
     public function testLoad(string $file, string $expectedColors, bool $autoRotate): void
     {
@@ -138,7 +135,6 @@ class ImageLoaderTest extends TestCase
     }
 
     /**
-     * @param int $color
      * @return string R, G, B, 0
      */
     private function nameColor(int $color): string

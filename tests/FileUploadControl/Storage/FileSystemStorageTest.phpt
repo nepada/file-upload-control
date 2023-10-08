@@ -183,7 +183,6 @@ class FileSystemStorageTest extends TestCase
 
     /**
      * @param array<string, FileUploadMetadata> $journalData
-     * @return FileSystemStorage
      */
     private function createStorage(array $journalData = []): FileSystemStorage
     {

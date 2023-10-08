@@ -26,7 +26,6 @@ class UploadNamespaceTest extends TestCase
 
     /**
      * @dataProvider getInvalidValues
-     * @param string $value
      */
     public function testInvalid(string $value): void
     {

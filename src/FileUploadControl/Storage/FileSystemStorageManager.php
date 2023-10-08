@@ -42,7 +42,7 @@ final class FileSystemStorageManager implements StorageManager
         DateTimeProvider $dateTimeProvider,
         RandomProvider $randomProvider,
         string $directory,
-        int $namespaceTtl = self::DEFAULT_TTL
+        int $namespaceTtl = self::DEFAULT_TTL,
     )
     {
         $this->metadataJournalProvider = $metadataJournalProvider;
@@ -64,8 +64,6 @@ final class FileSystemStorageManager implements StorageManager
     }
 
     /**
-     * @param UploadNamespace $namespace
-     * @return Storage
      * @throws StorageDoesNotExistException
      */
     public function getStorage(UploadNamespace $namespace): Storage

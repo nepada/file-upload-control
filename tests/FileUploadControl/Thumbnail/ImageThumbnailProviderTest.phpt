@@ -35,11 +35,6 @@ class ImageThumbnailProviderTest extends TestCase
 
     /**
      * @dataProvider getImageData
-     * @param string $file
-     * @param string $expectedName
-     * @param string $expectedContentType
-     * @param int $expectedWidth
-     * @param int $expectedHeight
      */
     public function testImages(string $file, string $expectedName, string $expectedContentType, int $expectedWidth, int $expectedHeight): void
     {

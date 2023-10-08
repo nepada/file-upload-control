@@ -45,11 +45,7 @@ class FileUploadControl extends BaseControl
 
     private bool $httpDataLoaded = false;
 
-    /**
-     * @param StorageManager $storageManager
-     * @param string|Html|null $caption
-     */
-    public function __construct(StorageManager $storageManager, $caption = null)
+    public function __construct(StorageManager $storageManager, string|Html|null $caption = null)
     {
         parent::__construct($caption);
         $this->storageManager = $storageManager;
@@ -130,11 +126,10 @@ class FileUploadControl extends BaseControl
     }
 
     /**
-     * @param mixed $value
-     * @return static
+     * @return $this
      * @internal
      */
-    public function setValue($value): self
+    public function setValue(mixed $value): static
     {
         return $this;
     }
@@ -147,10 +142,10 @@ class FileUploadControl extends BaseControl
     /**
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @param bool $value
-     * @return static
+     * @return $this
      * @throws Nette\Application\BadRequestException
      */
-    public function setDisabled($value = true): self
+    public function setDisabled($value = true): static
     {
         $this->getUploadControl()->setDisabled($value);
         if (! $value) {
@@ -217,8 +212,8 @@ class FileUploadControl extends BaseControl
     }
 
     /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @param string|Html|null $caption
-     * @return Html
      */
     public function getLabel($caption = null): Html
     {
@@ -228,12 +223,12 @@ class FileUploadControl extends BaseControl
     }
 
     /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @param callable|string $validator
      * @param string|Html|null $errorMessage
-     * @param mixed $arg
-     * @return static
+     * @return $this
      */
-    public function addRule($validator, $errorMessage = null, $arg = null): self
+    public function addRule($validator, $errorMessage = null, mixed $arg = null): static
     {
         if ($validator === Form::IMAGE) {
             $this->getUploadControl()->setHtmlAttribute('accept', implode(',', FileUpload::IMAGE_MIME_TYPES));
@@ -246,7 +241,6 @@ class FileUploadControl extends BaseControl
     }
 
     /**
-     * @param string $namespace
      * @throws Nette\Application\BadRequestException
      */
     public function handleUpload(string $namespace): void
@@ -288,8 +282,6 @@ class FileUploadControl extends BaseControl
     }
 
     /**
-     * @param string $namespace
-     * @param string $id
      * @throws Nette\Application\BadRequestException
      */
     public function handleDelete(string $namespace, string $id): void
@@ -307,8 +299,6 @@ class FileUploadControl extends BaseControl
     }
 
     /**
-     * @param string $namespace
-     * @param string $id
      * @throws Nette\Application\BadRequestException
      */
     public function handleDownload(string $namespace, string $id): void
@@ -332,8 +322,6 @@ class FileUploadControl extends BaseControl
     }
 
     /**
-     * @param string $namespace
-     * @param string $id
      * @throws Nette\Application\BadRequestException
      */
     public function handleThumbnail(string $namespace, string $id): void
@@ -380,10 +368,8 @@ class FileUploadControl extends BaseControl
      * Sends back JSON response.
      * Sets the right content type based on the support on the other end.
      * https://github.com/blueimp/jQuery-File-Upload/wiki/Setup#wiki-content-type-negotiation
-     *
-     * @param mixed $data
      */
-    protected function sendJson($data): void
+    protected function sendJson(mixed $data): void
     {
         $contentType = Strings::contains((string) $this->getHttpRequest()->getHeader('accept'), 'application/json') ? 'application/json' : 'text/plain';
         $response = new Nette\Application\Responses\JsonResponse($data, $contentType);
@@ -423,7 +409,6 @@ class FileUploadControl extends BaseControl
     }
 
     /**
-     * @return Storage
      * @throws StorageDoesNotExistException
      */
     protected function getStorage(): Storage
@@ -456,8 +441,6 @@ class FileUploadControl extends BaseControl
     }
 
     /**
-     * @param string $value
-     * @return UploadNamespace
      * @throws Nette\Application\BadRequestException
      */
     protected function parseUploadNamespace(string $value): UploadNamespace
@@ -469,8 +452,6 @@ class FileUploadControl extends BaseControl
     }
 
     /**
-     * @param string $value
-     * @return FileUploadId
      * @throws Nette\Application\BadRequestException
      */
     protected function parseFileUploadId(string $value): FileUploadId

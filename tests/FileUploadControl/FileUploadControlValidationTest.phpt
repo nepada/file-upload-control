@@ -174,9 +174,7 @@ class FileUploadControlValidationTest extends TestCase
     }
 
     /**
-     * @param FileUploadControl $control
      * @param mixed[] $files
-     * @param string|null $contentRangeHeader
      */
     private function doUpload(FileUploadControl $control, array $files = [], ?string $contentRangeHeader = null): void
     {
@@ -190,7 +188,6 @@ class FileUploadControlValidationTest extends TestCase
     }
 
     /**
-     * @param FileUploadControl $control
      * @param mixed[] $files
      */
     private function submitForm(FileUploadControl $control, array $files = []): void
@@ -200,7 +197,6 @@ class FileUploadControlValidationTest extends TestCase
     }
 
     /**
-     * @param FileUploadControl $control
      * @param mixed[] $post
      * @param mixed[] $files
      * @param mixed[] $parameters
@@ -237,7 +233,6 @@ class FileUploadControlValidationTest extends TestCase
     }
 
     /**
-     * @param string $file
      * @param int<0, max> $size
      */
     private function readChunk(string $file, int $size): string
