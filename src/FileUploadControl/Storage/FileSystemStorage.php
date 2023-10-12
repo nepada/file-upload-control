@@ -68,11 +68,11 @@ final class FileSystemStorage implements Storage
             throw FileUploadNotFoundException::withId($id);
         }
 
-        $error = $this->fileSystem->fileSize($file) === $metadata->getSize() ? UPLOAD_ERR_OK : UPLOAD_ERR_PARTIAL;
+        $error = $this->fileSystem->fileSize($file) === $metadata->size ? UPLOAD_ERR_OK : UPLOAD_ERR_PARTIAL;
 
         $fileUpload = new FileUpload([
-            'name' => $metadata->getName(),
-            'size' => $metadata->getSize(),
+            'name' => $metadata->name,
+            'size' => $metadata->size,
             'tmp_name' => $file,
             'error' => $error,
         ]);
@@ -90,11 +90,11 @@ final class FileSystemStorage implements Storage
      */
     public function save(FileUploadChunk $fileUploadChunk): FileUploadItem
     {
-        if (! $fileUploadChunk->getFileUpload()->isOk()) {
+        if (! $fileUploadChunk->fileUpload->isOk()) {
             throw UnableToSaveFileUploadException::withUploadError();
         }
 
-        if ($fileUploadChunk->getContentRange()->containsFirstByte()) {
+        if ($fileUploadChunk->contentRange->containsFirstByte()) {
             $id = $this->saveNewUpload($fileUploadChunk);
         } else {
             $id = $this->resumeExistingUpload($fileUploadChunk);
@@ -132,7 +132,7 @@ final class FileSystemStorage implements Storage
         }
 
         $file = $this->getFilePath($id);
-        $contents = $fileUploadChunk->getFileUpload()->getContents();
+        $contents = $fileUploadChunk->fileUpload->getContents();
         assert(is_string($contents));
         $this->fileSystem->write($file, $contents);
 
@@ -159,11 +159,11 @@ final class FileSystemStorage implements Storage
         if (! $this->fileSystem->fileExists($file)) {
             throw UnableToSaveFileUploadException::withFailedChunk($id, 'missing previously uploaded file part');
         }
-        if ($this->fileSystem->fileSize($file) !== $fileUploadChunk->getContentRange()->getStart()) {
+        if ($this->fileSystem->fileSize($file) !== $fileUploadChunk->contentRange->getStart()) {
             throw UnableToSaveFileUploadException::withFailedChunk($id, 'previously uploaded file part size does not match given content-range value');
         }
 
-        $contents = $fileUploadChunk->getFileUpload()->getContents();
+        $contents = $fileUploadChunk->fileUpload->getContents();
         assert(is_string($contents));
         $this->fileSystem->append($file, $contents);
 

@@ -58,10 +58,10 @@ final class InMemoryStorage implements Storage
 
     public function save(FileUploadChunk $fileUploadChunk): FileUploadItem
     {
-        $fileUpload = $fileUploadChunk->getFileUpload();
-        $contentRange = $fileUploadChunk->getContentRange();
+        $fileUpload = $fileUploadChunk->fileUpload;
+        $contentRange = $fileUploadChunk->contentRange;
         // assume unique enough names
-        $idValue = Strings::webalize($fileUploadChunk->getFileUpload()->getUntrustedName());
+        $idValue = Strings::webalize($fileUploadChunk->fileUpload->getUntrustedName());
         $fileUpload = new Nette\Http\FileUpload([
             'name' => $fileUpload->getUntrustedName(),
             'tmp_name' => $fileUpload->getTemporaryFile(),

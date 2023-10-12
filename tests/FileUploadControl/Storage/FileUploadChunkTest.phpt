@@ -24,10 +24,10 @@ class FileUploadChunkTest extends TestCase
         $fileUpload = FileUploadFactory::createWithSize($size);
 
         $chunk = FileUploadChunk::completeUpload($fileUpload);
-        Assert::same($fileUpload, $chunk->getFileUpload());
-        Assert::same($size, $chunk->getContentRange()->getSize());
-        Assert::true($chunk->getContentRange()->containsFirstByte());
-        Assert::true($chunk->getContentRange()->containsLastByte());
+        Assert::same($fileUpload, $chunk->fileUpload);
+        Assert::same($size, $chunk->contentRange->getSize());
+        Assert::true($chunk->contentRange->containsFirstByte());
+        Assert::true($chunk->contentRange->containsLastByte());
     }
 
     public function testPartialUpload(): void
@@ -37,8 +37,8 @@ class FileUploadChunkTest extends TestCase
         $contentRange = ContentRange::fromHttpHeaderValue('bytes 0-9/42');
 
         $chunk = FileUploadChunk::partialUpload($fileUpload, $contentRange);
-        Assert::same($fileUpload, $chunk->getFileUpload());
-        Assert::same($contentRange, $chunk->getContentRange());
+        Assert::same($fileUpload, $chunk->fileUpload);
+        Assert::same($contentRange, $chunk->contentRange);
     }
 
     public function testContentRangeMismatch(): void

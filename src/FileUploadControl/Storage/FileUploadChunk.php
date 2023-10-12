@@ -10,9 +10,9 @@ final class FileUploadChunk
 
     use Nette\SmartObject;
 
-    private Nette\Http\FileUpload $fileUpload;
+    public readonly Nette\Http\FileUpload $fileUpload;
 
-    private ContentRange $contentRange;
+    public readonly ContentRange $contentRange;
 
     private function __construct(Nette\Http\FileUpload $fileUpload, ContentRange $contentRange)
     {
@@ -38,11 +38,17 @@ final class FileUploadChunk
         return new self($fileUpload, $contentRange);
     }
 
+    /**
+     * @deprecated read the property directly instead
+     */
     public function getFileUpload(): Nette\Http\FileUpload
     {
         return $this->fileUpload;
     }
 
+    /**
+     * @deprecated read the property directly instead
+     */
     public function getContentRange(): ContentRange
     {
         return $this->contentRange;

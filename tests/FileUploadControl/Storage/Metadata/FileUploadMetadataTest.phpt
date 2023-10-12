@@ -24,8 +24,8 @@ class FileUploadMetadataTest extends TestCase
         $name = 'foo';
         $size = 42;
         $metadata = FileUploadMetadata::fromArray(['name' => $name, 'size' => $size, 'lorem' => 'ipsum']);
-        Assert::same($name, $metadata->getName());
-        Assert::same($size, $metadata->getSize());
+        Assert::same($name, $metadata->name);
+        Assert::same($size, $metadata->size);
         Assert::same(['name' => $name, 'size' => $size], $metadata->toArray());
     }
 
@@ -36,8 +36,8 @@ class FileUploadMetadataTest extends TestCase
         $fileUpload = FileUploadFactory::createWithSize(2, $name);
         $contentRange = ContentRange::fromHttpHeaderValue('bytes 0-1/' . $size);
         $metadata = FileUploadMetadata::fromFileUploadChunk(FileUploadChunk::partialUpload($fileUpload, $contentRange));
-        Assert::same($name, $metadata->getName());
-        Assert::same($size, $metadata->getSize());
+        Assert::same($name, $metadata->name);
+        Assert::same($size, $metadata->size);
     }
 
     public function testEquals(): void

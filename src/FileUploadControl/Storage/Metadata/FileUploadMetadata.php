@@ -13,9 +13,9 @@ final class FileUploadMetadata
 
     use Nette\SmartObject;
 
-    private string $name;
+    public readonly string $name;
 
-    private int $size;
+    public readonly int $size;
 
     private function __construct(string $name, int $size)
     {
@@ -28,7 +28,7 @@ final class FileUploadMetadata
 
     public static function fromFileUploadChunk(FileUploadChunk $fileUploadChunk): self
     {
-        return new self($fileUploadChunk->getFileUpload()->getUntrustedName(), $fileUploadChunk->getContentRange()->getSize());
+        return new self($fileUploadChunk->fileUpload->getUntrustedName(), $fileUploadChunk->contentRange->getSize());
     }
 
     /**
@@ -51,11 +51,17 @@ final class FileUploadMetadata
         ];
     }
 
+    /**
+     * @deprecated read the property directly instead
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * @deprecated read the property directly instead
+     */
     public function getSize(): int
     {
         return $this->size;

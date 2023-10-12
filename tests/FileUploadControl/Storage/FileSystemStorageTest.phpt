@@ -85,9 +85,9 @@ class FileSystemStorageTest extends TestCase
         $chunk = FileUploadChunk::completeUpload(FileUploadFactory::createWithContents($contents, $name));
 
         $savedFileUploadItem = $storage->save($chunk);
-        $id = $savedFileUploadItem->getId();
+        $id = $savedFileUploadItem->id;
         Assert::same($idValue, $id->toString());
-        $fileUpload = $savedFileUploadItem->getFileUpload();
+        $fileUpload = $savedFileUploadItem->fileUpload;
         Assert::same($name, $fileUpload->getUntrustedName());
         Assert::same($contents, $fileUpload->getContents());
         Assert::same(strlen($contents), $fileUpload->getSize());
@@ -127,9 +127,9 @@ class FileSystemStorageTest extends TestCase
 
         $chunk1 = FileUploadChunk::partialUpload(FileUploadFactory::createWithContents('Foo', $name), ContentRange::fromHttpHeaderValue('bytes 0-2/6'));
         $savedUploadItemChunk1 = $storage->save($chunk1);
-        $id = $savedUploadItemChunk1->getId();
+        $id = $savedUploadItemChunk1->id;
         Assert::same($idValue, $id->toString());
-        $partialFileUpload = $savedUploadItemChunk1->getFileUpload();
+        $partialFileUpload = $savedUploadItemChunk1->fileUpload;
         Assert::same($name, $partialFileUpload->getUntrustedName());
         Assert::same(6, $partialFileUpload->getSize());
         Assert::false($partialFileUpload->isOk());
@@ -161,8 +161,8 @@ class FileSystemStorageTest extends TestCase
         // successfully complete upload
         $chunk2 = FileUploadChunk::partialUpload(FileUploadFactory::createWithContents('Bar', $name), ContentRange::fromHttpHeaderValue('bytes 3-5/6'));
         $savedUploadItemChunk2 = $storage->save($chunk2);
-        Assert::equal($id, $savedUploadItemChunk2->getId());
-        $completedFileUpload = $savedUploadItemChunk2->getFileUpload();
+        Assert::equal($id, $savedUploadItemChunk2->id);
+        $completedFileUpload = $savedUploadItemChunk2->fileUpload;
         Assert::same($name, $completedFileUpload->getUntrustedName());
         Assert::same(6, $completedFileUpload->getSize());
         Assert::true($completedFileUpload->isOk());

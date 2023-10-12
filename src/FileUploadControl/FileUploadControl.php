@@ -119,7 +119,7 @@ class FileUploadControl extends BaseControl
         }
 
         try {
-            return array_map(fn (FileUploadItem $fileUploadItem): FileUpload => $fileUploadItem->getFileUpload(), $this->getStorage()->list());
+            return array_map(fn (FileUploadItem $fileUploadItem): FileUpload => $fileUploadItem->fileUpload, $this->getStorage()->list());
         } catch (StorageDoesNotExistException $exception) {
             throw new \LogicException($exception->getMessage(), 0, $exception);
         }
@@ -190,10 +190,10 @@ class FileUploadControl extends BaseControl
             throw new \LogicException($exception->getMessage(), 0, $exception);
         }
         $fileUploadItems = $storage->list();
-        $uniqueFilenames = array_map(fn (FileUploadItem $fileUploadItem): string => $fileUploadItem->getFileUpload()->getUntrustedName(), $fileUploadItems);
+        $uniqueFilenames = array_map(fn (FileUploadItem $fileUploadItem): string => $fileUploadItem->fileUpload->getUntrustedName(), $fileUploadItems);
         $completedFiles = array_map(
             fn (FileUploadItem $fileUploadItem): Response => $this->createUploadSuccessResponse($fileUploadItem),
-            array_filter($fileUploadItems, fn (FileUploadItem $fileUploadItem): bool => $fileUploadItem->getFileUpload()->isOk()),
+            array_filter($fileUploadItems, fn (FileUploadItem $fileUploadItem): bool => $fileUploadItem->fileUpload->isOk()),
         );
 
         $template->uploadUrl = $this->link('upload!', ['namespace' => $this->getUploadNamespace()->toString()]);
@@ -257,9 +257,9 @@ class FileUploadControl extends BaseControl
             }
 
             $fakeFileUpload = new FileUpload([
-                'name' => $fileUploadChunk->getFileUpload()->getUntrustedName(),
-                'size' => $fileUploadChunk->getContentRange()->getSize(),
-                'tmp_name' => $fileUploadChunk->getFileUpload()->getTemporaryFile(),
+                'name' => $fileUploadChunk->fileUpload->getUntrustedName(),
+                'size' => $fileUploadChunk->contentRange->getSize(),
+                'tmp_name' => $fileUploadChunk->fileUpload->getTemporaryFile(),
                 'error' => UPLOAD_ERR_OK,
             ]);
             $this->fakeUploadControl->setNewFileUpload($fakeFileUpload);
@@ -313,7 +313,7 @@ class FileUploadControl extends BaseControl
             throw new Nette\Application\BadRequestException('File upload not found.', 0, $exception);
         }
 
-        $fileUpload = $fileUploadItem->getFileUpload();
+        $fileUpload = $fileUploadItem->fileUpload;
         $response = new Nette\Application\Responses\FileResponse(
             $fileUpload->getTemporaryFile(),
             $fileUpload->getUntrustedName(),
@@ -331,7 +331,7 @@ class FileUploadControl extends BaseControl
         $this->setUploadNamespace($uploadNamespace);
 
         try {
-            $fileUpload = $this->getStorage()->load($fileUploadId)->getFileUpload();
+            $fileUpload = $this->getStorage()->load($fileUploadId)->fileUpload;
         } catch (StorageDoesNotExistException | FileUploadNotFoundException $exception) {
             throw new Nette\Application\BadRequestException('Source file for thumbnail not found.', 0, $exception);
         }
@@ -418,8 +418,8 @@ class FileUploadControl extends BaseControl
 
     protected function createUploadSuccessResponse(FileUploadItem $fileUploadItem): Response
     {
-        $fileUpload = $fileUploadItem->getFileUpload();
-        $idValue = $fileUploadItem->getId()->toString();
+        $fileUpload = $fileUploadItem->fileUpload;
+        $idValue = $fileUploadItem->id->toString();
         $namespaceValue = $this->getUploadNamespace()->toString();
         return new UploadSuccessResponse(
             $fileUpload->getUntrustedName(),
@@ -434,8 +434,8 @@ class FileUploadControl extends BaseControl
     protected function createUploadErrorResponse(FileUploadChunk $fileUploadChunk, string $error): Response
     {
         return new UploadErrorResponse(
-            $fileUploadChunk->getFileUpload()->getUntrustedName(),
-            $fileUploadChunk->getContentRange()->getSize(),
+            $fileUploadChunk->fileUpload->getUntrustedName(),
+            $fileUploadChunk->contentRange->getSize(),
             $error,
         );
     }
