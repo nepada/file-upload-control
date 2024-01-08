@@ -52,19 +52,11 @@ parameters:
             count: 1
             path: src/FileUploadControl/FileUploadControl.php
         -
-            message: "#^Parameter \\#1 \\$value of method Nette\\\\Forms\\\\Rules\\:\\:setRequired\\(\\) expects bool\\|string, bool\\|Nette\\\\Utils\\\\Html\\|string given\\.$#"
-            count: 1
-            path: src/FileUploadControl/FileUploadControl.php
-        -
-            message: "#^Return type \\(Nette\\\\Utils\\\\Html\\|string\\|null\\) of method Nepada\\\\FileUploadControl\\\\Validation\\\\FakeUploadControl\\:\\:getCaption\\(\\) should be covariant with return type \\(object\\|string\\) of method Nette\\\\Forms\\\\Controls\\\\BaseControl\\:\\:getCaption\\(\\)$#"
-            count: 1
-            path: src/FileUploadControl/Validation/FakeUploadControl.php
-        -
             message: "#^Method Nepada\\\\FileUploadControl\\\\Validation\\\\FakeUploadControl\\:\\:getCaption\\(\\) should return Nette\\\\Utils\\\\Html\\|string\\|null but returns object\\|string\\.$#"
             count: 1
             path: src/FileUploadControl/Validation/FakeUploadControl.php
         -
-            message: "#^Parameter \\#1 \\$message \\(Nette\\\\Utils\\\\Html\\|string\\) of method Nepada\\\\FileUploadControl\\\\Validation\\\\FakeUploadControl\\:\\:addError\\(\\) should be contravariant with parameter \\$message \\(object\\|string\\) of method Nette\\\\Forms\\\\Controls\\\\BaseControl\\:\\:addError\\(\\)$#"
+            message: "#^Parameter \\#1 \\$message \\(Nette\\\\Utils\\\\Html\\|string\\) of method Nepada\\\\FileUploadControl\\\\Validation\\\\FakeUploadControl\\:\\:addError\\(\\) should be contravariant with parameter \\$message \\((object\\|)?string(\\|Stringable)?\\) of method Nette\\\\Forms\\\\Controls\\\\BaseControl(<.*>)?\\:\\:addError\\(\\)$#"
             count: 1
             path: src/FileUploadControl/Validation/FakeUploadControl.php
         -
@@ -73,10 +65,6 @@ parameters:
             path: src/FileUploadControl/FileUploadControl.php
         -
             message: "#^Parameter \\#2 \\$validator \\(\\(callable\\(\\)\\: mixed\\)\\|string\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:addConditionOn\\(\\) should be contravariant with parameter \\$validator \\(mixed\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:addConditionOn\\(\\)$#"
-            count: 1
-            path: src/FileUploadControl/FileUploadControl.php
-        -
-            message: "#^Cannot cast mixed to string\\.$#"
             count: 1
             path: src/FileUploadControl/FileUploadControl.php
         -
@@ -103,15 +91,11 @@ parameters:
             message: "#^Parameter \\#2 \\$size of class Nepada\\\\FileUploadControl\\\\Storage\\\\Metadata\\\\FileUploadMetadata constructor expects int, mixed given\\.$#"
             count: 1
             path: src/FileUploadControl/Storage/Metadata/FileUploadMetadata.php
-        -
-            message: "#^Parameter \\#1 \\$control \\(Nette\\\\Forms\\\\Control\\<mixed\\>\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:addConditionOn\\(\\) should be contravariant with parameter \\$control \\(Nette\\\\Forms\\\\IControl\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:addConditionOn\\(\\)$#"
-            count: 1
-            path: src/FileUploadControl/FileUploadControl.php
         - # Used for checksum only
             message: "#^Calling sha1\\(\\) is forbidden, use hash\\(\\) with at least SHA\\-256 for secure hash, or password_hash\\(\\) for passwords$#"
             count: 1
             path: src/FileUploadControl/Storage/Metadata/FileUploadMetadata.php
         - # false positive
-            message: "#^Invalid var phpdoc of \\$files\\. Cannot assign array\\<string\\>\\|string to array\\<int, Nette\\\\Http\\\\FileUpload\\>$#"
+            message: "#^Invalid var phpdoc of \\$files\\. Cannot assign array.* to array\\<int, Nette\\\\Http\\\\FileUpload\\>$#"
             count: 1
             path: src/FileUploadControl/FileUploadControl.php

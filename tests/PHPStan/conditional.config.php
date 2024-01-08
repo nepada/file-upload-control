@@ -27,6 +27,26 @@ if (InstalledVersions::satisfies(new VersionParser(), 'nette/forms', '<3.2')) {
     $config['parameters']['ignoreErrors'][] = [
         'message' => '~contains generic type Nette\\\\Forms\\\\Control<mixed> but interface Nette\\\\Forms\\\\Control is not generic~',
     ];
+    $config['parameters']['ignoreErrors'][] = [
+        'message' => '#^Cannot cast mixed to string\\.$#',
+        'path' => '../../src/FileUploadControl/FileUploadControl.php',
+        'count' => 1,
+    ];
+    $config['parameters']['ignoreErrors'][] = [
+        'message' => '#^Return type \\(Nette\\\\Utils\\\\Html\\|string\\|null\\) of method Nepada\\\\FileUploadControl\\\\Validation\\\\FakeUploadControl\\:\\:getCaption\\(\\) should be covariant with return type \\(object\\|string\\) of method Nette\\\\Forms\\\\Controls\\\\BaseControl\\:\\:getCaption\\(\\)$#',
+        'path' => '../../src/FileUploadControl/Validation/FakeUploadControl.php',
+        'count' => 1,
+    ];
+    $config['parameters']['ignoreErrors'][] = [
+        'message' => '#^Parameter \\#1 \\$control \\(Nette\\\\Forms\\\\Control\\<mixed\\>\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:addConditionOn\\(\\) should be contravariant with parameter \\$control \\(Nette\\\\Forms\\\\IControl\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:addConditionOn\\(\\)$#s',
+        'path' => '../../src/FileUploadControl/FileUploadControl.php',
+        'count' => 1,
+    ];
+    $config['parameters']['ignoreErrors'][] = [
+        'message' => '#^Parameter \\#1 \\$value of method Nette\\\\Forms\\\\Rules\\:\\:setRequired\\(\\) expects bool\\|string, bool\\|Nette\\\\Utils\\\\Html\\|string given\\.$#',
+        'path' => '../../src/FileUploadControl/FileUploadControl.php',
+        'count' => 1,
+    ];
 }
 
 return $config;
