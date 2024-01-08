@@ -7,6 +7,7 @@ use Nepada\FileUploadControl\FileUploadControl;
 use Nepada\FileUploadControl\FileUploadControlFactory;
 use Nette;
 use Nette\Forms\Container;
+use Nette\Utils\Html;
 
 class ExtensionMethodRegistrator
 {
@@ -17,7 +18,11 @@ class ExtensionMethodRegistrator
     {
         Container::extensionMethod(
             'addFileUpload',
-            fn (Container $container, $name, $label = null): FileUploadControl => $container[$name] = $factory->create($label),
+            function (Container $container, string|int $name, string|Html|null $label = null) use ($factory): FileUploadControl {
+                $control = $factory->create($label);
+                $container->addComponent($control, (string) $name);
+                return $control;
+            },
         );
     }
 

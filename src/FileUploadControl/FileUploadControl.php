@@ -355,7 +355,7 @@ class FileUploadControl extends BaseControl
             $template->setTranslator($translator);
         }
 
-        $template->getLatte()->addFilter('json', fn ($data): string => Nette\Utils\Json::encode($data));
+        $template->getLatte()->addFilter('json', fn (mixed $data): string => Nette\Utils\Json::encode($data));
 
         return $template;
     }
