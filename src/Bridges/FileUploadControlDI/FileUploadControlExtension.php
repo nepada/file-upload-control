@@ -38,7 +38,7 @@ class FileUploadControlExtension extends CompilerExtension
         return Expect::structure([
             'registerExtensionMethod' => Expect::bool(false),
             'uploadDirectory' => Expect::string()->required(),
-            'templateFile' => Expect::string(FileUploadControl::DEFAULT_TEMPLATE_FILE),
+            'templateFile' => Expect::string(FileUploadControl::DEFAULT_TEMPLATE_FILE)->dynamic(),
             'thumbnails' => Expect::structure([
                 'enable' => Expect::bool(true),
                 'width' => Expect::int(ImageThumbnailProvider::DEFAULT_WIDTH),
