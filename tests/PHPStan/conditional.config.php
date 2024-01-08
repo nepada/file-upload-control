@@ -1,6 +1,7 @@
 <?php
 declare(strict_types = 1);
 
+use Composer\InstalledVersions;
 use Composer\Semver\VersionParser;
 
 $config = [];
@@ -19,6 +20,12 @@ if ($isInstalled('nette/utils', '>=4.0.3') || $isInstalled('nette/utils', 'dev-m
         'message' => '~^Parameter \\#2 \\$backgroundColor of method Nette\\\\Utils\\\\Image\\:\\:rotate\\(\\) expects .*, array given\\.$~',
         'path' => '../../src/FileUploadControl/Thumbnail/ImageLoader.php',
         'count' => 2,
+    ];
+}
+
+if (InstalledVersions::satisfies(new VersionParser(), 'nette/forms', '<3.2')) {
+    $config['parameters']['ignoreErrors'][] = [
+        'message' => '~contains generic type Nette\\\\Forms\\\\Control<mixed> but interface Nette\\\\Forms\\\\Control is not generic~',
     ];
 }
 

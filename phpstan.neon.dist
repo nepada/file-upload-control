@@ -103,6 +103,10 @@ parameters:
             message: "#^Parameter \\#2 \\$size of class Nepada\\\\FileUploadControl\\\\Storage\\\\Metadata\\\\FileUploadMetadata constructor expects int, mixed given\\.$#"
             count: 1
             path: src/FileUploadControl/Storage/Metadata/FileUploadMetadata.php
+        -
+            message: "#^Parameter \\#1 \\$control \\(Nette\\\\Forms\\\\Control\\<mixed\\>\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:addConditionOn\\(\\) should be contravariant with parameter \\$control \\(Nette\\\\Forms\\\\IControl\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:addConditionOn\\(\\)$#"
+            count: 1
+            path: src/FileUploadControl/FileUploadControl.php
         - # Used for checksum only
             message: "#^Calling sha1\\(\\) is forbidden, use hash\\(\\) with at least SHA\\-256 for secure hash, or password_hash\\(\\) for passwords$#"
             count: 1
