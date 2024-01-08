@@ -128,7 +128,7 @@ The default Latte template and bundled styles are build for [Bootstrap 4](https:
 Using precompiled bundles is the quick'n'dirty way of getting client side to work.
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/@nepada/file-upload-control@%5E1.0/dist/css/file-upload-control.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@nepada/file-upload-control@%5E1.7/dist/css/file-upload-control-bootstrap4.min.css">
 <script src="https://unpkg.com/jquery@%5E3.5.0/dist/jquery.min.js"></script>
 <script src="https://unpkg.com/blueimp-file-upload@%5E10.10.0/js/vendor/jquery.ui.widget.js"></script>
 <script src="https://unpkg.com/blueimp-file-upload@%5E10.10.0/js/jquery.fileupload.js"></script>
@@ -151,4 +151,4 @@ initializeFileUploadControl(Nette);
 Nette.initOnLoad();
 ```
 
-You can also customize the default look by importing the source sass files, or writing your own from scratch. 
+You can also customize the default look by importing the  [source sass files](src/assets/scss/_file-upload-control-module-bootstrap4.scss), or writing your own from scratch. 

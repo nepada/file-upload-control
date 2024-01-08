@@ -47,8 +47,8 @@
         "rollup": "^4.9.2",
         "sass": "^1.69.6"
     },
-    "style": "dist/css/file-upload-control.css",
-    "sass": "src/assets/scss/file-upload-control.scss",
+    "style": "dist/css/file-upload-control-bootstrap4.css",
+    "sass": "src/assets/scss/file-upload-control-bootstrap4.scss",
     "main": "dist/js/commonjs/index.js",
     "module": "src/assets/js/index.js",
     "files": [
@@ -57,10 +57,10 @@
     ],
     "scripts": {
         "lint": "eslint src/assets build",
-        "clean": "rm -rf ./dist/*",
-        "css:compile": "sass --embed-sources src/assets/scss/file-upload-control.scss:dist/css/file-upload-control.css",
+        "clean": "rm -rf ./dist/js/* ./dist/css/*-bootstrap*",
+        "css:compile": "sass --embed-sources src/assets/scss/file-upload-control-bootstrap4.scss:dist/css/file-upload-control-bootstrap4.css",
         "css:prefix": "postcss --config build/postcss.config.cjs --replace \"dist/css/*.css\" \"!dist/css/*.min.css\"",
-        "css:minify": "cd dist/css && ../../node_modules/.bin/cleancss -O1 --format breakWith=lf --source-map --source-map-inline-sources --output file-upload-control.min.css file-upload-control.css",
+        "css:minify": "cd dist/css && ../../node_modules/.bin/cleancss -O1 --format breakWith=lf --source-map --source-map-inline-sources --output file-upload-control-bootstrap4.min.css file-upload-control-bootstrap4.css",
         "build:css": "npm run css:compile && npm run css:prefix && npm run css:minify",
         "build:cjs": "rollup --config build/rollup.config.cjs.js",
         "build:umd": "rollup --config build/rollup.config.umd.js",

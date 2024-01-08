@@ -35,7 +35,8 @@ class FileUploadControl extends BaseControl
         UploadValidation::addRule as private _addRule;
     }
 
-    public const DEFAULT_TEMPLATE_FILE = __DIR__ . '/templates/bootstrap4.latte';
+    final public const TEMPLATE_FILE_BOOTSTRAP4 = __DIR__ . '/templates/bootstrap4.latte';
+    final public const DEFAULT_TEMPLATE_FILE = self::TEMPLATE_FILE_BOOTSTRAP4;
 
     private string $templateFile = self::DEFAULT_TEMPLATE_FILE;
 
