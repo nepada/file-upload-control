@@ -28,7 +28,7 @@
     "require-dev": {
         "nette/tester": "2.5.1",
         "mockery/mockery": "1.6.7",
-        "phpstan/phpstan": "1.10.40",
+        "phpstan/phpstan": "1.10.55",
         "phpstan/phpstan-strict-rules": "1.5.2",
         "phpstan/phpstan-nette": "1.2.9",
         "nepada/phpstan-nette-tester": "1.1.0",
