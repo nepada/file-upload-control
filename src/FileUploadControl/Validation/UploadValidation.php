@@ -6,7 +6,6 @@ namespace Nepada\FileUploadControl\Validation;
 use Nepada\FileUploadControl\FileUploadControl;
 use Nette\Forms\Control;
 use Nette\Forms\Rules;
-use Nette\Utils\Html;
 
 /**
  * @internal
@@ -21,7 +20,7 @@ trait UploadValidation
     /**
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @param callable|string $validator
-     * @param string|Html|null $errorMessage
+     * @param string|\Stringable|null $errorMessage
      * @return $this
      */
     public function addRule($validator, $errorMessage = null, mixed $arg = null): static
@@ -56,7 +55,7 @@ trait UploadValidation
 
     /**
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-     * @param bool|string|Html $value
+     * @param bool|string|\Stringable $value
      * @return $this
      */
     public function setRequired($value = true): static

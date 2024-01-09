@@ -67,7 +67,7 @@ final class FakeUploadControl extends UploadControl
 
     /**
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-     * @param Html|string $message
+     * @param \Stringable|string $message
      */
     public function addError($message, bool $translate = true): void
     {

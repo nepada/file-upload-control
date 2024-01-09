@@ -48,15 +48,11 @@ parameters:
             count: 1
             path: src/FileUploadControl/FileUploadControl.php
         -
-            message: "#^Parameter \\#1 \\$value \\(bool\\|Nette\\\\Utils\\\\Html\\|string\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:setRequired\\(\\) should be contravariant with parameter \\$value \\(bool\\|object\\|string\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:setRequired\\(\\)$#"
+            message: "#^Parameter \\#1 \\$value \\(bool\\|string\\|Stringable\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:setRequired\\(\\) should be contravariant with parameter \\$value \\(bool\\|object\\|string\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:setRequired\\(\\)$#"
             count: 1
             path: src/FileUploadControl/FileUploadControl.php
         -
             message: "#^Method Nepada\\\\FileUploadControl\\\\Validation\\\\FakeUploadControl\\:\\:getCaption\\(\\) should return Nette\\\\Utils\\\\Html\\|string\\|null but returns object\\|string\\.$#"
-            count: 1
-            path: src/FileUploadControl/Validation/FakeUploadControl.php
-        -
-            message: "#^Parameter \\#1 \\$message \\(Nette\\\\Utils\\\\Html\\|string\\) of method Nepada\\\\FileUploadControl\\\\Validation\\\\FakeUploadControl\\:\\:addError\\(\\) should be contravariant with parameter \\$message \\((object\\|)?string(\\|Stringable)?\\) of method Nette\\\\Forms\\\\Controls\\\\BaseControl(<.*>)?\\:\\:addError\\(\\)$#"
             count: 1
             path: src/FileUploadControl/Validation/FakeUploadControl.php
         -

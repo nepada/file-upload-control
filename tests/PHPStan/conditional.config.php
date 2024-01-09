@@ -38,12 +38,17 @@ if (InstalledVersions::satisfies(new VersionParser(), 'nette/forms', '<3.2')) {
         'count' => 1,
     ];
     $config['parameters']['ignoreErrors'][] = [
+        'message' => '#^Parameter \\#1 \\$message \\(string\\|Stringable\\) of method Nepada\\\\FileUploadControl\\\\Validation\\\\FakeUploadControl\\:\\:addError\\(\\) should be contravariant with parameter \\$message \\(object\\|string\\) of method Nette\\\\Forms\\\\Controls\\\\BaseControl\\:\\:addError\\(\\)$#',
+        'path' => '../../src/FileUploadControl/Validation/FakeUploadControl.php',
+        'count' => 1,
+    ];
+    $config['parameters']['ignoreErrors'][] = [
         'message' => '#^Parameter \\#1 \\$control \\(Nette\\\\Forms\\\\Control\\<mixed\\>\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:addConditionOn\\(\\) should be contravariant with parameter \\$control \\(Nette\\\\Forms\\\\IControl\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:addConditionOn\\(\\)$#s',
         'path' => '../../src/FileUploadControl/FileUploadControl.php',
         'count' => 1,
     ];
     $config['parameters']['ignoreErrors'][] = [
-        'message' => '#^Parameter \\#1 \\$value of method Nette\\\\Forms\\\\Rules\\:\\:setRequired\\(\\) expects bool\\|string, bool\\|Nette\\\\Utils\\\\Html\\|string given\\.$#',
+        'message' => '#^Parameter \\#1 \\$value of method Nette\\\\Forms\\\\Rules\\:\\:setRequired\\(\\) expects bool\\|string, bool\\|string\\|Stringable given\\.$#',
         'path' => '../../src/FileUploadControl/FileUploadControl.php',
         'count' => 1,
     ];
