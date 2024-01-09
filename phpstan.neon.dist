@@ -40,11 +40,11 @@ parameters:
             count: 1
             path: src/FileUploadControl/FileUploadControl.php
         -
-            message: "#^Parameter \\#1 \\$caption \\(Nette\\\\Utils\\\\Html\\|string\\|null\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:getLabel\\(\\) should be contravariant with parameter \\$caption \\(object\\|string(?:\\|null)?\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:getLabel\\(\\)$#"
+            message: "#^Parameter \\#1 \\$caption \\(string\\|Stringable\\|null\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:getLabel\\(\\) should be contravariant with parameter \\$caption \\(object\\|string(?:\\|null)?\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:getLabel\\(\\)$#"
             count: 1
             path: src/FileUploadControl/FileUploadControl.php
         -
-            message: "#^Parameter \\#2 \\$errorMessage \\(Nette\\\\Utils\\\\Html\\|string\\|null\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:addRule\\(\\) should be contravariant with parameter \\$errorMessage \\(object\\|string(?:\\|null)?\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:addRule\\(\\)$#"
+            message: "#^Parameter \\#2 \\$errorMessage \\(string\\|Stringable\\|null\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:addRule\\(\\) should be contravariant with parameter \\$errorMessage \\(object\\|string(?:\\|null)?\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:addRule\\(\\)$#"
             count: 1
             path: src/FileUploadControl/FileUploadControl.php
         -
@@ -52,7 +52,7 @@ parameters:
             count: 1
             path: src/FileUploadControl/FileUploadControl.php
         -
-            message: "#^Method Nepada\\\\FileUploadControl\\\\Validation\\\\FakeUploadControl\\:\\:getCaption\\(\\) should return Nette\\\\Utils\\\\Html\\|string\\|null but returns object\\|string\\.$#"
+            message: "#^Method Nepada\\\\FileUploadControl\\\\Validation\\\\FakeUploadControl\\:\\:getCaption\\(\\) should return string\\|Stringable\\|null but returns object\\|string\\.$#"
             count: 1
             path: src/FileUploadControl/Validation/FakeUploadControl.php
         -

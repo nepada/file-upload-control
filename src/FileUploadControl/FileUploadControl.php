@@ -46,7 +46,7 @@ class FileUploadControl extends BaseControl
 
     private bool $httpDataLoaded = false;
 
-    public function __construct(StorageManager $storageManager, string|Html|null $caption = null)
+    public function __construct(StorageManager $storageManager, string|\Stringable|null $caption = null)
     {
         parent::__construct($caption);
         $this->storageManager = $storageManager;
@@ -214,7 +214,7 @@ class FileUploadControl extends BaseControl
 
     /**
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-     * @param string|Html|null $caption
+     * @param string|\Stringable|null $caption
      */
     public function getLabel($caption = null): Html
     {
@@ -226,7 +226,7 @@ class FileUploadControl extends BaseControl
     /**
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @param callable|string $validator
-     * @param string|Html|null $errorMessage
+     * @param string|\Stringable|null $errorMessage
      * @return $this
      */
     public function addRule($validator, $errorMessage = null, mixed $arg = null): static

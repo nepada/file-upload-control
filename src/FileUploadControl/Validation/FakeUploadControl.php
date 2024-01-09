@@ -7,7 +7,6 @@ use Nepada\FileUploadControl\FileUploadControl;
 use Nette\Forms\Controls\UploadControl;
 use Nette\Forms\Form;
 use Nette\Http\FileUpload;
-use Nette\Utils\Html;
 
 /**
  * @internal
@@ -38,7 +37,7 @@ final class FakeUploadControl extends UploadControl
         return $this->fileUploadControl;
     }
 
-    public function getCaption(): Html|string|null
+    public function getCaption(): \Stringable|string|null
     {
         return $this->fileUploadControl->getCaption();
     }
