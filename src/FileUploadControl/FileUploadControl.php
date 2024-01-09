@@ -36,6 +36,7 @@ class FileUploadControl extends BaseControl
     }
 
     final public const TEMPLATE_FILE_BOOTSTRAP4 = __DIR__ . '/templates/bootstrap4.latte';
+    final public const TEMPLATE_FILE_BOOTSTRAP5 = __DIR__ . '/templates/bootstrap5.latte';
     final public const DEFAULT_TEMPLATE_FILE = self::TEMPLATE_FILE_BOOTSTRAP4;
 
     private string $templateFile = self::DEFAULT_TEMPLATE_FILE;

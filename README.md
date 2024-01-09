@@ -18,7 +18,7 @@ $ composer require nepada/file-upload-control
 
 ### Register and configure container extension
 
-The only required configuration option is `uploadDirectory`, which determines where are the uploaded files temporarily stored. 
+The only required configuration option is `uploadDirectory`, which determines where are the uploaded files temporarily stored.
 ```yaml
 extensions:
     fileUploadControl: Nepada\Bridges\FileUploadControlDI\FileUploadControlExtension
@@ -90,7 +90,7 @@ interface FormFactory
     public function create(): Form;
 
 }
-``` 
+```
 
 
 Usage
@@ -112,15 +112,22 @@ fileUpload:
         height: 150
 ```
 
+The package includes templates and styles build for Bootstrap [version 4](https://getbootstrap.com/docs/4.6/) and [version 5](https://getbootstrap.com/docs/5.3/). By default, version 4 is used, but to improve forward compatibility you should always explicitly specify which version you'd like to be used:
+```yaml
+fileUpload:
+    templateFile: ::constant(Nepada\FileUploadControl\FileUploadControl::TEMPLATE_FILE_BOOTSTRAP4)
+    # or for Bootstrap 5
+    # templateFile: ::constant(Nepada\FileUploadControl\FileUploadControl::TEMPLATE_FILE_BOOTSTRAP5)
+```
+
 ### Validation
 
-All standard Nette file upload related validations work as expected. Furthermore, you can limit the number of allowed uploads by "length" rules. 
+All standard Nette file upload related validations work as expected. Furthermore, you can limit the number of allowed uploads by "length" rules.
 
 ### Client side
 
 This package comes with client side built on top of [blueimp-file-upload](https://yarnpkg.com/package/blueimp-file-upload). It is published as npm package [@nepada/file-upload-control](https://yarnpkg.com/package/@nepada/file-upload-control).
 
-The default Latte template and bundled styles are build for [Bootstrap 4](https://yarnpkg.com/package/bootstrap).
 ![Bootstrap 4 theme](docs/example.png)
 
 #### Using precompiled bundle
@@ -129,18 +136,21 @@ Using precompiled bundles is the quick'n'dirty way of getting client side to wor
 
 ```html
 <link rel="stylesheet" href="https://unpkg.com/@nepada/file-upload-control@%5E1.7/dist/css/file-upload-control-bootstrap4.min.css">
+<!-- or for Bootstrap 5
+<link rel="stylesheet" href="https://unpkg.com/@nepada/file-upload-control@%5E1.7/dist/css/file-upload-control-bootstrap5.min.css">
+-->
 <script src="https://unpkg.com/jquery@%5E3.5.0/dist/jquery.min.js"></script>
 <script src="https://unpkg.com/blueimp-file-upload@%5E10.10.0/js/vendor/jquery.ui.widget.js"></script>
 <script src="https://unpkg.com/blueimp-file-upload@%5E10.10.0/js/jquery.fileupload.js"></script>
 <script src="https://unpkg.com/nette-forms@%5E3.0.3/src/assets/netteForms.min.js"></script>
-<script src="https://unpkg.com/@nepada/file-upload-control@%5E1.0/dist/js/file-upload-control.min.js"></script>
+<script src="https://unpkg.com/@nepada/file-upload-control@%5E1.7/dist/js/file-upload-control.min.js"></script>
 ```
 
 #### Building your own bundle
 
 It is highly recommended to install the client side package via nmp and compile your own bundle.
 
-Here is an example script for initialization of file upload control and Nette forms.  
+Here is an example script for initialization of file upload control and Nette forms.
 
 ```js
 import Nette from 'nette-forms';
@@ -151,4 +161,6 @@ initializeFileUploadControl(Nette);
 Nette.initOnLoad();
 ```
 
-You can also customize the default look by importing the  [source sass files](src/assets/scss/_file-upload-control-module-bootstrap4.scss), or writing your own from scratch. 
+If you use Bootstrap 4 or 5, you can easily customize the default look by importing the source SCSS files into your Sass styles:
+- [_file-upload-control-module-bootstrap4.scss](src/assets/scss/_file-upload-control-module-bootstrap4.scss), see also available [variables](src/assets/scss/partials-bootstrap4/_variables.scss) for overrides
+- [_file-upload-control-module-bootstrap5.scss](src/assets/scss/_file-upload-control-module-bootstrap5.scss), see also available [variables](src/assets/scss/partials-bootstrap5/_variables.scss) for overrides

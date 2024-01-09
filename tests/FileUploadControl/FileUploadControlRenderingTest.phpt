@@ -15,6 +15,8 @@ use Nette\Application\UI\Form;
 use Nette\Forms\Controls\BaseControl;
 use Nette\Utils\Strings;
 use Tester\Assert;
+use function basename;
+use function explode;
 
 require_once __DIR__ . '/../bootstrap.php';
 
@@ -36,54 +38,81 @@ class FileUploadControlRenderingTest extends TestCase
         );
     }
 
-    public function testControlWithFiles(): void
+    /**
+     * @dataProvider templateFilesDataProvider
+     */
+    public function testControlWithFiles(string $templateFile): void
     {
         $storage = InMemoryStorage::createWithFiles(__DIR__ . '/Fixtures/test.txt', __DIR__ . '/Fixtures/image.png');
-        $control = $this->createFileUploadControl($storage);
+        $control = $this->createFileUploadControl($storage, $templateFile);
 
         $control->setThumbnailProvider(new ImageThumbnailProvider(new ImageLoader()));
         $control->setRequired();
 
         HtmlAssert::matchFile(
-            __DIR__ . '/Fixtures/FileUploadControl.files.html',
+            $this->formatFixturePath('files', $templateFile),
             Strings::replace(trim((string) $control->getControl()), '~&#123;~', '{'), // escaping changed in latte 2.10.5
         );
     }
 
-    public function testControlWithErrors(): void
+    /**
+     * @dataProvider templateFilesDataProvider
+     */
+    public function testControlWithErrors(string $templateFile): void
     {
-        $control = $this->createFileUploadControl();
+        $control = $this->createFileUploadControl(null, $templateFile);
 
         $control->addRule(Form::IMAGE);
         $control->addError('some error');
         HtmlAssert::matchFile(
-            __DIR__ . '/Fixtures/FileUploadControl.errors.html',
+            $this->formatFixturePath('errors', $templateFile),
             trim((string) $control->getControl()),
         );
     }
 
-    public function testDisabledControl(): void
+    /**
+     * @dataProvider templateFilesDataProvider
+     */
+    public function testDisabledControl(string $templateFile): void
     {
-        $control = $this->createFileUploadControl();
+        $control = $this->createFileUploadControl(null, $templateFile);
 
         $control->setDisabled();
         HtmlAssert::matchFile(
-            __DIR__ . '/Fixtures/FileUploadControl.disabled.html',
+            $this->formatFixturePath('disabled', $templateFile),
             trim((string) $control->getControl()),
         );
     }
 
-    private function createFileUploadControl(?Storage $storage = null): FileUploadControl
+    private function createFileUploadControl(?Storage $storage = null, string $templateFile = FileUploadControl::DEFAULT_TEMPLATE_FILE): FileUploadControl
     {
         $storageManager = InMemoryStorageManager::createWithTestNamespace($storage);
 
         $form = TestPresenter::create()->getForm();
         $control = new FileUploadControl($storageManager, 'Test control');
+        $control->setTemplateFile($templateFile);
         $form['fileUpload'] = $control;
         assert($control['namespace'] instanceof BaseControl);
         $control['namespace']->setValue(InMemoryStorageManager::TEST_NAMESPACE);
 
         return $control;
+    }
+
+    /**
+     * @return mixed[]
+     */
+    protected function templateFilesDataProvider(): array
+    {
+        return [
+            'bootstrap 4' => [FileUploadControl::TEMPLATE_FILE_BOOTSTRAP4],
+            'bootstrap 5' => [FileUploadControl::TEMPLATE_FILE_BOOTSTRAP5],
+        ];
+    }
+
+    private function formatFixturePath(string $name, string $templateFile): string
+    {
+        $templateName = explode('.', basename($templateFile))[0];
+        return __DIR__ . "/Fixtures/FileUploadControl.{$templateName}.{$name}.html";
     }
 
 }

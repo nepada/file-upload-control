@@ -1,0 +1,91 @@
+{varType Nepada\FileUploadControl\FileUploadControl $control}
+{varType string $uploadUrl}
+{varType array $uniqueFilenames}
+{varType array $completedFiles}
+
+<div n:class="$control->isRequired() ? required, $control->isDisabled() ? disabled, $control->hasErrors() ? is-invalid"
+    n:attr="
+        id => $control->getHtmlId(),
+        data-file-upload-url => $uploadUrl,
+        data-unique-filenames => ($uniqueFilenames|json)
+    "
+>
+    <div class="fuc-buttons">
+        <span n:class="fuc-add, btn, btn-success, $control->isDisabled() ? disabled">
+            {_'Add files'}
+            <input n:name="$control:upload" data-files="{$completedFiles|json}">
+        </span>
+        <span data-file-upload-role="abort" class="btn btn-warning disabled">{_'Abort upload'}</span>
+        <span data-file-upload-role="delete" n:class="btn, btn-danger, count($completedFiles) === 0 ? disabled">{_'Delete all'}</span>
+    </div>
+    <div class="fuc-container">
+        {capture $templateFile}{include #template-file, file => null}{/capture}
+        {capture $templateProcessing}{include #template-file-status-processing, file => null}{/capture}
+        {capture $templateDone}{include #template-file-status-done, file => null}{/capture}
+        {capture $templateFailed}{include #template-file-status-failed, file => null}{/capture}
+        <div
+                data-file-upload-role="files"
+                class="fuc-files row"
+                data-template-file="{$templateFile|trim}"
+                data-template-processing="{$templateProcessing|trim}"
+                data-template-done="{$templateDone|trim}"
+                data-template-failed="{$templateFailed|trim}"
+        >
+            {foreach $completedFiles as $file}
+                {include #template-file status => done, file => $file}
+            {/foreach}
+        </div>
+        <div class="fuc-dropzone">{_'Drag & drop files here'}</div>
+    </div>
+    {input $control:namespace}
+</div>
+
+{define #template-file}{spaceless}
+    {varType Nepada\FileUploadControl\Responses\UploadSuccessResponse $file}
+    <div class='fuc-file col-auto'
+        data-file-upload-role="file"
+        n:attr="
+            data-file-upload-status => isset($status) ? $status,
+            data-content-type => $file ? $file->getContentType(),
+            title => $file ? $file->getName()
+        "
+    >
+        <div class="card">
+            <div class="card-header">
+                <div class="row g-0">
+                    <div class="col">
+                        <span data-file-upload-role="file-name" n:inner-if="$file">{$file->getName()}</span>
+                        <small class="text-muted">(<span data-file-upload-role="file-size" n:inner-if="$file">{$file->getSize()|bytes}</span>)</small>
+                    </div>
+                    <div class="col-auto">
+                        <button data-file-upload-role="file-delete" type="button" class="btn-close" aria-label="{_'Delete'}" title="{_'Delete'}" n:attr="data-url => $file ? $file->getDeleteUrl()">
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body" data-file-upload-role="file-status">
+                {ifset $status}{include #"template-file-status-$status", file => $file}{/ifset}
+            </div>
+        </div>
+    </div>
+{/spaceless}{/define}
+
+{define #template-file-status-processing}{spaceless}
+    <div class="progress">
+        <div data-file-upload-role="file-progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+    </div>
+{/spaceless}{/define}
+
+{define #template-file-status-done}{spaceless}
+    <a data-file-upload-role="file-download" class="fuc-file-thumbnail" title="{_'Download'}" n:attr='href => $file ? $file->getUrl()'>
+        {if $file && $file->getThumbnailUrl()}
+            <img data-file-upload-role="file-thumbnail" src='{$file->getThumbnailUrl()}'>
+        {else}
+            <span data-file-upload-role="file-thumbnail"></span>
+        {/if}
+    </a>
+{/spaceless}{/define}
+
+{define #template-file-status-failed}{spaceless}
+    <span data-file-upload-role="file-error" class="text-danger">{_'Upload failed.'}</span>
+{/spaceless}{/define}

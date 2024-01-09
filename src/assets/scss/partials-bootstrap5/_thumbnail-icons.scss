@@ -1,0 +1,47 @@
+.fuc-file-thumbnail > span {
+  background-image: escape-svg($file-upload-control-file-icon-default);
+}
+
+[data-content-type="text/plain"],
+[data-content-type="application/rtf"],
+[data-content-type="application/pdf"],
+[data-content-type="application/msword"],
+[data-content-type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
+[data-content-type="application/vnd.oasis.opendocument.text"] {
+  .fuc-file-thumbnail > span {
+    background-image: escape-svg($file-upload-control-file-icon-text);
+  }
+}
+
+[data-content-type="application/vnd.ms-excel"],
+[data-content-type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"],
+[data-content-type="application/vnd.oasis.opendocument.spreadsheet"] {
+  .fuc-file-thumbnail > span {
+    background-image: escape-svg($file-upload-control-file-icon-spreadsheet);
+  }
+}
+
+[data-content-type^="audio/"] {
+  .fuc-file-thumbnail > span {
+    background-image: escape-svg($file-upload-control-file-icon-audio);
+  }
+}
+
+[data-content-type^="video/"] {
+  .fuc-file-thumbnail > span {
+    background-image: escape-svg($file-upload-control-file-icon-video);
+  }
+}
+
+[data-content-type$="/x-7z-compressed"],
+[data-content-type$="/vnd.rar"],
+[data-content-type$="/x-tar"],
+[data-content-type$="/zip"],
+[data-content-type$="/gzip"],
+[data-content-type$="/x-bzip2"],
+[data-content-type$="/x-bzip"],
+[data-content-type$="/x-7z-compressed"] {
+  .fuc-file-thumbnail > span {
+    background-image: escape-svg($file-upload-control-file-icon-archive);
+  }
+}
