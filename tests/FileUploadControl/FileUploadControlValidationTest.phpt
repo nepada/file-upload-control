@@ -113,7 +113,7 @@ class FileUploadControlValidationTest extends TestCase
     public function testPartialUploadOverSizeLimit(): void
     {
         $control = $this->createFileUploadControl();
-        $control->addRule(Form::MAX_FILE_SIZE, '64 bytes bytes ought to be enough', 64);
+        $control->addRule(Form::MAX_FILE_SIZE, '64 bytes ought to be enough', 64);
 
         $files = ['fileUpload' => ['upload' => [
             FileUploadFactory::createWithContents($this->readChunk(__DIR__ . '/Fixtures/image.png', 32), 'image.png'),
@@ -125,7 +125,7 @@ class FileUploadControlValidationTest extends TestCase
                 [
                     'name' => 'image.png',
                     'size' => 666,
-                    'error' => 'translated:64 bytes bytes ought to be enough',
+                    'error' => 'translated:64 bytes ought to be enough',
                 ],
             ]]),
             $this->extractJsonResponsePayload($control),
