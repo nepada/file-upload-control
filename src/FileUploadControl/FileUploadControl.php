@@ -258,18 +258,20 @@ class FileUploadControl extends BaseControl
                 continue;
             }
 
-            $fakeFileUpload = new FileUpload([
-                'name' => $fileUploadChunk->fileUpload->getUntrustedName(),
-                'size' => $fileUploadChunk->contentRange->getSize(),
-                'tmp_name' => $fileUploadChunk->fileUpload->getTemporaryFile(),
-                'error' => UPLOAD_ERR_OK,
-            ]);
-            $this->fakeUploadControl->setNewFileUpload($fakeFileUpload);
-            $this->validate();
-            $error = $this->getError();
-            if ($error !== null) {
-                $responses[] = $this->createUploadErrorResponse($fileUploadChunk, $error);
-                continue;
+            if ($fileUploadChunk->contentRange->containsFirstByte()) {
+                $fakeFileUpload = new FileUpload([
+                    'name' => $fileUploadChunk->fileUpload->getUntrustedName(),
+                    'size' => $fileUploadChunk->contentRange->getSize(),
+                    'tmp_name' => $fileUploadChunk->fileUpload->getTemporaryFile(),
+                    'error' => UPLOAD_ERR_OK,
+                ]);
+                $this->fakeUploadControl->setNewFileUpload($fakeFileUpload);
+                $this->validate();
+                $error = $this->getError();
+                if ($error !== null) {
+                    $responses[] = $this->createUploadErrorResponse($fileUploadChunk, $error);
+                    continue;
+                }
             }
 
             try {

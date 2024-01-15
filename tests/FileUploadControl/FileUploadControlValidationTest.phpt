@@ -21,6 +21,7 @@ use Nette\Utils\Helpers;
 use Nette\Utils\Json;
 use Nette\Utils\Random;
 use Tester\Assert;
+use function fseek;
 
 require_once __DIR__ . '/../bootstrap.php';
 
@@ -132,18 +133,71 @@ class FileUploadControlValidationTest extends TestCase
         );
     }
 
-    public function testPartialUploadWithImageValidation(): void
+    public function testPartialUploadFailsOnMimeTypeValidation(): void
     {
         $control = $this->createFileUploadControl();
-        $control->addRule(Form::IMAGE, 'only PNG is allowed');
+        $control->addRule(Form::MIME_TYPE, 'only plain-text', 'text/plain');
 
-        $file = Environment::getTempDir() . '/' . Random::generate();
-        FileSystem::write($file, $this->readChunk(__DIR__ . '/Fixtures/image.png', 64));
+        $chunkFile = Environment::getTempDir() . '/' . Random::generate();
+        FileSystem::write($chunkFile, $this->readChunk(__DIR__ . '/Fixtures/image.png', 32));
 
         $files = ['fileUpload' => ['upload' => [
-            FileUploadFactory::createFromFile($file, 'image.png'),
+            FileUploadFactory::createFromFile($chunkFile, 'image.png'),
+        ]]];
+        $this->doUpload($control, $files, 'bytes 0-31/666');
+
+        Assert::same(
+            Json::encode(['files' => [
+                [
+                    'name' => 'image.png',
+                    'size' => 666,
+                    'error' => 'translated:only plain-text',
+                ],
+            ]]),
+            $this->extractJsonResponsePayload($control),
+        );
+    }
+
+    public function testPartialUploadWithSingleImageValidation(): void
+    {
+        $controlFactory = function (): FileUploadControl {
+            $control = $this->createFileUploadControl();
+            $control->addRule(Form::IMAGE, 'only images are allowed');
+            $control->addRule(Form::MAX_LENGTH, 'max 1 image', 1);
+            return $control;
+        };
+
+        $control = $controlFactory();
+        $chunk1File = Environment::getTempDir() . '/' . Random::generate();
+        FileSystem::write($chunk1File, $this->readChunk(__DIR__ . '/Fixtures/image.png', 64));
+
+        $files = ['fileUpload' => ['upload' => [
+            FileUploadFactory::createFromFile($chunk1File, 'image.png'),
         ]]];
         $this->doUpload($control, $files, 'bytes 0-63/666');
+
+        Assert::same(
+            Json::encode(['files' => [
+                [
+                    'name' => 'image.png',
+                    'size' => 666,
+                    'url' => '/?form-fileUpload-namespace=testStorage&form-fileUpload-id=image-png&action=default&do=form-fileUpload-download&presenter=Test',
+                    'type' => null,
+                    'deleteType' => 'GET',
+                    'deleteUrl' => '/?form-fileUpload-namespace=testStorage&form-fileUpload-id=image-png&action=default&do=form-fileUpload-delete&presenter=Test',
+                ],
+            ]]),
+            $this->extractJsonResponsePayload($control),
+        );
+
+        $control = $controlFactory();
+        $chunk2File = Environment::getTempDir() . '/' . Random::generate();
+        FileSystem::write($chunk2File, $this->readChunk(__DIR__ . '/Fixtures/image.png', 64, 64));
+
+        $files = ['fileUpload' => ['upload' => [
+            FileUploadFactory::createFromFile($chunk2File, 'image.png'),
+        ]]];
+        $this->doUpload($control, $files, 'bytes 64-127/666');
 
         Assert::same(
             Json::encode(['files' => [
@@ -233,11 +287,13 @@ class FileUploadControlValidationTest extends TestCase
 
     /**
      * @param int<0, max> $size
+     * @param int<0, max> $offset
      */
-    private function readChunk(string $file, int $size): string
+    private function readChunk(string $file, int $size, int $offset = 0): string
     {
         $fp = fopen($file, 'r');
         assert($fp !== false);
+        fseek($fp, $offset);
         $contents = fread($fp, $size);
         assert(is_string($contents));
         fclose($fp);
