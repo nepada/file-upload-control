@@ -66,7 +66,7 @@ final class InMemoryStorage implements Storage
             'name' => $fileUpload->getUntrustedName(),
             'tmp_name' => $fileUpload->getTemporaryFile(),
             'size' => $contentRange->getSize(),
-            'error' => filesize($fileUpload->getTemporaryFile()) === $contentRange->getSize() ? UPLOAD_ERR_OK : UPLOAD_ERR_PARTIAL,
+            'error' => $contentRange->containsLastByte() ? UPLOAD_ERR_OK : UPLOAD_ERR_PARTIAL,
         ]);
         return $this->data[$idValue] = new FileUploadItem(FileUploadId::fromString($idValue), $fileUpload);
     }
