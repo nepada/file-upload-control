@@ -2,7 +2,7 @@
     "name": "nepada/file-upload-control",
     "type": "library",
     "license": "BSD-3-Clause",
-    "description": "File upload control for Nette forms: multi-file AJAX upload via blueimp-file-upload, Bootstrap 4 template.",
+    "description": "File upload control for Nette forms: multi-file AJAX upload via blueimp-file-upload, Bootstrap 4 and 5 template.",
     "keywords": ["file", "upload", "form", "nette"],
     "support": {
         "email": "petr@pada.cz",
