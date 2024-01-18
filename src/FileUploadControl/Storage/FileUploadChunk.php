@@ -16,6 +16,10 @@ final class FileUploadChunk
 
     private function __construct(Nette\Http\FileUpload $fileUpload, ContentRange $contentRange)
     {
+        if (! $fileUpload->isOk()) {
+            throw new \InvalidArgumentException("Expected successful file upload, but upload of '{$fileUpload->getUntrustedName()}' has failed with error {$fileUpload->getError()}.");
+        }
+
         if ($fileUpload->getSize() !== $contentRange->getRangeSize()) {
             throw new \InvalidArgumentException(sprintf(
                 'Content range size of %d does not match file upload size %d.',

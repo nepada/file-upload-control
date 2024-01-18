@@ -32,6 +32,19 @@ require_once __DIR__ . '/../bootstrap.php';
 class FileUploadControlValidationTest extends TestCase
 {
 
+    public function testSubmittedWithFailedUpload(): void
+    {
+        $storage = InMemoryStorage::createWithFiles();
+        $control = $this->createFileUploadControl($storage);
+
+        $files = ['fileUpload' => ['upload' => [
+            FileUploadFactory::createFailed('fail'),
+        ]]];
+        $this->submitForm($control, $files);
+
+        Assert::same(['translated:Upload error'], $control->getErrors());
+    }
+
     public function testSubmittedRequiredValueMissing(): void
     {
         $control = $this->createFileUploadControl();
@@ -65,6 +78,18 @@ class FileUploadControlValidationTest extends TestCase
         $this->submitForm($control, $files);
 
         Assert::same(['translated:max 1 upload allowed'], $control->getErrors());
+    }
+
+    public function testUploadWithFailedUpload(): void
+    {
+        $control = $this->createFileUploadControl();
+
+        $files = ['fileUpload' => ['upload' => [
+            FileUploadFactory::createFailed('fail'),
+        ]]];
+        $this->doUpload($control, $files);
+
+        Assert::same('{"files":[{"name":"fail","size":0,"error":"translated:Upload error"}]}', $this->extractJsonResponsePayload($control));
     }
 
     public function testUploadWithDisabledControl(): void

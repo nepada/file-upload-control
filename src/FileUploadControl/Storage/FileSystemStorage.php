@@ -90,10 +90,6 @@ final class FileSystemStorage implements Storage
      */
     public function save(FileUploadChunk $fileUploadChunk): FileUploadItem
     {
-        if (! $fileUploadChunk->fileUpload->isOk()) {
-            throw UnableToSaveFileUploadException::withUploadError();
-        }
-
         if ($fileUploadChunk->contentRange->containsFirstByte()) {
             $id = $this->saveNewUpload($fileUploadChunk);
         } else {

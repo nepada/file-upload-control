@@ -69,7 +69,7 @@ parameters:
             path: src/FileUploadControl/FileUploadControl.php
         -
             message: "#^Parameter \\#2 \\$error of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:createUploadErrorResponse\\(\\) expects string, mixed given\\.$#"
-            count: 2
+            count: 3
             path: src/FileUploadControl/FileUploadControl.php
         -
             message: "#^Variable property access on Nette\\\\Utils\\\\Html\\.$#"

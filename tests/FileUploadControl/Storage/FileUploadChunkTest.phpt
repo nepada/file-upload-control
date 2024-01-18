@@ -55,6 +55,19 @@ class FileUploadChunkTest extends TestCase
         );
     }
 
+    public function testNotOkFileUploadIsRejected(): void
+    {
+        $fileUpload = FileUploadFactory::create('name', 0, 'tmp', UPLOAD_ERR_INI_SIZE);
+        $contentRange = ContentRange::fromHttpHeaderValue('bytes 0-9/42');
+        Assert::exception(
+            function () use ($fileUpload, $contentRange): void {
+                FileUploadChunk::partialUpload($fileUpload, $contentRange);
+            },
+            \InvalidArgumentException::class,
+            "Expected successful file upload, but upload of 'name' has failed with error 1.",
+        );
+    }
+
 }
 
 

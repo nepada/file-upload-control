@@ -41,4 +41,9 @@ final class FileUploadFactory
         return self::create($name, $size, 'tmp_name', UPLOAD_ERR_OK);
     }
 
+    public static function createFailed(string $name): FileUpload
+    {
+        return self::create($name, 0, 'tmp_name', UPLOAD_ERR_INI_SIZE);
+    }
+
 }

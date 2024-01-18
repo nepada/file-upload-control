@@ -34,19 +34,6 @@ class FileSystemStorageTest extends TestCase
         Assert::same([], $storage->list());
     }
 
-    public function testNotOkFileUploadIsRejected(): void
-    {
-        $storage = $this->createStorage();
-        $chunk = FileUploadChunk::completeUpload(FileUploadFactory::create('name', 42, 'tmp', UPLOAD_ERR_PARTIAL));
-        Assert::exception(
-            function () use ($storage, $chunk): void {
-                $storage->save($chunk);
-            },
-            UnableToSaveFileUploadException::class,
-            'Unable to save file upload, because of pre-existing upload error.',
-        );
-    }
-
     public function testAttemptToResumeUploadOfOrphanedMetadataFails(): void
     {
         $metadata = FileUploadMetadata::fromArray(['name' => 'orphaned.txt', 'size' => 42]);

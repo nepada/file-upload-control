@@ -8,6 +8,7 @@ use Nepada\FileUploadControl\Responses\Response;
 use Nepada\FileUploadControl\Responses\UploadErrorResponse;
 use Nepada\FileUploadControl\Responses\UploadSuccessResponse;
 use Nepada\FileUploadControl\Storage\ContentRange;
+use Nepada\FileUploadControl\Storage\FailedUpload;
 use Nepada\FileUploadControl\Storage\FileUploadChunk;
 use Nepada\FileUploadControl\Storage\FileUploadId;
 use Nepada\FileUploadControl\Storage\FileUploadItem;
@@ -100,6 +101,10 @@ class FileUploadControl extends BaseControl
 
         $uploadFailed = false;
         foreach ($fileUploadChunks as $fileUploadChunk) {
+            if ($fileUploadChunk instanceof FailedUpload) {
+                $uploadFailed = true;
+                continue;
+            }
             try {
                 $storage->save($fileUploadChunk);
             } catch (UnableToSaveFileUploadException $exception) {
@@ -263,6 +268,11 @@ class FileUploadControl extends BaseControl
         foreach ($fileUploadChunks as $fileUploadChunk) {
             if ($this->isDisabled()) {
                 $responses[] = $this->createUploadErrorResponse($fileUploadChunk, $this->translate('Upload disabled'));
+                continue;
+            }
+
+            if ($fileUploadChunk instanceof FailedUpload) {
+                $responses[] = $this->createUploadErrorResponse($fileUploadChunk, $this->translate('Upload error'));
                 continue;
             }
 
@@ -443,11 +453,11 @@ class FileUploadControl extends BaseControl
         );
     }
 
-    protected function createUploadErrorResponse(FileUploadChunk $fileUploadChunk, string $error): Response
+    protected function createUploadErrorResponse(FileUploadChunk|FailedUpload $upload, string $error): Response
     {
         return new UploadErrorResponse(
-            $fileUploadChunk->fileUpload->getUntrustedName(),
-            $fileUploadChunk->contentRange->getSize(),
+            $upload->fileUpload->getUntrustedName(),
+            $upload->contentRange?->getSize() ?? 0,
             $error,
         );
     }
@@ -475,7 +485,7 @@ class FileUploadControl extends BaseControl
     }
 
     /**
-     * @return FileUploadChunk[]
+     * @return list<FileUploadChunk|FailedUpload>
      * @throws Nette\Application\BadRequestException
      */
     protected function getFileUploadChunks(): array
@@ -492,22 +502,24 @@ class FileUploadControl extends BaseControl
             if (count($files) > 1) {
                 throw new Nette\Application\BadRequestException('Chunk upload does not support multi-file upload', 400);
             }
+            $file = reset($files);
+
             try {
                 $contentRange = ContentRange::fromHttpHeaderValue($contentRangeHeaderValue);
-                $fileUploadChunk = FileUploadChunk::partialUpload(reset($files), $contentRange);
-                return [$fileUploadChunk];
+                $fileUpload = $file->isOk() ? FileUploadChunk::partialUpload($file, $contentRange) : FailedUpload::of($file, $contentRange);
+                return [$fileUpload];
             } catch (\Throwable $exception) {
                 throw new Nette\Application\BadRequestException('Invalid content-range header value', 400, $exception);
             }
         }
 
-        /** @var FileUploadChunk[] $fileUploadChunks */
-        $fileUploadChunks = [];
+        /** @var list<FileUploadChunk|FailedUpload> $fileUploads */
+        $fileUploads = [];
         foreach ($files as $file) {
-            $fileUploadChunks[] = FileUploadChunk::completeUpload($file);
+            $fileUploads[] = $file->isOk() ? FileUploadChunk::completeUpload($file) : FailedUpload::of($file);
         }
 
-        return $fileUploadChunks;
+        return $fileUploads;
     }
 
 }
