@@ -13,10 +13,7 @@ use NepadaTests\FileUploadControl\Storage\InMemoryStorageManager;
 use NepadaTests\TestCase;
 use Nette\Application\UI\Form;
 use Nette\Forms\Controls\BaseControl;
-use Nette\Utils\Strings;
 use Tester\Assert;
-use function basename;
-use function explode;
 
 require_once __DIR__ . '/../bootstrap.php';
 
@@ -51,7 +48,7 @@ class FileUploadControlRenderingTest extends TestCase
 
         HtmlAssert::matchFile(
             $this->formatFixturePath('files', $templateFile),
-            Strings::replace(trim((string) $control->getControl()), '~&#123;~', '{'), // escaping changed in latte 2.10.5
+            trim((string) $control->getControl()),
         );
     }
 
