@@ -112,7 +112,7 @@ class FileUploadControl extends BaseControl
             }
         }
         if ($uploadFailed) {
-            $this->addError('Upload error');
+            $this->addError(Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::VALID]);
         }
     }
 
@@ -272,7 +272,7 @@ class FileUploadControl extends BaseControl
             }
 
             if ($fileUploadChunk instanceof FailedUpload) {
-                $responses[] = $this->createUploadErrorResponse($fileUploadChunk, $this->translate('Upload error'));
+                $responses[] = $this->createUploadErrorResponse($fileUploadChunk, $this->translate(Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::VALID]));
                 continue;
             }
 
@@ -296,7 +296,7 @@ class FileUploadControl extends BaseControl
                 $fileUploadItem = $this->getStorage()->save($fileUploadChunk);
                 $responses[] = $this->createUploadSuccessResponse($fileUploadItem);
             } catch (StorageDoesNotExistException | UnableToSaveFileUploadException $exception) {
-                $responses[] = $this->createUploadErrorResponse($fileUploadChunk, $this->translate('Upload error'));
+                $responses[] = $this->createUploadErrorResponse($fileUploadChunk, $this->translate(Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::VALID]));
             }
         }
 

@@ -10,6 +10,7 @@ use NepadaTests\FileUploadControl\Fixtures\TestPresenter;
 use NepadaTests\FileUploadControl\Storage\InMemoryStorage;
 use NepadaTests\FileUploadControl\Storage\InMemoryStorageManager;
 use NepadaTests\TestCase;
+use Nette;
 use Nette\Application;
 use Nette\Application\Responses\JsonResponse;
 use Nette\Application\UI\Form;
@@ -31,6 +32,11 @@ require_once __DIR__ . '/../bootstrap.php';
  */
 class FileUploadControlValidationTest extends TestCase
 {
+
+    protected function setUp(): void
+    {
+        Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::VALID] = 'Upload error';
+    }
 
     public function testSubmittedWithFailedUpload(): void
     {
