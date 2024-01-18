@@ -192,15 +192,23 @@ class FileUploadControl extends BaseControl
             throw new \LogicException($exception->getMessage(), 0, $exception);
         }
         $fileUploadItems = $storage->list();
-        $uniqueFilenames = array_map(fn (FileUploadItem $fileUploadItem): string => $fileUploadItem->fileUpload->getUntrustedName(), $fileUploadItems);
-        $completedFiles = array_map(
-            fn (FileUploadItem $fileUploadItem): Response => $this->createUploadSuccessResponse($fileUploadItem),
-            array_filter($fileUploadItems, fn (FileUploadItem $fileUploadItem): bool => $fileUploadItem->fileUpload->isOk()),
-        );
 
-        $template->uploadUrl = $this->link('upload!', ['namespace' => $this->getUploadNamespace()->toString()]);
+        $uniqueFilenames = array_map(fn (FileUploadItem $fileUploadItem): string => $fileUploadItem->fileUpload->getUntrustedName(), $fileUploadItems);
+        $completedFiles = [];
+        $partiallyUploadedFiles = [];
+        foreach ($fileUploadItems as $fileUploadItem) {
+            if ($fileUploadItem->fileUpload->isOk()) {
+                $completedFiles[] = $this->createUploadSuccessResponse($fileUploadItem);
+            } else {
+                $partiallyUploadedFiles[] = $this->createUploadSuccessResponse($fileUploadItem);
+            }
+        }
+
         $template->uniqueFilenames = $uniqueFilenames;
         $template->completedFiles = $completedFiles;
+        $template->partiallyUploadedFiles = $partiallyUploadedFiles;
+        $template->allFiles = array_merge($completedFiles, $partiallyUploadedFiles);
+        $template->uploadUrl = $this->link('upload!', ['namespace' => $this->getUploadNamespace()->toString()]);
 
         $controlHtml = Nette\Utils\Helpers::capture(function () use ($template): void {
             $template->render($this->templateFile);

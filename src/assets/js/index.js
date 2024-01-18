@@ -85,11 +85,11 @@ function initializeControl(container) {
         if (upload) {
             upload.abort();
         }
-        if ($this.is('[data-url]')) {
-            $.get($this.data('url'));
+        const deleteUrl = $this.data('url');
+        if (deleteUrl) {
+            $.get(deleteUrl);
+            filesList.removeByDeleteUrl(deleteUrl);
         }
-        const fileUrl = $file.find('[data-file-upload-role=file-download]').attr('href');
-        filesList.remove(fileUrl);
         $file.fadeOut(() => {
             $file.remove();
             buttons.refreshState();

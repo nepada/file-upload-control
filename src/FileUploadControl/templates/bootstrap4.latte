@@ -2,6 +2,8 @@
 {varType string $uploadUrl}
 {varType array $uniqueFilenames}
 {varType array $completedFiles}
+{varType array $partiallyUploadedFiles}
+{varType array $allFiles}
 
 <div n:class="$control->isRequired() ? required, $control->isDisabled() ? disabled, $control->hasErrors() ? is-invalid"
     n:attr="
@@ -13,10 +15,10 @@
     <div class="fuc-buttons">
         <span n:class="fuc-add, btn, btn-success, $control->isDisabled() ? disabled">
             {_'Add files'}
-            <input n:name="$control:upload" data-files="{$completedFiles|json}">
+            <input n:name="$control:upload" data-files="{$allFiles|json}">
         </span>
         <span data-file-upload-role="abort" class="btn btn-warning disabled">{_'Abort upload'}</span>
-        <span data-file-upload-role="delete" n:class="btn, btn-danger, count($completedFiles) === 0 ? disabled">{_'Delete all'}</span>
+        <span data-file-upload-role="delete" n:class="btn, btn-danger, count($allFiles) === 0 ? disabled">{_'Delete all'}</span>
     </div>
     <div class="fuc-container">
         {capture $templateFile}{include #template-file, file => null}{/capture}
@@ -33,6 +35,9 @@
         >
             {foreach $completedFiles as $file}
                 {include #template-file status => done, file => $file}
+            {/foreach}
+            {foreach $partiallyUploadedFiles as $file}
+                {include #template-file status => failed, file => $file}
             {/foreach}
         </div>
         <div class="fuc-dropzone">{_'Drag & drop files here'}</div>
