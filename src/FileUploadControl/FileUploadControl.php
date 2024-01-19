@@ -20,11 +20,14 @@ use Nepada\FileUploadControl\Storage\UnableToSaveFileUploadException;
 use Nepada\FileUploadControl\Storage\UploadNamespace;
 use Nepada\FileUploadControl\Thumbnail\NullThumbnailProvider;
 use Nepada\FileUploadControl\Thumbnail\ThumbnailProvider;
+use Nepada\FileUploadControl\Validation\ClientSide;
+use Nepada\FileUploadControl\Validation\FakeUploadControl;
 use Nepada\FileUploadControl\Validation\UploadValidation;
 use Nette;
 use Nette\Bridges\ApplicationLatte\Template;
 use Nette\Forms\Form;
 use Nette\Http\FileUpload;
+use Nette\Utils\Arrays;
 use Nette\Utils\Html;
 use Nette\Utils\Strings;
 use Nextras\FormComponents\Fragments\UIControl\BaseControl;
@@ -58,6 +61,14 @@ class FileUploadControl extends BaseControl
         $this->addComponent(new Nette\Forms\Controls\UploadControl($caption, true), 'upload');
         $this->addComponent(new Nette\Forms\Controls\HiddenField(), 'namespace');
         $this->initializeValidation($this);
+        $this->addCondition(true) // avoid export to JS
+            ->addRule($this->validateUploadSuccess(...), Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::VALID]);
+        $this->addRule(ClientSide::NO_UPLOAD_IN_PROGRESS, 'File upload is still in progress - wait until it is finished, or abort it.');
+    }
+
+    private function validateUploadSuccess(FakeUploadControl $control): bool
+    {
+        return Arrays::every($control->getValue(), fn (FileUpload $upload): bool => $upload->isOk());
     }
 
     public function setThumbnailProvider(ThumbnailProvider $thumbnailProvider): void

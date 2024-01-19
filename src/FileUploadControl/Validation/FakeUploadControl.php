@@ -24,6 +24,7 @@ final class FakeUploadControl extends UploadControl
         $this->fileUploadControl = $fileUploadControl;
         $fileUploadControl->monitor(Form::class, function (Form $form): void {
             $this->setParent(null, $this->fileUploadControl->getName());
+            $this->control->name = $this->fileUploadControl->getComponent('upload')->getHtmlName();
         });
     }
 

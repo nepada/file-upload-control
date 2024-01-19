@@ -4,6 +4,8 @@ declare(strict_types = 1);
 namespace NepadaTests\FileUploadControl;
 
 use Nepada\FileUploadControl\FileUploadControl;
+use Nepada\FileUploadControl\Storage\ContentRange;
+use Nepada\FileUploadControl\Storage\FileUploadChunk;
 use Nepada\FileUploadControl\Storage\Storage;
 use NepadaTests\Environment;
 use NepadaTests\FileUploadControl\Fixtures\TestPresenter;
@@ -84,6 +86,21 @@ class FileUploadControlValidationTest extends TestCase
         $this->submitForm($control, $files);
 
         Assert::same(['translated:max 1 upload allowed'], $control->getErrors());
+    }
+
+    public function testSubmittedWithInterruptedUpload(): void
+    {
+        $storage = InMemoryStorage::createWithFiles();
+        $storage->save(FileUploadChunk::partialUpload(
+            FileUploadFactory::createFromFile(__DIR__ . '/Fixtures/test.txt', 'partial.txt'),
+            ContentRange::fromHttpHeaderValue('bytes 0-8/100'),
+        )); // interrupted partial upload
+
+        $control = $this->createFileUploadControl($storage);
+
+        $this->submitForm($control);
+
+        Assert::same(['translated:Upload error'], $control->getErrors());
     }
 
     public function testUploadWithFailedUpload(): void

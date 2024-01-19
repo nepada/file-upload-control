@@ -118,6 +118,11 @@ function initializeFileUploadControl(Nette) {
         e.preventDefault();
     });
 
+    // Validation
+    Nette.validators.NepadaFileUploadControlValidationClientSide_noUploadInProgress = (element) => {
+        return $(element).closest('[data-file-upload-url]').find('[data-file-upload-status=processing] [data-file-upload-role=file-delete]').length === 0;
+    };
+
     // Effective value
     const originalGetEffectiveValue = Nette.getEffectiveValue;
     Nette.getEffectiveValue = (elem, filter) => {

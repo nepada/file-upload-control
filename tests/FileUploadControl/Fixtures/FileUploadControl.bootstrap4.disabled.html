@@ -4,16 +4,16 @@
     <div class="fuc-buttons">
         <span class="fuc-add btn btn-success disabled">
             translated:Add files
-            <input data-files="[]" type="file" name="fileUpload[upload][]" multiple id="frm-form-fileUpload-upload" disabled data-nette-rules="[]">
+            <input data-files="[]" type="file" name="fileUpload[upload][]" multiple id="frm-form-fileUpload-upload" disabled data-nette-rules='[{"op":"Nepada\\FileUploadControl\\Validation\\ClientSide::noUploadInProgress","msg":"translated:File upload is still in progress - wait until it is finished, or abort it."}]'>
         </span>
         <span data-file-upload-role="abort" class="btn btn-warning disabled">translated:Abort upload</span>
         <span data-file-upload-role="delete" class="btn btn-danger disabled">translated:Delete all</span>
     </div>
     <div class="fuc-container">
-        
-        
-        
-        
+
+
+
+
         <div
                 data-file-upload-role="files"
                 class="fuc-files row"
