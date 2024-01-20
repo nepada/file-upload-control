@@ -95,7 +95,3 @@ parameters:
             message: "#^Invalid var phpdoc of \\$files\\. Cannot assign array.* to array\\<int, Nette\\\\Http\\\\FileUpload\\>$#"
             count: 1
             path: src/FileUploadControl/FileUploadControl.php
-        - # false positive
-            message: "#^Parameter \\#1 \\$validator of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:addCondition\\(\\) expects \\(callable\\(\\)\\: mixed\\)\\|string, true given\\.$#"
-            count: 1
-            path: src/FileUploadControl/FileUploadControl.php

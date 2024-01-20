@@ -103,6 +103,36 @@ class FileUploadControlValidationTest extends TestCase
         Assert::same(['translated:Upload error'], $control->getErrors());
     }
 
+    public function testUploadCanSucceedDespitePreviouslyInterruptedUpload(): void
+    {
+        $storage = InMemoryStorage::createWithFiles();
+        $storage->save(FileUploadChunk::partialUpload(
+            FileUploadFactory::createFromFile(__DIR__ . '/Fixtures/test.txt', 'partial.txt'),
+            ContentRange::fromHttpHeaderValue('bytes 0-8/100'),
+        )); // interrupted partial upload
+
+        $control = $this->createFileUploadControl($storage);
+
+        $files = ['fileUpload' => ['upload' => [
+            FileUploadFactory::createFromFile(__DIR__ . '/Fixtures/test.txt'),
+        ]]];
+        $this->doUpload($control, $files);
+
+        Assert::same(
+            Json::encode(['files' => [
+                [
+                    'name' => 'test.txt',
+                    'size' => 9,
+                    'url' => '/?form-fileUpload-namespace=testStorage&form-fileUpload-id=test-txt&action=default&do=form-fileUpload-download&presenter=Test',
+                    'type' => 'text/plain',
+                    'deleteType' => 'GET',
+                    'deleteUrl' => '/?form-fileUpload-namespace=testStorage&form-fileUpload-id=test-txt&action=default&do=form-fileUpload-delete&presenter=Test',
+                ],
+            ]]),
+            $this->extractJsonResponsePayload($control),
+        );
+    }
+
     public function testUploadWithFailedUpload(): void
     {
         $control = $this->createFileUploadControl();
@@ -126,6 +156,25 @@ class FileUploadControlValidationTest extends TestCase
         $this->doUpload($control, $files);
 
         Assert::same('{"files":[{"name":"test.txt","size":9,"error":"translated:Upload disabled"}]}', $this->extractJsonResponsePayload($control));
+    }
+
+    public function testUploadOverMaxLengthLimit(): void
+    {
+        $storage = InMemoryStorage::createWithFiles();
+        $storage->save(FileUploadChunk::partialUpload(
+            FileUploadFactory::createFromFile(__DIR__ . '/Fixtures/test.txt', 'partial.txt'),
+            ContentRange::fromHttpHeaderValue('bytes 0-8/100'),
+        )); // interrupted partial upload
+
+        $control = $this->createFileUploadControl($storage);
+        $control->addRule(Form::MAX_LENGTH, 'max 1 item', 1);
+
+        $files = ['fileUpload' => ['upload' => [
+            FileUploadFactory::createFromFile(__DIR__ . '/Fixtures/test.txt'),
+        ]]];
+        $this->doUpload($control, $files);
+
+        Assert::same('{"files":[{"name":"test.txt","size":9,"error":"translated:max 1 item"}]}', $this->extractJsonResponsePayload($control));
     }
 
     public function testUploadWithContentTypeValidation(): void
