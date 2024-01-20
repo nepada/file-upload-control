@@ -24,11 +24,32 @@ class FilesList {
         this.getInput().data(this.dataAttribute, files);
     }
 
+    /**
+     * @deprecated
+     */
     remove(fileUrl) {
         this.getInput().data(this.dataAttribute, $.grep(
             this.list(),
             (file) => {
                 return file.url !== fileUrl;
+            },
+        ));
+    }
+
+    removeByDeleteUrl(deleteUrl) {
+        this.getInput().data(this.dataAttribute, $.grep(
+            this.list(),
+            (file) => {
+                return file.deleteUrl !== deleteUrl;
+            },
+        ));
+    }
+
+    removeByUid(uid) {
+        this.getInput().data(this.dataAttribute, $.grep(
+            this.list(),
+            (file) => {
+                return file.uid !== uid;
             },
         ));
     }

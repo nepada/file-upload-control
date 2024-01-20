@@ -1,6 +1,7 @@
 'use strict';
 
 var $ = require('jquery');
+var FilesList = require('./FilesList.js');
 
 class FileUpload {
 
@@ -29,6 +30,11 @@ class FileUpload {
         this.$filesContainer = $fileUpload.find('[data-file-upload-role=files]');
         this.$file = this.createUI();
 
+        const uid = [name, size, Math.floor(Math.random() * 2**32)].join('|');
+        this.fileListItem = {name, size, type, uid};
+        this.fileList = new FilesList($fileUpload);
+        this.fileList.add(this.fileListItem);
+
         this.updateFileInfoUI();
         this.$filesContainer.append(this.$file);
         this.$file.fadeIn();
@@ -51,6 +57,15 @@ class FileUpload {
         this.thumbnailUrl = file.thumbnailUrl || this.thumbnailUrl;
         this.deleteUrl = file.deleteUrl || this.deleteUrl;
         this.type = file.type || this.type;
+        this.replaceFileListItem(file);
+    }
+
+    replaceFileListItem(file) {
+        if (this.fileListItem) {
+            this.fileList.removeByUid(this.fileListItem.uid);
+            this.fileList.add(file);
+            this.fileListItem = null;
+        }
     }
 
     processing(file) {
@@ -67,6 +82,18 @@ class FileUpload {
         this.updateFileInfoUI($error);
         this.$file.find('[data-file-upload-role=file-status]').html($error);
         this.updateFileInfoUI();
+        this.removeFileListItem();
+    }
+
+    aborted() {
+        this.removeFileListItem();
+    }
+
+    removeFileListItem() {
+        if (this.fileListItem) {
+            this.fileList.removeByUid(this.fileListItem.uid);
+            this.fileListItem = null;
+        }
     }
 
     done(file) {

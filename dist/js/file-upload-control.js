@@ -4,6 +4,20 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Nette, global.jQuery));
 })(this, (function (Nette, $) { 'use strict';
 
+  function _toPrimitive(t, r) {
+    if ("object" != typeof t || !t) return t;
+    var e = t[Symbol.toPrimitive];
+    if (void 0 !== e) {
+      var i = e.call(t, r || "default");
+      if ("object" != typeof i) return i;
+      throw new TypeError("@@toPrimitive must return a primitive value.");
+    }
+    return ("string" === r ? String : Number)(t);
+  }
+  function _toPropertyKey(t) {
+    var i = _toPrimitive(t, "string");
+    return "symbol" == typeof i ? i : String(i);
+  }
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -25,20 +39,6 @@
       writable: false
     });
     return Constructor;
-  }
-  function _toPrimitive(input, hint) {
-    if (typeof input !== "object" || input === null) return input;
-    var prim = input[Symbol.toPrimitive];
-    if (prim !== undefined) {
-      var res = prim.call(input, hint || "default");
-      if (typeof res !== "object") return res;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (hint === "string" ? String : Number)(input);
-  }
-  function _toPropertyKey(arg) {
-    var key = _toPrimitive(arg, "string");
-    return typeof key === "symbol" ? key : String(key);
   }
 
   var Button = /*#__PURE__*/function () {
@@ -102,11 +102,29 @@
         files.push(file);
         this.getInput().data(this.dataAttribute, files);
       }
+
+      /**
+       * @deprecated
+       */
     }, {
       key: "remove",
       value: function remove(fileUrl) {
         this.getInput().data(this.dataAttribute, $.grep(this.list(), function (file) {
           return file.url !== fileUrl;
+        }));
+      }
+    }, {
+      key: "removeByDeleteUrl",
+      value: function removeByDeleteUrl(deleteUrl) {
+        this.getInput().data(this.dataAttribute, $.grep(this.list(), function (file) {
+          return file.deleteUrl !== deleteUrl;
+        }));
+      }
+    }, {
+      key: "removeByUid",
+      value: function removeByUid(uid) {
+        this.getInput().data(this.dataAttribute, $.grep(this.list(), function (file) {
+          return file.uid !== uid;
         }));
       }
     }]);
@@ -138,6 +156,15 @@
       this.error = null;
       this.$filesContainer = $fileUpload.find('[data-file-upload-role=files]');
       this.$file = this.createUI();
+      var uid = [name, size, Math.floor(Math.random() * Math.pow(2, 32))].join('|');
+      this.fileListItem = {
+        name,
+        size,
+        type,
+        uid
+      };
+      this.fileList = new FilesList($fileUpload);
+      this.fileList.add(this.fileListItem);
       this.updateFileInfoUI();
       this.$filesContainer.append(this.$file);
       this.$file.fadeIn();
@@ -163,6 +190,16 @@
         this.thumbnailUrl = file.thumbnailUrl || this.thumbnailUrl;
         this.deleteUrl = file.deleteUrl || this.deleteUrl;
         this.type = file.type || this.type;
+        this.replaceFileListItem(file);
+      }
+    }, {
+      key: "replaceFileListItem",
+      value: function replaceFileListItem(file) {
+        if (this.fileListItem) {
+          this.fileList.removeByUid(this.fileListItem.uid);
+          this.fileList.add(file);
+          this.fileListItem = null;
+        }
       }
     }, {
       key: "processing",
@@ -181,6 +218,20 @@
         this.updateFileInfoUI($error);
         this.$file.find('[data-file-upload-role=file-status]').html($error);
         this.updateFileInfoUI();
+        this.removeFileListItem();
+      }
+    }, {
+      key: "aborted",
+      value: function aborted() {
+        this.removeFileListItem();
+      }
+    }, {
+      key: "removeFileListItem",
+      value: function removeFileListItem() {
+        if (this.fileListItem) {
+          this.fileList.removeByUid(this.fileListItem.uid);
+          this.fileListItem = null;
+        }
       }
     }, {
       key: "done",
@@ -258,7 +309,7 @@
       dataType: 'json',
       formData: [],
       // do not send other form data with file uploads
-      uniqueFilenames: uniqueFilenames,
+      uniqueFilenames,
       singleFileUploads: true,
       maxChunkSize: 2 * 1024 * 1024,
       limitConcurrentUploads: 3,
@@ -285,7 +336,12 @@
       }
       data.fileUpload.updateProgress(data.loaded / data.total);
     }).on('fileuploadfail', function (e, data) {
-      if (data.fileUpload && data.errorThrown !== 'abort') {
+      if (!data.fileUpload) {
+        return;
+      }
+      if (data.errorThrown === 'abort') {
+        data.fileUpload.aborted();
+      } else {
         data.fileUpload.failed();
         buttons.refreshState();
       }
@@ -295,7 +351,6 @@
         data.fileUpload.failed(file);
       } else {
         data.fileUpload.done(file);
-        filesList.add(file);
       }
       buttons.refreshState();
     }).on('fileuploadchunkdone', function (e, data) {
@@ -315,11 +370,11 @@
       if (upload) {
         upload.abort();
       }
-      if ($this.is('[data-url]')) {
-        $.get($this.data('url'));
+      var deleteUrl = $this.data('url');
+      if (deleteUrl) {
+        $.get(deleteUrl);
+        filesList.removeByDeleteUrl(deleteUrl);
       }
-      var fileUrl = $file.find('[data-file-upload-role=file-download]').attr('href');
-      filesList.remove(fileUrl);
       $file.fadeOut(function () {
         $file.remove();
         buttons.refreshState();
@@ -336,6 +391,11 @@
     $(document).on('drop dragover', function (e) {
       e.preventDefault();
     });
+
+    // Validation
+    Nette.validators.NepadaFileUploadControlValidationClientSide_noUploadInProgress = function (element) {
+      return $(element).closest('[data-file-upload-url]').find('[data-file-upload-status=processing] [data-file-upload-role=file-delete]').length === 0;
+    };
 
     // Effective value
     var originalGetEffectiveValue = Nette.getEffectiveValue;

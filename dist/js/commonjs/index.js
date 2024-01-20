@@ -54,7 +54,12 @@ function initializeControl(container) {
         data.fileUpload.updateProgress(data.loaded / data.total);
 
     }).on('fileuploadfail', (e, data) => {
-        if (data.fileUpload && data.errorThrown !== 'abort') {
+        if (!data.fileUpload) {
+            return;
+        }
+        if (data.errorThrown === 'abort') {
+            data.fileUpload.aborted();
+        } else {
             data.fileUpload.failed();
             buttons.refreshState();
         }
@@ -65,7 +70,6 @@ function initializeControl(container) {
             data.fileUpload.failed(file);
         } else {
             data.fileUpload.done(file);
-            filesList.add(file);
         }
         buttons.refreshState();
 
@@ -88,11 +92,11 @@ function initializeControl(container) {
         if (upload) {
             upload.abort();
         }
-        if ($this.is('[data-url]')) {
-            $.get($this.data('url'));
+        const deleteUrl = $this.data('url');
+        if (deleteUrl) {
+            $.get(deleteUrl);
+            filesList.removeByDeleteUrl(deleteUrl);
         }
-        const fileUrl = $file.find('[data-file-upload-role=file-download]').attr('href');
-        filesList.remove(fileUrl);
         $file.fadeOut(() => {
             $file.remove();
             buttons.refreshState();
@@ -116,6 +120,11 @@ function initializeFileUploadControl(Nette) {
     $(document).on('drop dragover', (e) => {
         e.preventDefault();
     });
+
+    // Validation
+    Nette.validators.NepadaFileUploadControlValidationClientSide_noUploadInProgress = (element) => {
+        return $(element).closest('[data-file-upload-url]').find('[data-file-upload-status=processing] [data-file-upload-role=file-delete]').length === 0;
+    };
 
     // Effective value
     const originalGetEffectiveValue = Nette.getEffectiveValue;
