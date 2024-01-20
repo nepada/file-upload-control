@@ -43,6 +43,15 @@ class FilesList {
         ));
     }
 
+    removeByUid(uid) {
+        this.getInput().data(this.dataAttribute, $.grep(
+            this.list(),
+            (file) => {
+                return file.uid !== uid;
+            },
+        ));
+    }
+
 }
 
 

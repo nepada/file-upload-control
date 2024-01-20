@@ -51,7 +51,12 @@ function initializeControl(container) {
         data.fileUpload.updateProgress(data.loaded / data.total);
 
     }).on('fileuploadfail', (e, data) => {
-        if (data.fileUpload && data.errorThrown !== 'abort') {
+        if (!data.fileUpload) {
+            return;
+        }
+        if (data.errorThrown === 'abort') {
+            data.fileUpload.aborted();
+        } else {
             data.fileUpload.failed();
             buttons.refreshState();
         }
@@ -62,7 +67,6 @@ function initializeControl(container) {
             data.fileUpload.failed(file);
         } else {
             data.fileUpload.done(file);
-            filesList.add(file);
         }
         buttons.refreshState();
 
