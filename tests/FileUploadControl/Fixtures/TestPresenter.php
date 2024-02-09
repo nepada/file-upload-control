@@ -8,6 +8,7 @@ use Nette;
 use Nette\Application\Routers\SimpleRouter;
 use Nette\Application\UI\Form;
 use Nette\Application\UI\Template;
+use ReflectionMethod;
 
 final class TestPresenter extends Nette\Application\UI\Presenter
 {
@@ -26,11 +27,19 @@ final class TestPresenter extends Nette\Application\UI\Presenter
 
         $presenter->formConfigurator = $formConfigurator;
 
-        $httpRequest ??= $presenter->createHttpRequest();
-        $httpResponse = $presenter->createHttpResponse();
-        $templateFactory = $presenter->createTemplateFactory();
-        $router = new SimpleRouter();
-        $presenter->injectPrimary(null, null, $router, $httpRequest, $httpResponse, null, null, $templateFactory);
+        $primaryDependencies = [];
+        $rc = new ReflectionMethod($presenter, 'injectPrimary');
+        foreach ($rc->getParameters() as $parameter) {
+            if ($parameter->isDefaultValueAvailable()) {
+                continue;
+            }
+            $primaryDependencies[$parameter->getName()] = null;
+        }
+        $primaryDependencies['httpRequest'] = $httpRequest ?? $presenter->createHttpRequest();
+        $primaryDependencies['httpResponse'] = $presenter->createHttpResponse();
+        $primaryDependencies['router'] = new SimpleRouter();
+        $primaryDependencies['templateFactory'] = $presenter->createTemplateFactory();
+        $presenter->injectPrimary(...$primaryDependencies);
 
         $presenter->setParent(null, 'Test');
         $presenter->changeAction('default');
