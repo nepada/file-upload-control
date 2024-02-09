@@ -40,7 +40,6 @@ trait UploadValidation
 
     /**
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-     * @param Control<mixed> $control
      * @param callable|string $validator
      */
     public function addConditionOn(Control $control, $validator, mixed $value = null): Rules
