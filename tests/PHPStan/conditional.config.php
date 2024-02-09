@@ -25,11 +25,6 @@ if ($isInstalled('nette/utils', '>=4.0.3') || $isInstalled('nette/utils', 'dev-m
 
 if (InstalledVersions::satisfies(new VersionParser(), 'nette/forms', '<3.2')) {
     $config['parameters']['ignoreErrors'][] = [
-        'message' => '#^Cannot cast mixed to string\\.$#',
-        'path' => '../../src/FileUploadControl/FileUploadControl.php',
-        'count' => 1,
-    ];
-    $config['parameters']['ignoreErrors'][] = [
         'message' => '#^Return type \\(string\\|Stringable\\|null\\) of method Nepada\\\\FileUploadControl\\\\Validation\\\\FakeUploadControl\\:\\:getCaption\\(\\) should be covariant with return type \\(object\\|string\\) of method Nette\\\\Forms\\\\Controls\\\\BaseControl\\:\\:getCaption\\(\\)$#',
         'path' => '../../src/FileUploadControl/Validation/FakeUploadControl.php',
         'count' => 1,

@@ -426,8 +426,9 @@ class FileUploadControl extends BaseControl
 
     protected function getUploadNamespace(): UploadNamespace
     {
-        $nameSpaceValue = (string) $this->getNamespaceControl()->getValue();
-        if (UploadNamespace::isValid($nameSpaceValue)) {
+        /** @var string|null $nameSpaceValue */
+        $nameSpaceValue = $this->getNamespaceControl()->getValue();
+        if ($nameSpaceValue !== null && UploadNamespace::isValid($nameSpaceValue)) {
             return UploadNamespace::fromString($nameSpaceValue);
         }
 
