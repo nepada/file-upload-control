@@ -39,6 +39,7 @@ final class TestPresenter extends Nette\Application\UI\Presenter
         $primaryDependencies['httpResponse'] = $presenter->createHttpResponse();
         $primaryDependencies['router'] = new SimpleRouter();
         $primaryDependencies['templateFactory'] = $presenter->createTemplateFactory();
+        $primaryDependencies['presenterFactory'] = new Nette\Application\PresenterFactory();
         $presenter->injectPrimary(...$primaryDependencies);
 
         $presenter->setParent(null, 'Test');
@@ -95,7 +96,11 @@ final class TestPresenter extends Nette\Application\UI\Presenter
 
             public function create(): Latte\Engine
             {
-                return new Latte\Engine();
+                $latte = new Latte\Engine();
+
+                $latte->addExtension(new Nette\Bridges\FormsLatte\FormsExtension());
+
+                return $latte;
             }
 
         };
