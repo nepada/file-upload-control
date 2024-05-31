@@ -91,7 +91,3 @@ parameters:
             message: "#^Calling sha1\\(\\) is forbidden, use hash\\(\\) with at least SHA\\-256 for secure hash, or password_hash\\(\\) for passwords\\.$#"
             count: 1
             path: src/FileUploadControl/Storage/Metadata/FileUploadMetadata.php
-        - # false positive
-            message: "#^Invalid var phpdoc of \\$files\\. Cannot assign array.* to array\\<int, Nette\\\\Http\\\\FileUpload\\>$#"
-            count: 1
-            path: src/FileUploadControl/FileUploadControl.php
