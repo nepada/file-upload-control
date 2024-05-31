@@ -383,7 +383,7 @@ class FileUploadControlValidationTest extends TestCase
     }
 
     /**
-     * @param int<0, max> $size
+     * @param int<1, max> $size
      * @param int<0, max> $offset
      */
     private function readChunk(string $file, int $size, int $offset = 0): string
