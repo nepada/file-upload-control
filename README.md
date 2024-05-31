@@ -115,9 +115,9 @@ fileUpload:
 The package includes templates and styles build for Bootstrap [version 4](https://getbootstrap.com/docs/4.6/) and [version 5](https://getbootstrap.com/docs/5.3/). By default, version 4 is used, but to improve forward compatibility you should always explicitly specify which version you'd like to be used:
 ```yaml
 fileUpload:
-    templateFile: ::constant(Nepada\FileUploadControl\FileUploadControl::TEMPLATE_FILE_BOOTSTRAP4)
+    templateFile: Nepada\FileUploadControl\FileUploadControl::TEMPLATE_FILE_BOOTSTRAP4
     # or for Bootstrap 5
-    # templateFile: ::constant(Nepada\FileUploadControl\FileUploadControl::TEMPLATE_FILE_BOOTSTRAP5)
+    # templateFile: Nepada\FileUploadControl\FileUploadControl::TEMPLATE_FILE_BOOTSTRAP5
 ```
 
 ### Validation
