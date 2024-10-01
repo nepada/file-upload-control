@@ -40,7 +40,7 @@
         "nette/di": "^3.0.6@dev",
         "nette/bootstrap": ">=3.1@dev",
         "nette/component-model": ">=3.0.2",
-        "composer/semver": "3.4.2"
+        "composer/semver": "3.4.3"
     },
     "suggest": {
         "ext-gd": "to use image thumbnails",
