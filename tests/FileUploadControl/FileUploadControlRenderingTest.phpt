@@ -66,7 +66,7 @@ class FileUploadControlRenderingTest extends TestCase
     {
         $control = $this->createFileUploadControl(null, $templateFile);
 
-        $control->addRule(Form::IMAGE);
+        $control->addRule(Form::Image);
         $control->addError('some error');
         HtmlAssert::matchFile(
             $this->formatFixturePath('errors', $templateFile),

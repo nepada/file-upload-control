@@ -72,7 +72,7 @@ final class UploadSuccessResponse implements Response
             'size' => $this->size,
             'url' => $this->url,
             'type' => $this->contentType,
-            'deleteType' => Nette\Http\IRequest::GET,
+            'deleteType' => Nette\Http\IRequest::Get,
             'deleteUrl' => $this->deleteUrl,
         ];
         if ($this->thumbnailUrl !== null) {

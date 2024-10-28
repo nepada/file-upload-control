@@ -29,8 +29,8 @@ use Nette\Forms\Form;
 use Nette\Http\FileUpload;
 use Nette\Utils\Arrays;
 use Nette\Utils\Html;
-use Nette\Utils\Strings;
 use Nextras\FormComponents\Fragments\UIControl\BaseControl;
+use function implode;
 
 class FileUploadControl extends BaseControl
 {
@@ -62,7 +62,7 @@ class FileUploadControl extends BaseControl
         $this->addComponent(new Nette\Forms\Controls\HiddenField(), 'namespace');
         $this->initializeValidation($this);
         $this->addCondition(fn () => $this->getPresenterIfExists()?->isSignalReceiver($this, 'upload') !== true) // disable during file upload via signal
-            ->addRule($this->validateUploadSuccess(...), Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::VALID]);
+            ->addRule($this->validateUploadSuccess(...), Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::Valid]);
         $this->addRule(ClientSide::NO_UPLOAD_IN_PROGRESS, 'File upload is still in progress - wait until it is finished, or abort it.');
     }
 
@@ -123,7 +123,7 @@ class FileUploadControl extends BaseControl
             }
         }
         if ($uploadFailed) {
-            $this->addError(Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::VALID]);
+            $this->addError(Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::Valid]);
         }
     }
 
@@ -256,9 +256,9 @@ class FileUploadControl extends BaseControl
      */
     public function addRule($validator, $errorMessage = null, mixed $arg = null): static
     {
-        if ($validator === Form::IMAGE) {
-            $this->getUploadControl()->setHtmlAttribute('accept', implode(',', FileUpload::IMAGE_MIME_TYPES));
-        } elseif ($validator === Form::MIME_TYPE) {
+        if ($validator === Form::Image) {
+            $this->getUploadControl()->setHtmlAttribute('accept', implode(',', Nette\Forms\Helpers::getSupportedImages()));
+        } elseif ($validator === Form::MimeType) {
             $mimeTypes = is_array($arg) ? $arg : ($arg === null ? [] : [$arg]);
             $this->getUploadControl()->setHtmlAttribute('accept', implode(',', $mimeTypes));
         }
@@ -283,7 +283,7 @@ class FileUploadControl extends BaseControl
             }
 
             if ($fileUploadChunk instanceof FailedUpload) {
-                $responses[] = $this->createUploadErrorResponse($fileUploadChunk, $this->translate(Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::VALID]));
+                $responses[] = $this->createUploadErrorResponse($fileUploadChunk, $this->translate(Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::Valid]));
                 continue;
             }
 
@@ -307,7 +307,7 @@ class FileUploadControl extends BaseControl
                 $fileUploadItem = $this->getStorage()->save($fileUploadChunk);
                 $responses[] = $this->createUploadSuccessResponse($fileUploadItem);
             } catch (StorageDoesNotExistException | UnableToSaveFileUploadException $exception) {
-                $responses[] = $this->createUploadErrorResponse($fileUploadChunk, $this->translate(Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::VALID]));
+                $responses[] = $this->createUploadErrorResponse($fileUploadChunk, $this->translate(Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::Valid]));
             }
         }
 
@@ -404,7 +404,7 @@ class FileUploadControl extends BaseControl
      */
     protected function sendJson(mixed $data): void
     {
-        $contentType = Strings::contains((string) $this->getHttpRequest()->getHeader('accept'), 'application/json') ? 'application/json' : 'text/plain';
+        $contentType = str_contains((string) $this->getHttpRequest()->getHeader('accept'), 'application/json') ? 'application/json' : 'text/plain';
         $response = new Nette\Application\Responses\JsonResponse($data, $contentType);
         $this->getPresenter()->sendResponse($response);
     }
@@ -504,7 +504,7 @@ class FileUploadControl extends BaseControl
     {
         $httpRequest = $this->getHttpRequest();
         /** @var array<int, FileUpload> $files */
-        $files = Nette\Forms\Helpers::extractHttpData($httpRequest->getFiles(), $this->getUploadControl()->getHtmlName() . '[]', Form::DATA_FILE);
+        $files = Nette\Forms\Helpers::extractHttpData($httpRequest->getFiles(), $this->getUploadControl()->getHtmlName() . '[]', Form::DataFile);
         if (count($files) === 0) {
             return [];
         }

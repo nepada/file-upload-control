@@ -64,7 +64,7 @@ final class FileSystemMetadataJournal implements MetadataJournal
         if (! $this->fileSystem->fileExists($file)) {
             throw FileUploadMetadataNotFoundException::withId($id);
         }
-        $data = Json::decode($this->fileSystem->read($file), Json::FORCE_ARRAY);
+        $data = Json::decode($this->fileSystem->read($file), JSON_OBJECT_AS_ARRAY);
         return FileUploadMetadata::fromArray($data);
     }
 

@@ -5,6 +5,7 @@ namespace Nepada\FileUploadControl\Thumbnail;
 
 use Nette;
 use Nette\Utils\Image;
+use Nette\Utils\ImageColor;
 
 final class ImageLoader
 {
@@ -46,14 +47,14 @@ final class ImageLoader
                 $image->resize(null, '-100%');
                 // intentionally no break
             case 6:
-                $image->rotate(-90, Image::rgb(0, 0, 0, 127));
+                $image->rotate(-90, ImageColor::rgb(0, 0, 0, 0));
                 break;
             /** @noinspection PhpMissingBreakStatementInspection */
             case 7:
                 $image->resize(null, '-100%');
                 // intentionally no break
             case 8:
-                $image->rotate(90, Image::rgb(0, 0, 0, 127));
+                $image->rotate(90, ImageColor::rgb(0, 0, 0, 0));
                 break;
         }
 

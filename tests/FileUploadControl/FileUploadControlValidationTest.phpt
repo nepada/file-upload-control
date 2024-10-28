@@ -37,7 +37,7 @@ class FileUploadControlValidationTest extends TestCase
 
     protected function setUp(): void
     {
-        Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::VALID] = 'Upload error';
+        Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::Valid] = 'Upload error';
     }
 
     public function testSubmittedWithFailedUpload(): void
@@ -67,7 +67,7 @@ class FileUploadControlValidationTest extends TestCase
     {
         $storage = InMemoryStorage::createWithFiles(__DIR__ . '/Fixtures/test.txt');
         $control = $this->createFileUploadControl($storage);
-        $control->addRule(Form::IMAGE);
+        $control->addRule(Form::Image);
 
         $this->submitForm($control);
 
@@ -77,7 +77,7 @@ class FileUploadControlValidationTest extends TestCase
     public function testSubmittedWithUnprocessedUploadsOverCountLimit(): void
     {
         $control = $this->createFileUploadControl();
-        $control->addRule(Form::MAX_LENGTH, 'max 1 upload allowed', 1);
+        $control->addRule(Form::MaxLength, 'max 1 upload allowed', 1);
 
         $files = ['fileUpload' => ['upload' => [
             FileUploadFactory::createFromFile(__DIR__ . '/Fixtures/test.txt'),
@@ -167,7 +167,7 @@ class FileUploadControlValidationTest extends TestCase
         )); // interrupted partial upload
 
         $control = $this->createFileUploadControl($storage);
-        $control->addRule(Form::MAX_LENGTH, 'max 1 item', 1);
+        $control->addRule(Form::MaxLength, 'max 1 item', 1);
 
         $files = ['fileUpload' => ['upload' => [
             FileUploadFactory::createFromFile(__DIR__ . '/Fixtures/test.txt'),
@@ -180,7 +180,7 @@ class FileUploadControlValidationTest extends TestCase
     public function testUploadWithContentTypeValidation(): void
     {
         $control = $this->createFileUploadControl();
-        $control->addRule(Form::MIME_TYPE, 'only plain-text', 'text/plain');
+        $control->addRule(Form::MimeType, 'only plain-text', 'text/plain');
 
         $files = ['fileUpload' => ['upload' => [
             FileUploadFactory::createFromFile(__DIR__ . '/Fixtures/image.png'),
@@ -211,7 +211,7 @@ class FileUploadControlValidationTest extends TestCase
     public function testPartialUploadOverSizeLimit(): void
     {
         $control = $this->createFileUploadControl();
-        $control->addRule(Form::MAX_FILE_SIZE, '64 bytes ought to be enough', 64);
+        $control->addRule(Form::MaxFileSize, '64 bytes ought to be enough', 64);
 
         $files = ['fileUpload' => ['upload' => [
             FileUploadFactory::createWithContents($this->readChunk(__DIR__ . '/Fixtures/image.png', 32), 'image.png'),
@@ -233,7 +233,7 @@ class FileUploadControlValidationTest extends TestCase
     public function testPartialUploadFailsOnMimeTypeValidation(): void
     {
         $control = $this->createFileUploadControl();
-        $control->addRule(Form::MIME_TYPE, 'only plain-text', 'text/plain');
+        $control->addRule(Form::MimeType, 'only plain-text', 'text/plain');
 
         $chunkFile = Environment::getTempDir() . '/' . Random::generate();
         FileSystem::write($chunkFile, $this->readChunk(__DIR__ . '/Fixtures/image.png', 32));
@@ -259,8 +259,8 @@ class FileUploadControlValidationTest extends TestCase
     {
         $controlFactory = function (): FileUploadControl {
             $control = $this->createFileUploadControl();
-            $control->addRule(Form::IMAGE, 'only images are allowed');
-            $control->addRule(Form::MAX_LENGTH, 'max 1 image', 1);
+            $control->addRule(Form::Image, 'only images are allowed');
+            $control->addRule(Form::MaxLength, 'max 1 image', 1);
             return $control;
         };
 
@@ -361,7 +361,7 @@ class FileUploadControlValidationTest extends TestCase
         $parameters['action'] = 'default';
         $url = (new UrlScript('https://example.com'))->withQuery($parameters);
         $httpRequest = new Request($url, $post, $files, $cookies, $headers);
-        $request = new Application\Request('Test', IRequest::POST, $parameters, $post, $files);
+        $request = new Application\Request('Test', IRequest::Post, $parameters, $post, $files);
         $presenter = TestPresenter::create(
             $httpRequest,
             function (Form $form) use ($control): void {

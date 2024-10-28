@@ -5,12 +5,10 @@ namespace NepadaTests\FileUploadControl\Fixtures;
 
 use Nette;
 
-class DummyTranslator implements Nette\Localization\Translator
+final class DummyTranslator implements Nette\Localization\Translator
 {
 
-    use Nette\SmartObject;
-
-    public function translate(mixed $message, mixed ...$parameters): string
+    public function translate(string|\Stringable $message, mixed ...$parameters): string
     {
         return 'translated:' . (string) $message;
     }

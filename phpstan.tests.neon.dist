@@ -34,10 +34,6 @@ parameters:
             message: "#^Dead catch \\- Nette\\\\Application\\\\AbortException is never thrown in the try block\\.$#"
             count: 1
             path: tests/FileUploadControl/FileUploadControlTest.phpt
-        -
-            message: "#^Cannot cast mixed to string\\.$#"
-            count: 1
-            path: tests/FileUploadControl/Fixtures/DummyTranslator.php
         - # nette/application 3.1 compatibility
             message: "#^Parameter .* of method Nette\\\\Application\\\\UI\\\\Presenter\\:\\:injectPrimary\\(\\) expects .*, .* given\\.$#"
             count: 1

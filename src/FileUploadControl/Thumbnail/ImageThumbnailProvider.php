@@ -6,7 +6,7 @@ namespace Nepada\FileUploadControl\Thumbnail;
 use Nette;
 use Nette\Http\FileUpload;
 use Nette\Utils\Image;
-use Nette\Utils\Strings;
+use function str_ends_with;
 
 final class ImageThumbnailProvider implements ThumbnailProvider
 {
@@ -41,20 +41,20 @@ final class ImageThumbnailProvider implements ThumbnailProvider
         }
 
         $image = $this->imageLoader->load($fileUpload->getTemporaryFile());
-        $image->resize($this->width, $this->height, Image::SHRINK_ONLY);
+        $image->resize($this->width, $this->height, Image::ShrinkOnly);
 
         $name = $fileUpload->getUntrustedName();
         if (in_array($fileUpload->getContentType(), ['image/gif', 'image/png'], true)) {
             $contents = $image->toString(Image::PNG);
             $contentType = 'image/png';
-            if (! Strings::endsWith($name, '.png')) {
+            if (! str_ends_with($name, '.png')) {
                 $name .= '.png';
             }
 
         } else {
             $contents = $image->toString(Image::JPEG);
             $contentType = 'image/jpeg';
-            if (! Strings::endsWith($name, '.jpg')) {
+            if (! str_ends_with($name, '.jpg')) {
                 $name .= '.jpg';
             }
         }

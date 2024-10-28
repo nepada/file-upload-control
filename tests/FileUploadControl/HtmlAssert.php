@@ -27,7 +27,7 @@ final class HtmlAssert
 
     private static function normalizeWhiteSpace(string $content): string
     {
-        $content = Strings::normalizeNewLines($content);
+        $content = Strings::unixNewLines($content);
         $content = Strings::replace($content, '~^[\t ]+|[\t ]+$~m', ''); // remove leading and trailing whitespace
         $content = Strings::replace($content, "~\n+~", "\n"); // remove empty lines
         return Strings::trim($content);
