@@ -29,7 +29,6 @@ use Nette\Forms\Form;
 use Nette\Http\FileUpload;
 use Nette\Utils\Arrays;
 use Nette\Utils\Html;
-use Nextras\FormComponents\Fragments\UIControl\BaseControl;
 use function implode;
 
 class FileUploadControl extends BaseControl
