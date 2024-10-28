@@ -38,7 +38,9 @@
         "nepada/coding-standard": "7.14.1",
         "nette/di": "^3.0.6@dev",
         "nette/bootstrap": ">=3.1@dev",
-        "composer/semver": "3.4.3"
+        "composer/semver": "3.4.3",
+        "nette/neon": ">=3.3.4@dev",
+        "nette/robot-loader": "*@dev"
     },
     "suggest": {
         "ext-gd": "to use image thumbnails",

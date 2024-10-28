@@ -15,6 +15,8 @@ updates:
     ignore:
       - dependency-name: "nette/di"
       - dependency-name: "nette/bootstrap"
+      - dependency-name: "nette/neon"
+      - dependency-name: "nette/robot-loader"
     groups:
         phpstan:
             patterns: ["*phpstan*"]
