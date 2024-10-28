@@ -24,12 +24,11 @@ use function str_contains;
  *
  * @license    BSD-3-Clause
  * @link       https://github.com/nette/forms
- *
  * @property-read Form $form
  * @property-read string $htmlName
  * @property   string|bool|null $htmlId
  * @property   mixed $value
- * @property   string|Stringable $caption
+ * @property   string|Stringable|null $caption
  * @property   bool $disabled
  * @property   bool $omitted
  * @property-read Html $control
@@ -38,8 +37,8 @@ use function str_contains;
  * @property-read Html $labelPrototype
  * @property   bool $required
  * @property-read bool $filled
- * @property-read array $errors
- * @property-read array $options
+ * @property-read array<string|Stringable> $errors
+ * @property-read array<mixed> $options
  * @property-read string $error
  */
 abstract class BaseControl extends Nette\Application\UI\Control implements Control
@@ -47,22 +46,43 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
 
     public static string $idMask = 'frm-%s';
 
+    /**
+     * @var array<string, array<string, callable>> extension methods
+     */
+    private static array $extMethods = [];
+
     protected mixed $value = null;
+
     protected Html $control;
+
     protected Html $label;
 
-    /** @var bool|bool[] */
+    /**
+     * @var bool|bool[]
+     */
     protected bool|array $disabled = false;
 
-    /** @var callable[][]  extension methods */
-    private static array $extMethods = [];
     private string|Stringable|null $caption;
+
+    /**
+     * @var array<string|Stringable>
+     */
     private array $errors = [];
+
     private ?bool $omitted = null;
+
     private Rules $rules;
 
-    /** true means autodetect */
+    /**
+     * true means autodetect
+     *
+     * @var Translator|true|null
+     */
     private Translator|bool|null $translator = true;
+
+    /**
+     * @var array<mixed>
+     */
     private array $options = [];
 
     public function __construct(string|Stringable|null $caption = null)
@@ -73,12 +93,24 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
         $this->rules = new Rules($this);
         $this->setValue(null);
         $this->monitor(Form::class, function (Form $form): void {
-            if (!$this->isDisabled() && $form->isAnchored() && $form->isSubmitted()) {
+            if (! $this->isDisabled() && $form->isAnchored() && $form->isSubmitted() !== false) {
                 $this->loadHttpData();
             }
         });
     }
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @param callable $callback
+     */
+    public static function extensionMethod(string $name, /*callable*/ $callback): void
+    {
+        if (str_contains($name, '::')) { // back compatibility
+            [, $name] = explode('::', $name);
+        }
+
+        self::$extMethods[$name][static::class] = $callback;
+    }
 
     /**
      * Sets textual caption or label.
@@ -89,40 +121,39 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
         return $this;
     }
 
-
     public function getCaption(): string|Stringable|null
     {
         return $this->caption;
     }
 
-
     /**
      * Returns form.
+     *
      * @return ($throw is true ? Form : ?Form)
      */
     public function getForm(bool $throw = true): ?Form
     {
+        // @phpstan-ignore return.type
         return $this->lookup(Form::class, $throw);
     }
-
 
     /**
      * Loads HTTP data.
      */
     public function loadHttpData(): void
     {
-        $this->setValue($this->getHttpData(Form::DATA_TEXT));
+        $this->setValue($this->getHttpData(Form::DataText));
     }
-
 
     /**
      * Loads HTTP data.
+     *
+     * @param Form::Data* $type
      */
-    protected function getHttpData($type, ?string $htmlTail = null): mixed
+    protected function getHttpData(int $type, ?string $htmlTail = null): mixed
     {
-        return $this->getForm()->getHttpData($type, $this->getHtmlName() . $htmlTail);
+        return $this->getForm()->getHttpData($type, $this->getHtmlName() . ($htmlTail ?? ''));
     }
-
 
     /**
      * Returns HTML name of control.
@@ -132,31 +163,26 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
         return $this->control->name ?? Nette\Forms\Helpers::generateHtmlName($this->lookupPath(Form::class));
     }
 
-
     /********************* interface Control ****************d*g**/
-
 
     /**
      * Sets control's value.
-     * @return static
+     *
      * @internal
      */
-    public function setValue(mixed $value)
+    public function setValue(mixed $value): static
     {
         $this->value = $value;
         return $this;
     }
 
-
     /**
      * Returns control's value.
-     * @return mixed
      */
-    public function getValue()
+    public function getValue(): mixed
     {
         return $this->value;
     }
-
 
     /**
      * Is control filled?
@@ -167,36 +193,40 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
         return $value !== null && $value !== [] && $value !== '';
     }
 
-
     /**
      * Sets control's default value.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
      * @return static
+     * @phpstan-ignore missingType.parameter
      */
-    public function setDefaultValue($value)
+    public function setDefaultValue($value): static
     {
         $form = $this->getForm(throw: false);
-        if ($this->isDisabled() || !$form || !$form->isAnchored() || !$form->isSubmitted()) {
+        if ($this->isDisabled() || $form === null || ! $form->isAnchored() || $form->isSubmitted() === false) {
             $this->setValue($value);
         }
         return $this;
     }
 
-
     /**
      * Disables or enables control.
+     *
      * @return static
      */
-    public function setDisabled(bool $state = true)
+    public function setDisabled(bool $state = true): static
     {
         $this->disabled = $state;
         if ($state) {
             $this->setValue(null);
-        } elseif (($form = $this->getForm(throw: false)) && $form->isAnchored() && $form->isSubmitted()) {
-            $this->loadHttpData();
+        } else {
+            $form = $this->getForm(throw: false);
+            if ($form !== null && $form->isAnchored() && $form->isSubmitted() !== false) {
+                $this->loadHttpData();
+            }
         }
         return $this;
     }
-
 
     /**
      * Is control disabled?
@@ -205,7 +235,6 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
     {
         return $this->disabled === true;
     }
-
 
     /**
      * Sets whether control value is excluded from $form->getValues() result.
@@ -216,7 +245,6 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
         return $this;
     }
 
-
     /**
      * Is control value excluded from $form->getValues() result?
      */
@@ -225,54 +253,47 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
         return $this->omitted || ($this->isDisabled() && $this->omitted === null);
     }
 
-
     /********************* rendering ****************d*g**/
-
 
     /**
      * Generates control's HTML element.
-     * @return Html|string
      */
-    public function getControl()
+    public function getControl(): ?Html
     {
         $this->setOption('rendered', true);
         $el = clone $this->control;
+        $rules = Nette\Forms\Helpers::exportRules($this->rules);
         return $el->addAttributes([
             'name' => $this->getHtmlName(),
             'id' => $this->getHtmlId(),
             'required' => $this->isRequired(),
             'disabled' => $this->isDisabled(),
-            'data-nette-rules' => Nette\Forms\Helpers::exportRules($this->rules) ?: null,
+            'data-nette-rules' => $rules !== [] ? $rules : null,
         ]);
     }
 
-
     /**
      * Generates label's HTML element.
-     * @return Html|string|null
      */
-    public function getLabel(string|Stringable|null $caption = null)
+    public function getLabel(string|Stringable|null $caption = null): ?Html
     {
         $label = clone $this->label;
         $label->for = $this->getHtmlId();
         $caption ??= $this->caption;
         $translator = $this->getForm()->getTranslator();
-        $label->setText($translator && !$caption instanceof Nette\HtmlStringable ? $translator->translate($caption) : $caption);
+        $label->setText($translator !== null && $caption !== null && ! $caption instanceof Nette\HtmlStringable ? $translator->translate($caption) : $caption);
         return $label;
     }
-
 
     public function getControlPart(): ?Html
     {
         return $this->getControl();
     }
 
-
     public function getLabelPart(): ?Html
     {
         return $this->getLabel();
     }
-
 
     /**
      * Returns control's HTML element template.
@@ -282,7 +303,6 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
         return $this->control;
     }
 
-
     /**
      * Returns label's HTML element template.
      */
@@ -290,7 +310,6 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
     {
         return $this->label;
     }
-
 
     /**
      * Changes control's HTML id.
@@ -301,13 +320,12 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
         return $this;
     }
 
-
     /**
      * Returns control's HTML id.
      */
     public function getHtmlId(): string|bool|null
     {
-        if (!isset($this->control->id)) {
+        if (! isset($this->control->id)) {
             $form = $this->getForm();
             $prefix = $form instanceof Nette\Application\UI\Form || $form->getName() === null
                 ? ''
@@ -317,26 +335,27 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
         return $this->control->id;
     }
 
-
     /**
      * Changes control's HTML attribute.
      */
     public function setHtmlAttribute(string $name, mixed $value = true): static
     {
+        // @phpstan-ignore property.dynamicName
         $this->control->$name = $value;
-        if (
-            $name === 'name'
-            && ($form = $this->getForm(false))
-            && !$this->isDisabled()
-            && $form->isAnchored()
-            && $form->isSubmitted()
-        ) {
-            $this->loadHttpData();
+        if ($name === 'name') {
+            $form = $this->getForm(false);
+            if (
+                $form !== null
+                && ! $this->isDisabled()
+                && $form->isAnchored()
+                && $form->isSubmitted() !== false
+            ) {
+                $this->loadHttpData();
+            }
         }
 
         return $this;
     }
-
 
     /**
      * @deprecated  use setHtmlAttribute()
@@ -346,9 +365,7 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
         return $this->setHtmlAttribute($name, $value);
     }
 
-
     /********************* translator ****************d*g**/
-
 
     /**
      * Sets translate adapter.
@@ -359,30 +376,28 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
         return $this;
     }
 
-
     /**
      * Returns translate adapter.
      */
     public function getTranslator(): ?Translator
     {
         if ($this->translator === true) {
-            return $this->getForm(false)
-                ? $this->getForm()->getTranslator()
-                : null;
+            return $this->getForm(false)?->getTranslator();
         }
         return $this->translator;
     }
 
-
     /**
      * Returns translated string.
      */
-    public function translate($value, ...$parameters): mixed
+    public function translate(mixed $value, mixed ...$parameters): mixed
     {
-        if ($translator = $this->getTranslator()) {
+        $translator = $this->getTranslator();
+        if ($translator !== null) {
             $tmp = is_array($value) ? [&$value] : [[&$value]];
             foreach ($tmp[0] as &$v) {
-                if ($v != null && !$v instanceof Nette\HtmlStringable) { // intentionally ==
+                // phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedNotEqualOperator
+                if ($v != null && ! $v instanceof Nette\HtmlStringable) { // intentionally ==
                     $v = $translator->translate($v, ...$parameters);
                 }
             }
@@ -390,41 +405,44 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
         return $value;
     }
 
-
     /********************* rules ****************d*g**/
-
 
     /**
      * Adds a validation rule.
+     *
      * @return static
      */
     public function addRule(
         callable|string $validator,
         string|Stringable|null $errorMessage = null,
         mixed $arg = null,
-    ) {
+    ): static
+    {
         $this->rules->addRule($validator, $errorMessage, $arg);
         return $this;
     }
 
-
     /**
      * Adds a validation condition a returns new branch.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @param callable|string $validator
      */
-    public function addCondition($validator, $value = null): Rules
+    public function addCondition($validator, mixed $value = null): Rules
     {
         return $this->rules->addCondition($validator, $value);
     }
 
-
     /**
      * Adds a validation condition based on another control a returns new branch.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @param callable|string $validator
      */
-    public function addConditionOn(Control $control, $validator, $value = null): Rules
+    public function addConditionOn(Control $control, $validator, mixed $value = null): Rules
     {
         return $this->rules->addConditionOn($control, $validator, $value);
     }
-
 
     /**
      * Adds an input filter callback.
@@ -435,12 +453,10 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
         return $this;
     }
 
-
     public function getRules(): Rules
     {
         return $this->rules;
     }
-
 
     /**
      * Makes control mandatory.
@@ -451,7 +467,6 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
         return $this;
     }
 
-
     /**
      * Is control mandatory?
      */
@@ -459,7 +474,6 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
     {
         return $this->rules->isRequired();
     }
-
 
     /**
      * Performs the server side validation.
@@ -473,7 +487,6 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
         $this->rules->validate();
     }
 
-
     /**
      * Adds error message to the list.
      */
@@ -482,42 +495,41 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
         $this->errors[] = $translate ? $this->translate($message) : $message;
     }
 
-
     /**
      * Returns errors corresponding to control.
      */
     public function getError(): ?string
     {
-        return $this->errors ? implode(' ', array_unique($this->errors)) : null;
+        return $this->errors !== [] ? implode(' ', array_unique($this->errors)) : null;
     }
-
 
     /**
      * Returns errors corresponding to control.
+     *
+     * @return array<string|Stringable>
      */
     public function getErrors(): array
     {
         return array_unique($this->errors);
     }
 
-
     public function hasErrors(): bool
     {
         return (bool) $this->errors;
     }
-
 
     public function cleanErrors(): void
     {
         $this->errors = [];
     }
 
-
     /********************* user data ****************d*g**/
-
 
     /**
      * Sets user-specific option.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @param string|int $key
      */
     public function setOption($key, mixed $value): static
     {
@@ -529,9 +541,11 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
         return $this;
     }
 
-
     /**
      * Returns user-specific option.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @param string|int $key
      */
     public function getOption($key): mixed
     {
@@ -542,19 +556,23 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
         return $this->options[$key] ?? $default ?? null;
     }
 
-
     /**
      * Returns user-specific options.
+     *
+     * @return array<mixed>
      */
     public function getOptions(): array
     {
         return $this->options;
     }
 
-
     /********************* extension methods ****************d*g**/
 
-
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingAnyTypeHint
+     * @param array<mixed> $args
+     * @phpstan-ignore shipmonk.missingNativeReturnTypehint
+     */
     public function __call(string $name, array $args)
     {
         $class = static::class;
@@ -565,16 +583,6 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
             $class = get_parent_class($class);
         } while ($class);
         return parent::__call($name, $args);
-    }
-
-
-    public static function extensionMethod(string $name, /*callable*/ $callback): void
-    {
-        if (str_contains($name, '::')) { // back compatibility
-            [, $name] = explode('::', $name);
-        }
-
-        self::$extMethods[$name][static::class] = $callback;
     }
 
 }

@@ -29,6 +29,7 @@ use Nette\Forms\Form;
 use Nette\Http\FileUpload;
 use Nette\Utils\Arrays;
 use Nette\Utils\Html;
+use Stringable;
 use function implode;
 
 class FileUploadControl extends BaseControl
@@ -236,11 +237,7 @@ class FileUploadControl extends BaseControl
         return $this->getUploadControl()->getLabelPrototype();
     }
 
-    /**
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-     * @param string|\Stringable|null $caption
-     */
-    public function getLabel($caption = null): Html
+    public function getLabel(string|Stringable|null $caption = null): Html
     {
         $label = $this->getUploadControl()->getLabel($caption);
         assert($label instanceof Html);
@@ -248,12 +245,9 @@ class FileUploadControl extends BaseControl
     }
 
     /**
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-     * @param callable|string $validator
-     * @param string|\Stringable|null $errorMessage
      * @return $this
      */
-    public function addRule($validator, $errorMessage = null, mixed $arg = null): static
+    public function addRule(callable|string $validator, string|Stringable|null $errorMessage = null, mixed $arg = null): static
     {
         if ($validator === Form::Image) {
             $this->getUploadControl()->setHtmlAttribute('accept', implode(',', Nette\Forms\Helpers::getSupportedImages()));

@@ -36,34 +36,6 @@ parameters:
             message: "~Method Nepada\\\\FileUploadControl\\\\Utils\\\\NetteFileSystem::.* throws checked exception Exception but it's missing from the PHPDoc @throws tag~"
             path: src/FileUploadControl/Utils/NetteFileSystem.php
         -
-            message: "#^Parameter \\#1 \\$value \\(bool\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:setDisabled\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:setDisabled\\(\\)$#"
-            count: 1
-            path: src/FileUploadControl/FileUploadControl.php
-        -
-            message: "#^Parameter \\#1 \\$caption \\(string\\|Stringable\\|null\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:getLabel\\(\\) should be contravariant with parameter \\$caption \\(object\\|string(?:\\|null)?\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:getLabel\\(\\)$#"
-            count: 1
-            path: src/FileUploadControl/FileUploadControl.php
-        -
-            message: "#^Parameter \\#2 \\$errorMessage \\(string\\|Stringable\\|null\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:addRule\\(\\) should be contravariant with parameter \\$errorMessage \\(object\\|string(?:\\|null)?\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:addRule\\(\\)$#"
-            count: 1
-            path: src/FileUploadControl/FileUploadControl.php
-        -
-            message: "#^Parameter \\#1 \\$value \\(bool\\|string\\|Stringable\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:setRequired\\(\\) should be contravariant with parameter \\$value \\(bool\\|object\\|string\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:setRequired\\(\\)$#"
-            count: 1
-            path: src/FileUploadControl/FileUploadControl.php
-        -
-            message: "#^Method Nepada\\\\FileUploadControl\\\\Validation\\\\FakeUploadControl\\:\\:getCaption\\(\\) should return string\\|Stringable\\|null but returns object\\|string\\.$#"
-            count: 1
-            path: src/FileUploadControl/Validation/FakeUploadControl.php
-        -
-            message: "#^Parameter \\#1 \\$validator \\(\\(callable\\(\\)\\: mixed\\)\\|string\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:addCondition\\(\\) should be contravariant with parameter \\$validator \\(mixed\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:addCondition\\(\\)$#"
-            count: 1
-            path: src/FileUploadControl/FileUploadControl.php
-        -
-            message: "#^Parameter \\#2 \\$validator \\(\\(callable\\(\\)\\: mixed\\)\\|string\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:addConditionOn\\(\\) should be contravariant with parameter \\$validator \\(mixed\\) of method Nextras\\\\FormComponents\\\\Fragments\\\\UIControl\\\\BaseControl\\:\\:addConditionOn\\(\\)$#"
-            count: 1
-            path: src/FileUploadControl/FileUploadControl.php
-        -
             message: "#^Dead catch \\- Throwable is never thrown in the try block\\.$#"
             count: 1
             path: src/FileUploadControl/FileUploadControl.php
