@@ -130,7 +130,7 @@ function initializeFileUploadControl(Nette) {
     const originalGetEffectiveValue = Nette.getEffectiveValue;
     Nette.getEffectiveValue = (elem, filter) => {
         if (!elem || !elem.nodeName || elem.nodeName.toLowerCase() !== 'input' || !$(elem).data('files')) {
-            return originalGetEffectiveValue(elem, filter);
+            return originalGetEffectiveValue.apply(Nette, [elem, filter]);
         }
         return $(elem).data('files');
     };
@@ -145,7 +145,7 @@ function initializeFileUploadControl(Nette) {
     // Tap into Nette.initForm() to provide AJAX snippet support via e.g. Naja
     const originalInitForm = Nette.initForm;
     Nette.initForm = (form) => {
-        originalInitForm(form);
+        originalInitForm.apply(Nette, [form]);
         initializeForm(form);
     };
 }
