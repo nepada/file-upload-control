@@ -63,3 +63,11 @@ parameters:
             message: "#^Calling sha1\\(\\) is forbidden, use hash\\(\\) with at least SHA\\-256 for secure hash, or password_hash\\(\\) for passwords\\.$#"
             count: 1
             path: src/FileUploadControl/Storage/Metadata/FileUploadMetadata.php
+        - # false-positive
+            message: "#^Method Nepada\\\\FileUploadControl\\\\Storage\\\\ContentRange\\:\\:getRangeSize\\(\\) should return int\\<0, max\\> but returns int\\.$#"
+            count: 1
+            path: src/FileUploadControl/Storage/ContentRange.php
+        - # should not happen
+            message: "#^Parameter \\#1 \\$size of static method Nepada\\\\FileUploadControl\\\\Storage\\\\ContentRange\\:\\:ofSize\\(\\) expects int\\<0, max\\>, int given\\.$#"
+            count: 1
+            path: src/FileUploadControl/Storage/FileUploadChunk.php

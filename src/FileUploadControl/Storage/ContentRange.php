@@ -11,10 +11,19 @@ final class ContentRange
 
     use Nette\SmartObject;
 
+    /**
+     * @var int<0, max>
+     */
     private int $start;
 
+    /**
+     * @var int<0, max>
+     */
     private int $end;
 
+    /**
+     * @var int<0, max>
+     */
     private int $size;
 
     private function __construct(int $start, int $end, int $size)
@@ -25,17 +34,23 @@ final class ContentRange
         if ($end < $start) {
             throw new \InvalidArgumentException("Start ($start) cannot be larger than end ($end).");
         }
-        if ($size <= $end) {
-            throw new \InvalidArgumentException("End ($end) cannot be larger or equal to size ($size).");
+        if ($size < $end) {
+            throw new \InvalidArgumentException("End ($end) cannot be larger than size ($size).");
+        }
+        if ($size > 0 && $size === $end) {
+            throw new \InvalidArgumentException("End ($end) cannot be equal to size ($size).");
         }
         $this->start = $start;
         $this->end = $end;
         $this->size = $size;
     }
 
+    /**
+     * @param int<0, max> $size
+     */
     public static function ofSize(int $size): self
     {
-        return new self(0, $size - 1, $size);
+        return new self(0, $size === 0 ? 0 : $size - 1, $size);
     }
 
     public static function fromHttpHeaderValue(string $header): self
@@ -47,21 +62,33 @@ final class ContentRange
         return new self((int) $match[1], (int) $match[2], (int) $match[3]);
     }
 
+    /**
+     * @return int<0, max>
+     */
     public function getStart(): int
     {
         return $this->start;
     }
 
+    /**
+     * @return int<0, max>
+     */
     public function getEnd(): int
     {
         return $this->end;
     }
 
+    /**
+     * @return int<0, max>
+     */
     public function getRangeSize(): int
     {
-        return $this->end - $this->start + 1;
+        return $this->size === 0 ? 0 : $this->end - $this->start + 1;
     }
 
+    /**
+     * @return int<0, max>
+     */
     public function getSize(): int
     {
         return $this->size;
@@ -74,7 +101,7 @@ final class ContentRange
 
     public function containsLastByte(): bool
     {
-        return $this->end === ($this->size - 1);
+        return $this->end === max(0, ($this->size - 1));
     }
 
 }

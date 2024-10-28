@@ -16,6 +16,28 @@ require_once __DIR__ . '/../../bootstrap.php';
 class ContentRangeTest extends TestCase
 {
 
+    public function testOfZeroSize(): void
+    {
+        $contentRange = ContentRange::ofSize(0);
+        Assert::same(0, $contentRange->getSize());
+        Assert::same(0, $contentRange->getStart());
+        Assert::same(0, $contentRange->getEnd());
+        Assert::same(0, $contentRange->getRangeSize());
+        Assert::true($contentRange->containsFirstByte());
+        Assert::true($contentRange->containsLastByte());
+    }
+
+    public function testOfOneByteSize(): void
+    {
+        $contentRange = ContentRange::ofSize(1);
+        Assert::same(1, $contentRange->getSize());
+        Assert::same(0, $contentRange->getStart());
+        Assert::same(0, $contentRange->getEnd());
+        Assert::same(1, $contentRange->getRangeSize());
+        Assert::true($contentRange->containsFirstByte());
+        Assert::true($contentRange->containsLastByte());
+    }
+
     public function testOfSize(): void
     {
         $contentRange = ContentRange::ofSize(42);
@@ -63,8 +85,12 @@ class ContentRangeTest extends TestCase
                 'expectedError' => "Malformed content-range header 'bflmpsvz'.",
             ],
             [
+                'headerValue' => 'bytes 0-10/5',
+                'expectedError' => 'End (10) cannot be larger than size (5).',
+            ],
+            [
                 'headerValue' => 'bytes 0-10/10',
-                'expectedError' => 'End (10) cannot be larger or equal to size (10).',
+                'expectedError' => 'End (10) cannot be equal to size (10).',
             ],
             [
                 'headerValue' => 'bytes 10-5/10',
