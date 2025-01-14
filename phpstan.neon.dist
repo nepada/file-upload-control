@@ -32,6 +32,11 @@ parameters:
             - Nette\Utils\UnknownImageFileException
 
     ignoreErrors:
+        - # covered by tests
+            message: '#^Trait Nepada\\Bridges\\FileUploadControlForms\\FileUploadControlMixin is used zero times and is not analysed\.$#'
+            identifier: trait.unused
+            count: 1
+            path: src/Bridges/FileUploadControlForms/FileUploadControlMixin.php
         -
             message: "~Method Nepada\\\\FileUploadControl\\\\Utils\\\\NetteFileSystem::.* throws checked exception Exception but it's missing from the PHPDoc @throws tag~"
             path: src/FileUploadControl/Utils/NetteFileSystem.php
@@ -48,7 +53,7 @@ parameters:
             count: 1
             path: src/FileUploadControl/FileUploadControl.php
         -
-            message: "#^Parameter \\#1 \\$data of static method Nepada\\\\FileUploadControl\\\\Storage\\\\Metadata\\\\FileUploadMetadata\\:\\:fromArray\\(\\) expects array, mixed given\\.$#"
+            message: "#^Parameter \\#1 \\$data of static method Nepada\\\\FileUploadControl\\\\Storage\\\\Metadata\\\\FileUploadMetadata\\:\\:fromArray\\(\\) expects array<mixed>, mixed given\\.$#"
             count: 1
             path: src/FileUploadControl/Storage/Metadata/FileSystemMetadataJournal.php
         -
@@ -71,3 +76,53 @@ parameters:
             message: "#^Parameter \\#1 \\$size of static method Nepada\\\\FileUploadControl\\\\Storage\\\\ContentRange\\:\\:ofSize\\(\\) expects int\\<0, max\\>, int given\\.$#"
             count: 1
             path: src/FileUploadControl/Storage/FileUploadChunk.php
+        - # pre-validated config structure
+            message: '#^Cannot access property \$enable on mixed\.$#'
+            identifier: property.nonObject
+            count: 1
+            path: src/Bridges/FileUploadControlDI/FileUploadControlExtension.php
+        - # pre-validated config structure
+            message: '#^Cannot access property \$height on mixed\.$#'
+            identifier: property.nonObject
+            count: 1
+            path: src/Bridges/FileUploadControlDI/FileUploadControlExtension.php
+        - # pre-validated config structure
+            message: '#^Cannot access property \$width on mixed\.$#'
+            identifier: property.nonObject
+            count: 1
+            path: src/Bridges/FileUploadControlDI/FileUploadControlExtension.php
+        - # intentional
+            message: '#^Loose comparison via "\!\=" is not allowed\.$#'
+            identifier: notEqual.notAllowed
+            count: 1
+            path: src/FileUploadControl/BaseControl.php
+        - # false positive
+            message: '#^Method Nepada\\FileUploadControl\\BaseControl\:\:getHtmlId\(\) should return bool\|string\|null but returns mixed\.$#'
+            identifier: return.type
+            count: 1
+            path: src/FileUploadControl/BaseControl.php
+        - # false positive
+            message: '#^Method Nepada\\FileUploadControl\\BaseControl\:\:getHtmlName\(\) should return string but returns mixed\.$#'
+            identifier: return.type
+            count: 1
+            path: src/FileUploadControl/BaseControl.php
+        -
+            message: '#^Parameter \#1 \$message of method Nette\\Localization\\Translator\:\:translate\(\) expects string\|Stringable, mixed given\.$#'
+            identifier: argument.type
+            count: 1
+            path: src/FileUploadControl/BaseControl.php
+        - # false positive
+            message: '#^Method Nepada\\FileUploadControl\\FileUploadControl\:\:getNamespaceControl\(\) should return Nette\\Forms\\Controls\\HiddenField but returns mixed\.$#'
+            identifier: return.type
+            count: 1
+            path: src/FileUploadControl/FileUploadControl.php
+        - # false positive
+            message: '#^Method Nepada\\FileUploadControl\\FileUploadControl\:\:getUploadControl\(\) should return Nette\\Forms\\Controls\\UploadControl but returns mixed\.$#'
+            identifier: return.type
+            count: 1
+            path: src/FileUploadControl/FileUploadControl.php
+        -
+            message: '#^Cannot call method getHtmlName\(\) on mixed\.$#'
+            identifier: method.nonObject
+            count: 1
+            path: src/FileUploadControl/Validation/FakeUploadControl.php

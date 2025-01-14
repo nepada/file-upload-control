@@ -36,7 +36,7 @@ final class FileSystemStorage implements Storage
     }
 
     /**
-     * @return FileUploadItem[]
+     * @return list<FileUploadItem>
      */
     public function list(): array
     {

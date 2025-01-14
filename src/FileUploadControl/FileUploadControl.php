@@ -61,8 +61,10 @@ class FileUploadControl extends BaseControl
         $this->addComponent(new Nette\Forms\Controls\UploadControl($caption, true), 'upload');
         $this->addComponent(new Nette\Forms\Controls\HiddenField(), 'namespace');
         $this->initializeValidation($this);
+        /** @var string $errorMessage */
+        $errorMessage = Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::Valid];
         $this->addCondition(fn () => $this->getPresenterIfExists()?->isSignalReceiver($this, 'upload') !== true) // disable during file upload via signal
-            ->addRule($this->validateUploadSuccess(...), Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::Valid]);
+            ->addRule($this->validateUploadSuccess(...), $errorMessage);
         $this->addRule(ClientSide::NO_UPLOAD_IN_PROGRESS, 'File upload is still in progress - wait until it is finished, or abort it.');
     }
 
@@ -123,12 +125,14 @@ class FileUploadControl extends BaseControl
             }
         }
         if ($uploadFailed) {
-            $this->addError(Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::Valid]);
+            /** @var string $errorMessage */
+            $errorMessage = Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::Valid];
+            $this->addError($errorMessage);
         }
     }
 
     /**
-     * @return FileUpload[]
+     * @return list<FileUpload>
      */
     public function getValue(): array
     {

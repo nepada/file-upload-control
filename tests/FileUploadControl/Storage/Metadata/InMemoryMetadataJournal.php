@@ -29,7 +29,7 @@ final class InMemoryMetadataJournal implements MetadataJournal
     }
 
     /**
-     * @return FileUploadId[]
+     * @return list<FileUploadId>
      */
     public function list(): array
     {

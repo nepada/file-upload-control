@@ -40,7 +40,7 @@ class FileUploadIdTest extends TestCase
     }
 
     /**
-     * @return mixed[]
+     * @return list<mixed[]>
      */
     protected function getInvalidValues(): array
     {

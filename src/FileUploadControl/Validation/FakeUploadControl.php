@@ -44,7 +44,7 @@ final class FakeUploadControl extends UploadControl
     }
 
     /**
-     * @return FileUpload[]
+     * @return list<FileUpload>
      */
     public function getValue(): array
     {

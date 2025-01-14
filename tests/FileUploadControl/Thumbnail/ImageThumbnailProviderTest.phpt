@@ -51,7 +51,7 @@ class ImageThumbnailProviderTest extends TestCase
     }
 
     /**
-     * @return mixed[]
+     * @return list<mixed[]>
      */
     protected function getImageData(): array
     {

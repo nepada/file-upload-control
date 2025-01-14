@@ -11,7 +11,7 @@ interface MetadataJournal
     /**
      * List all record ids tracked by the journal.
      *
-     * @return FileUploadId[]
+     * @return list<FileUploadId>
      */
     public function list(): array;
 

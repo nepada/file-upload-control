@@ -36,7 +36,7 @@ final class FileSystemMetadataJournal implements MetadataJournal
     }
 
     /**
-     * @return FileUploadId[]
+     * @return list<FileUploadId>
      */
     public function list(): array
     {

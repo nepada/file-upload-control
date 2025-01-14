@@ -75,7 +75,7 @@ class ContentRangeTest extends TestCase
     }
 
     /**
-     * @return mixed[]
+     * @return list<mixed[]>
      */
     protected function getInvalidHttpHeaders(): array
     {
