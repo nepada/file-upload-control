@@ -6,6 +6,9 @@ namespace NepadaTests\FileUploadControl;
 use Nette;
 use Nette\Utils\Strings;
 use Tester\Assert;
+use function htmlspecialchars;
+use function str_contains;
+use function str_replace;
 
 final class HtmlAssert
 {
@@ -37,16 +40,27 @@ final class HtmlAssert
     {
         $content = Strings::replace(
             $content,
-            '~(<[^>\s]+)\s*([^>]*?)\s*(/?>)~m',
+            '~(data-(?:template-[a-z]+|files)=)\'([^\']+)\'~m',
             function (array $matches): string {
-                $attributes = Strings::matchAll($matches[2], '~[^=\s]+(?:=(?:\'[^\']*\'|"[^"]*"))?~', PREG_PATTERN_ORDER)[0];
-                $serializedAttributes = '';
-                if ($attributes !== []) {
-                    sort($attributes);
-                    $serializedAttributes = ' ' . implode(' ', $attributes);
-                }
-                return $matches[1] . $serializedAttributes . $matches[3];
+                $value = htmlspecialchars($matches[2], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8');
+                $value = str_replace('{', '&#123;', $value);
+                $quote = str_contains($value, '"') ? "'" : '"';
+                return "{$matches[1]}{$quote}$value{$quote}";
             },
+        );
+        $content = Strings::replace(
+            $content,
+            '~(src=)\'([^\']+)\'~m',
+            function (array $matches): string {
+                $value = $matches[2];
+                $quote = str_contains($value, '"') ? "'" : '"';
+                return "{$matches[1]}{$quote}$value{$quote}";
+            },
+        );
+        $content = str_replace(
+            ['&amp;amp;', '&amp;apos;'],
+            ['&amp;', '&apos;'],
+            $content,
         );
         return $content;
     }

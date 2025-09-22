@@ -21,17 +21,17 @@
         <span data-file-upload-role="delete" n:class="btn, btn-danger, count($allFiles) === 0 ? disabled">{_'Delete all'}</span>
     </div>
     <div class="fuc-container">
-        {capture $templateFile}{include #template-file, file => null}{/capture}
-        {capture $templateProcessing}{include #template-file-status-processing, file => null}{/capture}
-        {capture $templateDone}{include #template-file-status-done, file => null}{/capture}
-        {capture $templateFailed}{include #template-file-status-failed, file => null}{/capture}
+        {capture $templateFile|trim}{include #template-file, file => null}{/capture}
+        {capture $templateProcessing|trim}{include #template-file-status-processing, file => null}{/capture}
+        {capture $templateDone|trim}{include #template-file-status-done, file => null}{/capture}
+        {capture $templateFailed|trim}{include #template-file-status-failed, file => null}{/capture}
         <div
                 data-file-upload-role="files"
                 class="fuc-files row"
-                data-template-file="{$templateFile|trim}"
-                data-template-processing="{$templateProcessing|trim}"
-                data-template-done="{$templateDone|trim}"
-                data-template-failed="{$templateFailed|trim}"
+                data-template-file="{$templateFile}"
+                data-template-processing="{$templateProcessing}"
+                data-template-done="{$templateDone}"
+                data-template-failed="{$templateFailed}"
         >
             {foreach $completedFiles as $file}
                 {include #template-file status => done, file => $file}
