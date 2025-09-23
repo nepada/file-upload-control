@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     name: JS
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
@@ -38,7 +38,7 @@ jobs:
           - '--prefer-stable --prefer-lowest'
     name: PHP ${{ matrix.php }} ${{ matrix.composer_args }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
@@ -66,7 +66,7 @@ jobs:
     needs: [ tests ]
     name: Code Style
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: shivammathur/setup-php@v2
         with:
           php-version: 8.1
@@ -82,7 +82,7 @@ jobs:
     continue-on-error: true
     name: Code Coverage
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: shivammathur/setup-php@v2
         with:
           php-version: 8.1
