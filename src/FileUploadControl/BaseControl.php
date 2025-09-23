@@ -250,7 +250,7 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
      */
     public function isOmitted(): bool
     {
-        return $this->omitted || ($this->isDisabled() && $this->omitted === null);
+        return $this->omitted === true || ($this->isDisabled() && $this->omitted === null);
     }
 
     /********************* rendering ****************d*g**/
@@ -492,7 +492,7 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
      */
     public function addError(string|Stringable $message, bool $translate = true): void
     {
-        $this->errors[] = $translate ? $this->translate($message) : $message;
+        $this->errors[] = $translate ? $this->translate($message) : $message; // @phpstan-ignore assign.propertyType
     }
 
     /**
