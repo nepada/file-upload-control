@@ -25,7 +25,7 @@
         "nette/utils": "^4.0.4@dev"
     },
     "require-dev": {
-        "nette/tester": "2.5.6",
+        "nette/tester": "2.5.7",
         "mockery/mockery": "1.6.12",
         "phpstan/phpstan": "2.1.29",
         "phpstan/phpstan-strict-rules": "2.0.7",
@@ -37,10 +37,14 @@
         "php-parallel-lint/php-parallel-lint": "1.4.0",
         "nepada/coding-standard": "8.0.1",
         "nette/di": "^3.0.6@dev",
+        "nette/schema": "^1.0.3@dev",
         "nette/bootstrap": ">=3.1@dev",
         "composer/semver": "3.4.4",
-        "nette/neon": ">=3.3.4@dev",
-        "nette/robot-loader": "*@dev"
+        "nette/neon": ">=3.3.4"
+    },
+    "conflict": {
+        "nette/component-model": "3.1.2",
+        "latte/latte": "3.1.0-beta1"
     },
     "suggest": {
         "ext-gd": "to use image thumbnails",
