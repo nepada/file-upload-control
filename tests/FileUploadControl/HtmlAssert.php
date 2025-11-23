@@ -40,7 +40,7 @@ final class HtmlAssert
     {
         $content = Strings::replace(
             $content,
-            '~(data-(?:template-[a-z]+|files)=)\'([^\']+)\'~m',
+            '~(data-(?:template-[a-z]+|files|unique-filenames)=)\'([^\']+)\'~m',
             function (array $matches): string {
                 $value = htmlspecialchars($matches[2], ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8');
                 $value = str_replace('{', '&#123;', $value);
