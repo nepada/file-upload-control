@@ -26,4 +26,12 @@ if (! InstalledVersions::satisfies(new VersionParser(), 'nette/forms', '<=3.2.8'
     ];
 }
 
+if (InstalledVersions::satisfies(new VersionParser(), 'nette/application', '>=3.2.0, <=3.2.9')) {
+    $config['parameters']['ignoreErrors'][] = [
+        'message' => '#^Parameter \\#1 \\$class \\(class\\-string\\<T of Nette\\\\Bridges\\\\ApplicationLatte\\\\Template\\>\\|null\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:createTemplate\\(\\) should be contravariant with parameter \\$class \\(string\\|null\\) of method Nette\\\\Application\\\\UI\\\\Control\\:\\:createTemplate\\(\\)$#',
+        'path' => __DIR__ . '/../../src/FileUploadControl/FileUploadControl.php',
+        'count' => 1,
+    ];
+}
+
 return $config;
