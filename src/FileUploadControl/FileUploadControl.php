@@ -374,6 +374,11 @@ class FileUploadControl extends BaseControl
         $this->getPresenter()->sendResponse($response);
     }
 
+    /**
+     * @template T of Template
+     * @param ?class-string<T>  $class
+     * @return ($class is null ? Template : T)
+     */
     protected function createTemplate(?string $class = null): Template
     {
         $template = parent::createTemplate($class);

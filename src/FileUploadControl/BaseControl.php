@@ -11,6 +11,7 @@ use Nette\Localization\Translator;
 use Nette\Utils\Html;
 use Stringable;
 use function array_unique;
+use function array_values;
 use function explode;
 use function get_parent_class;
 use function implode;
@@ -65,7 +66,7 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
     private string|Stringable|null $caption;
 
     /**
-     * @var array<string|Stringable>
+     * @var list<string|Stringable>
      */
     private array $errors = [];
 
@@ -506,11 +507,11 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
     /**
      * Returns errors corresponding to control.
      *
-     * @return array<string|Stringable>
+     * @return list<string|Stringable>
      */
     public function getErrors(): array
     {
-        return array_unique($this->errors);
+        return array_values(array_unique($this->errors));
     }
 
     public function hasErrors(): bool
