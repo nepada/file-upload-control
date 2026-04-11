@@ -325,7 +325,7 @@ class FileUploadControlValidationTest extends TestCase
     }
 
     /**
-     * @param mixed[] $files
+     * @param array<string, mixed> $files
      */
     private function doUpload(FileUploadControl $control, array $files = [], ?string $contentRangeHeader = null): void
     {
@@ -339,7 +339,7 @@ class FileUploadControlValidationTest extends TestCase
     }
 
     /**
-     * @param mixed[] $files
+     * @param array<string, mixed> $files
      */
     private function submitForm(FileUploadControl $control, array $files = []): void
     {
@@ -348,15 +348,15 @@ class FileUploadControlValidationTest extends TestCase
     }
 
     /**
-     * @param mixed[] $post
-     * @param mixed[] $files
-     * @param mixed[] $parameters
-     * @param mixed[] $headers
+     * @param array<string, mixed> $post
+     * @param array<string, mixed> $files
+     * @param array<string, mixed> $parameters
+     * @param array<string, string> $headers
      */
     private function runTestPresenter(FileUploadControl $control, array $post = [], array $files = [], array $parameters = [], array $headers = []): void
     {
         $cookies = [
-            '_nss' => true,
+            '_nss' => '1',
         ];
         $parameters['action'] = 'default';
         $url = (new UrlScript('https://example.com'))->withQuery($parameters);
