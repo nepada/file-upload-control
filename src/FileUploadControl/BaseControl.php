@@ -134,7 +134,6 @@ abstract class BaseControl extends Nette\Application\UI\Control implements Contr
      */
     public function getForm(bool $throw = true): ?Form
     {
-        // @phpstan-ignore return.type
         return $this->lookup(Form::class, $throw);
     }
 

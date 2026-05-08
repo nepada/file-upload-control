@@ -6,6 +6,14 @@ use Composer\Semver\VersionParser;
 
 $config = ['parameters' => ['ignoreErrors' => []]];
 
+if (InstalledVersions::satisfies(new VersionParser(), 'nette/component-model', '<3.1.4')) {
+    $config['parameters']['ignoreErrors'][] = [
+        'message' => '#^Method Nepada\\\\FileUploadControl\\\\BaseControl::getForm\\(\\) should return Nette\\\\Forms\\\\Form\\|null but returns Nette\\\\ComponentModel\\\\IComponent\\|null\\.$#',
+        'path' => __DIR__ . '/../../src/FileUploadControl/BaseControl.php',
+        'count' => 1,
+    ];
+}
+
 if (! InstalledVersions::satisfies(new VersionParser(), 'nette/forms', '<=3.2.8')) {
     $config['parameters']['ignoreErrors'][] = [
         'message' => '~^Parameter \\#2 \\$callback of static method Nette\\\\Forms\\\\Container\\:\\:extensionMethod\\(\\) expects callable\\(Nette\\\\Forms\\\\Container\\)\\: mixed, Closure\\(Nette\\\\Forms\\\\Container, int\\|string, Nette\\\\Utils\\\\Html\\|string\\|null\\=\\)\\: Nepada\\\\FileUploadControl\\\\FileUploadControl given\\.$~',
