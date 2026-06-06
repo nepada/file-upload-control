@@ -254,8 +254,11 @@ class FileUploadControl extends BaseControl
     public function addRule(callable|string $validator, string|Stringable|null $errorMessage = null, mixed $arg = null): static
     {
         if ($validator === Form::Image) {
-            $this->getUploadControl()->setHtmlAttribute('accept', implode(',', Nette\Forms\Helpers::getSupportedImages()));
+            /** @var list<string> $mimeTypes */
+            $mimeTypes = Nette\Forms\Helpers::getSupportedImages();
+            $this->getUploadControl()->setHtmlAttribute('accept', implode(',', $mimeTypes));
         } elseif ($validator === Form::MimeType) {
+            /** @var list<string> $mimeTypes */
             $mimeTypes = is_array($arg) ? $arg : ($arg === null ? [] : [$arg]);
             $this->getUploadControl()->setHtmlAttribute('accept', implode(',', $mimeTypes));
         }
