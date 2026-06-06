@@ -22,6 +22,7 @@ parameters:
             missingCheckedExceptionInThrows: true
             tooWideThrowType: true
         uncheckedExceptionClasses:
+            - TypeError
             - LogicException
             - Nette\Application\AbortException
             - Nette\Application\UI\InvalidLinkException
@@ -47,10 +48,6 @@ parameters:
         -
             message: "#^Parameter \\#2 \\$error of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:createUploadErrorResponse\\(\\) expects string, mixed given\\.$#"
             count: 3
-            path: src/FileUploadControl/FileUploadControl.php
-        -
-            message: "#^Variable property access on Nette\\\\Utils\\\\Html\\.$#"
-            count: 1
             path: src/FileUploadControl/FileUploadControl.php
         -
             message: "#^Parameter \\#1 \\$data of static method Nepada\\\\FileUploadControl\\\\Storage\\\\Metadata\\\\FileUploadMetadata\\:\\:fromArray\\(\\) expects array<mixed>, mixed given\\.$#"
