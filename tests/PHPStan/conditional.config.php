@@ -28,7 +28,7 @@ if (! InstalledVersions::satisfies(new VersionParser(), 'nette/forms', '<=3.2.8'
     ];
 
     $config['parameters']['ignoreErrors'][] = [
-        'message' => '#^Parameter \\#1 \\$validator of method Nette\\\\Forms\\\\Rules\\:\\:addRule\\(\\) expects \\(callable\\(Nette\\\\Forms\\\\Control\\)\\: bool\\)\\|string, Closure\\(Nepada\\\\FileUploadControl\\\\Validation\\\\FakeUploadControl\\)\\: bool given\\.$#',
+        'message' => '#^Parameter \\#1 \\$validator of method Nette\\\\Forms\\\\Rules\\:\\:addRule\\(\\) expects \\(callable\\(Nette\\\\Forms\\\\Control.*\\)\\: bool\\)\\|string, Closure\\(Nepada\\\\FileUploadControl\\\\Validation\\\\FakeUploadControl\\)\\: bool given\\.$#',
         'path' => __DIR__ . '/../../src/FileUploadControl/FileUploadControl.php',
         'count' => 1,
     ];
