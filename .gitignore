@@ -4,5 +4,5 @@
 /.phpcs.xml
 /.phpcs-cache
 /node_modules
-/yarn.lock
+/package-lock.json
 

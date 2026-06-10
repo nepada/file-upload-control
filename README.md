@@ -126,7 +126,7 @@ All standard Nette file upload related validations work as expected. Furthermore
 
 ### Client side
 
-This package comes with client side built on top of [blueimp-file-upload](https://yarnpkg.com/package/blueimp-file-upload). It is published as npm package [@nepada/file-upload-control](https://yarnpkg.com/package/@nepada/file-upload-control).
+This package comes with client side built on top of [blueimp-file-upload](https://www.npmjs.com/package/blueimp-file-upload). It is published as npm package [@nepada/file-upload-control](https://www.npmjs.com/package/@nepada/file-upload-control).
 
 ![Bootstrap 4 theme](docs/example.png)
 
