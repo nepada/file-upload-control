@@ -94,7 +94,7 @@ final class TestPresenter extends Nette\Application\UI\Presenter
     {
         return new class () implements Nette\Bridges\ApplicationLatte\LatteFactory {
 
-            public function create(): Latte\Engine
+            public function create(?Nette\Application\UI\Control $control = null): Latte\Engine
             {
                 $latte = new Latte\Engine();
 
