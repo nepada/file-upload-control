@@ -118,8 +118,3 @@ parameters:
             identifier: return.type
             count: 1
             path: src/FileUploadControl/FileUploadControl.php
-        -
-            message: '#^Cannot call method getHtmlName\(\) on mixed\.$#'
-            identifier: method.nonObject
-            count: 1
-            path: src/FileUploadControl/Validation/FakeUploadControl.php

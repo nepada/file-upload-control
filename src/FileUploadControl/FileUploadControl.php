@@ -399,7 +399,13 @@ class FileUploadControl extends BaseControl
 
     protected function getHttpRequest(): Nette\Http\IRequest
     {
-        return $this->getPresenter()->getHttpRequest();
+        // With nette/component-model 4.x, monitor callbacks fire top-down (ancestor first). When UI\Form's
+        // Presenter-attach callback triggers loadHttpData() on this control, a direct $this->getPresenter()
+        // would still hit a stale negative lookup cache and throw, even though the tree is fully attached.
+        // Reaching the presenter through the form is safe - the form's own lookup is fresh inside its callback.
+        $form = $this->getForm(false);
+        $presenter = $form instanceof Nette\Application\UI\Form ? $form->getPresenter() : null;
+        return ($presenter ?? $this->getPresenter())->getHttpRequest();
     }
 
     /**
