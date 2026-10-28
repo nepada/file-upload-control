@@ -11,7 +11,10 @@ class UnableToSaveFileUploadException extends \RuntimeException
         return new self("Unable to save file upload '{$id->toString()}', because of conflict with existing data.");
     }
 
-    public static function withFailedChunk(FileUploadId $id, string $reason): self
+    public static function withFailedChunk(
+        FileUploadId $id,
+        string $reason,
+    ): self
     {
         return new self("Unable to continue in file upload '{$id->toString()}': $reason");
     }

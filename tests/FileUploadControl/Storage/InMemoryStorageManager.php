@@ -29,7 +29,10 @@ final class InMemoryStorageManager implements StorageManager
         return $storageManager;
     }
 
-    public function setStorage(UploadNamespace $namespace, Storage $storage): void
+    public function setStorage(
+        UploadNamespace $namespace,
+        Storage $storage,
+    ): void
     {
         $this->storages[$namespace->toString()] = $storage;
     }

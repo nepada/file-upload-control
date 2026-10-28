@@ -9,11 +9,17 @@ interface Finder
     /**
      * @return iterable<\SplFileInfo>
      */
-    public function findFilesInDirectory(string $path, string $mask = '*'): iterable;
+    public function findFilesInDirectory(
+        string $path,
+        string $mask = '*',
+    ): iterable;
 
     /**
      * @return iterable<\SplFileInfo>
      */
-    public function findDirectoriesInDirectory(string $path, string $mask = '*'): iterable;
+    public function findDirectoriesInDirectory(
+        string $path,
+        string $mask = '*',
+    ): iterable;
 
 }

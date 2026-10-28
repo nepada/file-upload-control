@@ -16,23 +16,18 @@ final class FileSystemMetadataJournal implements MetadataJournal
 
     private const METADATA_FILE_SUFFIX = '.json';
 
-    private FileSystem $fileSystem;
-
-    private string $directory;
-
-    private Finder $finder;
-
-    public function __construct(FileSystem $fileSystem, Finder $finder, string $directory)
+    public function __construct(
+        private FileSystem $fileSystem,
+        private Finder $finder,
+        private string $directory,
+    )
     {
-        $this->fileSystem = $fileSystem;
-        $this->finder = $finder;
         if (! $this->fileSystem->directoryExists($directory)) {
             throw new \InvalidArgumentException("Directory '$directory' does not exist.");
         }
         if (! $this->fileSystem->isWritable($directory)) {
             throw new \InvalidArgumentException("Directory '$directory' is not writable.");
         }
-        $this->directory = $directory;
     }
 
     /**
@@ -71,7 +66,10 @@ final class FileSystemMetadataJournal implements MetadataJournal
     /**
      * @throws FileUploadMetadataAlreadyExistsException
      */
-    public function save(FileUploadId $id, FileUploadMetadata $metadata): void
+    public function save(
+        FileUploadId $id,
+        FileUploadMetadata $metadata,
+    ): void
     {
         $file = $this->getFilePath($id);
         if ($this->fileSystem->fileExists($file)) {

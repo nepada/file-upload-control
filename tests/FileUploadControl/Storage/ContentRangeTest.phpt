@@ -63,7 +63,10 @@ class ContentRangeTest extends TestCase
     /**
      * @dataProvider getInvalidHttpHeaders
      */
-    public function testFromHttpHeaderValueFailure(string $headerValue, string $expectedError): void
+    public function testFromHttpHeaderValueFailure(
+        string $headerValue,
+        string $expectedError,
+    ): void
     {
         Assert::exception(
             function () use ($headerValue): void {

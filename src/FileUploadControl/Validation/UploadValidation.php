@@ -21,7 +21,11 @@ trait UploadValidation
     /**
      * @return $this
      */
-    public function addRule(callable|string $validator, string|Stringable|null $errorMessage = null, mixed $arg = null): static
+    public function addRule(
+        callable|string $validator,
+        string|Stringable|null $errorMessage = null,
+        mixed $arg = null,
+    ): static
     {
         $this->rules->addRule($validator, $errorMessage, $arg);
         return $this;
@@ -31,7 +35,10 @@ trait UploadValidation
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @param callable|string $validator
      */
-    public function addCondition($validator, mixed $value = null): Rules
+    public function addCondition(
+        $validator,
+        mixed $value = null,
+    ): Rules
     {
         return $this->rules->addCondition($validator, $value);
     }
@@ -40,7 +47,11 @@ trait UploadValidation
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @param callable|string $validator
      */
-    public function addConditionOn(Control $control, $validator, mixed $value = null): Rules
+    public function addConditionOn(
+        Control $control,
+        $validator,
+        mixed $value = null,
+    ): Rules
     {
         return $this->rules->addConditionOn($control, $validator, $value);
     }

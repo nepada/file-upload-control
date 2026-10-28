@@ -10,26 +10,15 @@ final class UploadSuccessResponse implements Response
 
     use Nette\SmartObject;
 
-    private string $name;
-
-    private int $size;
-
-    private ?string $contentType;
-
-    private string $url;
-
-    private string $deleteUrl;
-
-    private ?string $thumbnailUrl;
-
-    public function __construct(string $name, int $size, ?string $contentType, string $url, string $deleteUrl, ?string $thumbnailUrl)
+    public function __construct(
+        private string $name,
+        private int $size,
+        private ?string $contentType,
+        private string $url,
+        private string $deleteUrl,
+        private ?string $thumbnailUrl,
+    )
     {
-        $this->name = $name;
-        $this->size = $size;
-        $this->contentType = $contentType;
-        $this->url = $url;
-        $this->deleteUrl = $deleteUrl;
-        $this->thumbnailUrl = $thumbnailUrl;
     }
 
     public function getName(): string

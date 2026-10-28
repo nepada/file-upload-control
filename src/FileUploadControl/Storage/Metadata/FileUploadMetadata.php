@@ -13,17 +13,14 @@ final class FileUploadMetadata
 
     use Nette\SmartObject;
 
-    public readonly string $name;
-
-    public readonly int $size;
-
-    private function __construct(string $name, int $size)
+    private function __construct(
+        public readonly string $name,
+        public readonly int $size,
+    )
     {
         if ($size < 0) {
             throw new \InvalidArgumentException('File upload size cannot be negative.');
         }
-        $this->name = $name;
-        $this->size = $size;
     }
 
     public static function fromFileUploadChunk(FileUploadChunk $fileUploadChunk): self

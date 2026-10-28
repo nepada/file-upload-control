@@ -6,6 +6,7 @@ namespace Nepada\FileUploadControl\Storage;
 use Nette;
 use Nette\Utils\Strings;
 
+// phpcs:disable SlevomatCodingStandard.Classes.RequireConstructorPropertyPromotion -- properties are narrowed to int<0, max> after validation
 final class ContentRange
 {
 
@@ -26,7 +27,11 @@ final class ContentRange
      */
     private int $size;
 
-    private function __construct(int $start, int $end, int $size)
+    private function __construct(
+        int $start,
+        int $end,
+        int $size,
+    )
     {
         if ($start < 0) {
             throw new \InvalidArgumentException("Start ($start) cannot be negative.");

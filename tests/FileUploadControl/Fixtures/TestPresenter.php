@@ -20,7 +20,10 @@ final class TestPresenter extends Nette\Application\UI\Presenter
      */
     private $formConfigurator;
 
-    public static function create(?Nette\Http\IRequest $httpRequest = null, ?callable $formConfigurator = null): self
+    public static function create(
+        ?Nette\Http\IRequest $httpRequest = null,
+        ?callable $formConfigurator = null,
+    ): self
     {
         $presenter = new self();
         $presenter->autoCanonicalize = false;

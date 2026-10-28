@@ -16,23 +16,18 @@ final class FileSystemStorage implements Storage
 
     use Nette\SmartObject;
 
-    private MetadataJournal $metadataJournal;
-
-    private FileSystem $fileSystem;
-
-    private string $directory;
-
-    public function __construct(MetadataJournal $metadataJournal, FileSystem $fileSystem, string $directory)
+    public function __construct(
+        private MetadataJournal $metadataJournal,
+        private FileSystem $fileSystem,
+        private string $directory,
+    )
     {
-        $this->metadataJournal = $metadataJournal;
-        $this->fileSystem = $fileSystem;
         if (! $this->fileSystem->directoryExists($directory)) {
             throw new \InvalidArgumentException("Directory '$directory' does not exist.");
         }
         if (! $this->fileSystem->isWritable($directory)) {
             throw new \InvalidArgumentException("Directory '$directory' is not writable.");
         }
-        $this->directory = $directory;
     }
 
     /**

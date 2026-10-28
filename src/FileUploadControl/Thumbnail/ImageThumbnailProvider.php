@@ -16,17 +16,12 @@ final class ImageThumbnailProvider implements ThumbnailProvider
     public const DEFAULT_WIDTH = 200;
     public const DEFAULT_HEIGHT = 150;
 
-    private ImageLoader $imageLoader;
-
-    private int $width;
-
-    private int $height;
-
-    public function __construct(ImageLoader $imageLoader, int $width = self::DEFAULT_WIDTH, int $height = self::DEFAULT_HEIGHT)
+    public function __construct(
+        private ImageLoader $imageLoader,
+        private int $width = self::DEFAULT_WIDTH,
+        private int $height = self::DEFAULT_HEIGHT,
+    )
     {
-        $this->imageLoader = $imageLoader;
-        $this->width = $width;
-        $this->height = $height;
     }
 
     public function isSupported(FileUpload $fileUpload): bool

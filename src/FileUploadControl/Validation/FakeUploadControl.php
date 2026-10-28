@@ -14,14 +14,13 @@ use Nette\Http\FileUpload;
 final class FakeUploadControl extends UploadControl
 {
 
-    private FileUploadControl $fileUploadControl;
-
     private ?FileUpload $newFileUpload = null;
 
-    public function __construct(FileUploadControl $fileUploadControl)
+    public function __construct(
+        private FileUploadControl $fileUploadControl,
+    )
     {
         parent::__construct();
-        $this->fileUploadControl = $fileUploadControl;
         $fileUploadControl->monitor(Form::class, function (): void {
             $this->setParent(null, $this->fileUploadControl->getName());
         });
@@ -75,7 +74,10 @@ final class FakeUploadControl extends UploadControl
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @param \Stringable|string $message
      */
-    public function addError($message, bool $translate = true): void
+    public function addError(
+        $message,
+        bool $translate = true,
+    ): void
     {
         $this->fileUploadControl->addError($message, $translate);
     }

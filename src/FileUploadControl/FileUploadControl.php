@@ -45,16 +45,16 @@ class FileUploadControl extends BaseControl
 
     private string $templateFile = self::DEFAULT_TEMPLATE_FILE;
 
-    private StorageManager $storageManager;
-
     private ThumbnailProvider $thumbnailProvider;
 
     private bool $httpDataLoaded = false;
 
-    public function __construct(StorageManager $storageManager, string|\Stringable|null $caption = null)
+    public function __construct(
+        private StorageManager $storageManager,
+        string|\Stringable|null $caption = null,
+    )
     {
         parent::__construct($caption);
-        $this->storageManager = $storageManager;
         $this->thumbnailProvider = new NullThumbnailProvider();
         $this->control = Html::el();
         $this->setOption('type', 'file-upload');
@@ -251,7 +251,11 @@ class FileUploadControl extends BaseControl
     /**
      * @return $this
      */
-    public function addRule(callable|string $validator, string|Stringable|null $errorMessage = null, mixed $arg = null): static
+    public function addRule(
+        callable|string $validator,
+        string|Stringable|null $errorMessage = null,
+        mixed $arg = null,
+    ): static
     {
         if ($validator === Form::Image) {
             /** @var list<string> $mimeTypes */
@@ -317,7 +321,10 @@ class FileUploadControl extends BaseControl
     /**
      * @throws Nette\Application\BadRequestException
      */
-    public function handleDelete(string $namespace, string $id): void
+    public function handleDelete(
+        string $namespace,
+        string $id,
+    ): void
     {
         $fileUploadId = $this->parseFileUploadId($id);
         $uploadNamespace = $this->parseUploadNamespace($namespace);
@@ -334,7 +341,10 @@ class FileUploadControl extends BaseControl
     /**
      * @throws Nette\Application\BadRequestException
      */
-    public function handleDownload(string $namespace, string $id): void
+    public function handleDownload(
+        string $namespace,
+        string $id,
+    ): void
     {
         $fileUploadId = $this->parseFileUploadId($id);
         $uploadNamespace = $this->parseUploadNamespace($namespace);
@@ -357,7 +367,10 @@ class FileUploadControl extends BaseControl
     /**
      * @throws Nette\Application\BadRequestException
      */
-    public function handleThumbnail(string $namespace, string $id): void
+    public function handleThumbnail(
+        string $namespace,
+        string $id,
+    ): void
     {
         $fileUploadId = $this->parseFileUploadId($id);
         $uploadNamespace = $this->parseUploadNamespace($namespace);
@@ -476,7 +489,10 @@ class FileUploadControl extends BaseControl
         );
     }
 
-    protected function createUploadErrorResponse(FileUploadChunk|FailedUpload $upload, string $error): Response
+    protected function createUploadErrorResponse(
+        FileUploadChunk|FailedUpload $upload,
+        string $error,
+    ): Response
     {
         return new UploadErrorResponse(
             $upload->fileUpload->getUntrustedName(),

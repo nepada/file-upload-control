@@ -33,6 +33,17 @@
         </properties>
     </rule>
 
+    <!-- BaseControl is copied from nette/forms, keep it close to the original -->
+    <rule ref="SlevomatCodingStandard.Classes.RequireConstructorPropertyPromotion">
+        <exclude-pattern>*/src/FileUploadControl/BaseControl.php</exclude-pattern>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Classes.RequireMultiLineMethodSignature">
+        <exclude-pattern>*/src/FileUploadControl/BaseControl.php</exclude-pattern>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Commenting.RequireOneDocComment">
+        <exclude-pattern>*/src/FileUploadControl/BaseControl.php</exclude-pattern>
+    </rule>
+
     <!-- special settings for tests and bootstrap -->
     <exclude-pattern>*/tests/temp/*</exclude-pattern>
     <rule ref="PSR1.Files.SideEffects">

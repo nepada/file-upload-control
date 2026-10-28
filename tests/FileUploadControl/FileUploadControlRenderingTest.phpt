@@ -88,7 +88,10 @@ class FileUploadControlRenderingTest extends TestCase
         );
     }
 
-    private function createFileUploadControl(?Storage $storage = null, string $templateFile = FileUploadControl::DEFAULT_TEMPLATE_FILE): FileUploadControl
+    private function createFileUploadControl(
+        ?Storage $storage = null,
+        string $templateFile = FileUploadControl::DEFAULT_TEMPLATE_FILE,
+    ): FileUploadControl
     {
         $storageManager = InMemoryStorageManager::createWithTestNamespace($storage);
 
@@ -113,7 +116,10 @@ class FileUploadControlRenderingTest extends TestCase
         ];
     }
 
-    private function formatFixturePath(string $name, string $templateFile): string
+    private function formatFixturePath(
+        string $name,
+        string $templateFile,
+    ): string
     {
         $templateName = explode('.', basename($templateFile))[0];
         return __DIR__ . "/Fixtures/FileUploadControl.{$templateName}.{$name}.html";

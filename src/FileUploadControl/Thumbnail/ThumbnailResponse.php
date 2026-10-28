@@ -11,17 +11,12 @@ final class ThumbnailResponse implements Response
 
     use Nette\SmartObject;
 
-    private string $contents;
-
-    private string $name;
-
-    private string $contentType;
-
-    public function __construct(string $contents, string $name, string $contentType)
+    public function __construct(
+        private string $contents,
+        private string $name,
+        private string $contentType,
+    )
     {
-        $this->contents = $contents;
-        $this->name = $name;
-        $this->contentType = $contentType;
     }
 
     public function getContents(): string
@@ -39,7 +34,10 @@ final class ThumbnailResponse implements Response
         return $this->contentType;
     }
 
-    public function send(Nette\Http\IRequest $httpRequest, Nette\Http\IResponse $httpResponse): void
+    public function send(
+        Nette\Http\IRequest $httpRequest,
+        Nette\Http\IResponse $httpResponse,
+    ): void
     {
         $httpResponse->setContentType($this->contentType);
         $httpResponse->setHeader('Content-Disposition', sprintf('inline; filename="%s"; filename*=utf-8\'\'%s', $this->name, rawurlencode($this->name)));

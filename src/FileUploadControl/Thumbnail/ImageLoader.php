@@ -12,11 +12,10 @@ final class ImageLoader
 
     use Nette\SmartObject;
 
-    private bool $autoRotate;
-
-    public function __construct(bool $autoRotate = true)
+    public function __construct(
+        private bool $autoRotate = true,
+    )
     {
-        $this->autoRotate = $autoRotate;
     }
 
     public function load(string $path): Image

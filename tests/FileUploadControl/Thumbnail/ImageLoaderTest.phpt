@@ -20,7 +20,11 @@ class ImageLoaderTest extends TestCase
     /**
      * @dataProvider getImageData
      */
-    public function testLoad(string $file, string $expectedColors, bool $autoRotate): void
+    public function testLoad(
+        string $file,
+        string $expectedColors,
+        bool $autoRotate,
+    ): void
     {
         $imageLoader = new ImageLoader($autoRotate);
         $image = $imageLoader->load($file);

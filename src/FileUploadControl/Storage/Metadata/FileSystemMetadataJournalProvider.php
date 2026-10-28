@@ -15,16 +15,14 @@ final class FileSystemMetadataJournalProvider implements MetadataJournalProvider
 
     private const NAMESPACE_DIRECTORY_SUFFIX = '-meta';
 
-    private FileSystem $fileSystem;
-
-    private Finder $finder;
-
     private string $baseDirectory;
 
-    public function __construct(FileSystem $fileSystem, Finder $finder, string $directory)
+    public function __construct(
+        private FileSystem $fileSystem,
+        private Finder $finder,
+        string $directory,
+    )
     {
-        $this->fileSystem = $fileSystem;
-        $this->finder = $finder;
         $this->baseDirectory = $directory;
     }
 

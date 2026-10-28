@@ -18,16 +18,12 @@ final class InMemoryStorage implements Storage
     use Nette\SmartObject;
 
     /**
-     * @var array<string, FileUploadItem>
-     */
-    private array $data;
-
-    /**
      * @param array<string, FileUploadItem> $data
      */
-    public function __construct(array $data = [])
+    public function __construct(
+        private array $data = [],
+    )
     {
-        $this->data = $data;
     }
 
     public static function createWithFiles(string ...$files): self

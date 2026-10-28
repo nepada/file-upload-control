@@ -23,7 +23,10 @@ interface MetadataJournal
     /**
      * @throws FileUploadMetadataAlreadyExistsException
      */
-    public function save(FileUploadId $id, FileUploadMetadata $metadata): void;
+    public function save(
+        FileUploadId $id,
+        FileUploadMetadata $metadata,
+    ): void;
 
     public function delete(FileUploadId $id): void;
 

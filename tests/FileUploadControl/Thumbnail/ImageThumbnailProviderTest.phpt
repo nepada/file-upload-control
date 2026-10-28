@@ -36,7 +36,13 @@ class ImageThumbnailProviderTest extends TestCase
     /**
      * @dataProvider getImageData
      */
-    public function testImages(string $file, string $expectedName, string $expectedContentType, int $expectedWidth, int $expectedHeight): void
+    public function testImages(
+        string $file,
+        string $expectedName,
+        string $expectedContentType,
+        int $expectedWidth,
+        int $expectedHeight,
+    ): void
     {
         $fileUpload = FileUploadFactory::createFromFile($file);
         $imageThumbnailProvider = new ImageThumbnailProvider(new ImageLoader());

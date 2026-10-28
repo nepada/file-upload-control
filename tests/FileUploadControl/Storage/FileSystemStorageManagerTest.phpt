@@ -65,7 +65,10 @@ class FileSystemStorageManagerTest extends TestCase
         );
     }
 
-    private function createStorageManager(?string $directory = null, int $ttl = FileSystemStorageManager::DEFAULT_TTL): FileSystemStorageManager
+    private function createStorageManager(
+        ?string $directory = null,
+        int $ttl = FileSystemStorageManager::DEFAULT_TTL,
+    ): FileSystemStorageManager
     {
         $directory ??= Environment::getTempDir() . '/' . Random::generate();
         $fileSystem = new NetteFileSystem();

@@ -11,14 +11,13 @@ final class FileUploadId
 
     use Nette\SmartObject;
 
-    private string $id;
-
-    private function __construct(string $id)
+    private function __construct(
+        private string $id,
+    )
     {
         if (! self::isValid($id)) {
             throw new \InvalidArgumentException('File upload id must be a non-empty string of _, -, and alphanumeric characters.');
         }
-        $this->id = $id;
     }
 
     public static function isValid(string $id): bool

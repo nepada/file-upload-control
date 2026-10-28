@@ -8,7 +8,10 @@ use Nette;
 final class DummyTranslator implements Nette\Localization\Translator
 {
 
-    public function translate(string|\Stringable $message, mixed ...$parameters): string
+    public function translate(
+        string|\Stringable $message,
+        mixed ...$parameters,
+    ): string
     {
         return 'translated:' . (string) $message;
     }

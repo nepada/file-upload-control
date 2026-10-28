@@ -29,12 +29,18 @@ final class NetteFileSystem implements FileSystem
         return Nette\Utils\FileSystem::read($path);
     }
 
-    public function write(string $path, string $data): void
+    public function write(
+        string $path,
+        string $data,
+    ): void
     {
         Nette\Utils\FileSystem::write($path, $data);
     }
 
-    public function append(string $path, string $data): void
+    public function append(
+        string $path,
+        string $data,
+    ): void
     {
         $this->createDirectory(dirname($path));
 

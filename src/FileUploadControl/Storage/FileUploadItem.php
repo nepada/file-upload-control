@@ -10,14 +10,11 @@ final class FileUploadItem
 
     use Nette\SmartObject;
 
-    public readonly FileUploadId $id;
-
-    public readonly Nette\Http\FileUpload $fileUpload;
-
-    public function __construct(FileUploadId $id, Nette\Http\FileUpload $fileUpload)
+    public function __construct(
+        public readonly FileUploadId $id,
+        public readonly Nette\Http\FileUpload $fileUpload,
+    )
     {
-        $this->id = $id;
-        $this->fileUpload = $fileUpload;
     }
 
     /**

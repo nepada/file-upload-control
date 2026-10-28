@@ -327,7 +327,11 @@ class FileUploadControlValidationTest extends TestCase
     /**
      * @param array<string, mixed> $files
      */
-    private function doUpload(FileUploadControl $control, array $files = [], ?string $contentRangeHeader = null): void
+    private function doUpload(
+        FileUploadControl $control,
+        array $files = [],
+        ?string $contentRangeHeader = null,
+    ): void
     {
         $post = ['_do' => 'form-fileUpload-upload'];
         $parameters = ['form-fileUpload-namespace' => InMemoryStorageManager::TEST_NAMESPACE];
@@ -341,7 +345,10 @@ class FileUploadControlValidationTest extends TestCase
     /**
      * @param array<string, mixed> $files
      */
-    private function submitForm(FileUploadControl $control, array $files = []): void
+    private function submitForm(
+        FileUploadControl $control,
+        array $files = [],
+    ): void
     {
         $post = ['_do' => 'form-submit', 'fileUpload' => ['namespace' => InMemoryStorageManager::TEST_NAMESPACE]];
         $this->runTestPresenter($control, $post, $files);
@@ -353,7 +360,13 @@ class FileUploadControlValidationTest extends TestCase
      * @param array<string, mixed> $parameters
      * @param array<string, string> $headers
      */
-    private function runTestPresenter(FileUploadControl $control, array $post = [], array $files = [], array $parameters = [], array $headers = []): void
+    private function runTestPresenter(
+        FileUploadControl $control,
+        array $post = [],
+        array $files = [],
+        array $parameters = [],
+        array $headers = [],
+    ): void
     {
         $cookies = [
             '_nss' => '1',
@@ -386,7 +399,11 @@ class FileUploadControlValidationTest extends TestCase
      * @param int<1, max> $size
      * @param int<0, max> $offset
      */
-    private function readChunk(string $file, int $size, int $offset = 0): string
+    private function readChunk(
+        string $file,
+        int $size,
+        int $offset = 0,
+    ): string
     {
         $fp = fopen($file, 'r');
         assert($fp !== false);

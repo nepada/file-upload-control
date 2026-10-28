@@ -12,9 +12,15 @@ interface FileSystem
 
     public function read(string $path): string;
 
-    public function write(string $path, string $data): void;
+    public function write(
+        string $path,
+        string $data,
+    ): void;
 
-    public function append(string $path, string $data): void;
+    public function append(
+        string $path,
+        string $data,
+    ): void;
 
     public function delete(string $path): void;
 

@@ -16,16 +16,12 @@ final class InMemoryMetadataJournal implements MetadataJournal
     use Nette\SmartObject;
 
     /**
-     * @var array<string, FileUploadMetadata>
-     */
-    private array $data;
-
-    /**
      * @param array<string, FileUploadMetadata> $data
      */
-    public function __construct(array $data = [])
+    public function __construct(
+        private array $data = [],
+    )
     {
-        $this->data = $data;
     }
 
     /**
@@ -48,7 +44,10 @@ final class InMemoryMetadataJournal implements MetadataJournal
         return $this->data[$idValue];
     }
 
-    public function save(FileUploadId $id, FileUploadMetadata $metadata): void
+    public function save(
+        FileUploadId $id,
+        FileUploadMetadata $metadata,
+    ): void
     {
         $idValue = $id->toString();
         if (isset($this->data[$idValue])) {

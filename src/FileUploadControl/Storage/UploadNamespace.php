@@ -14,14 +14,13 @@ final class UploadNamespace
 
     private const DEFAULT_LENGTH = 24;
 
-    private string $id;
-
-    private function __construct(string $id)
+    private function __construct(
+        private string $id,
+    )
     {
         if (! self::isValid($id)) {
             throw new \InvalidArgumentException('Storage namespace must be a non-empty string of alphanumeric characters.');
         }
-        $this->id = $id;
     }
 
     public static function isValid(string $id): bool

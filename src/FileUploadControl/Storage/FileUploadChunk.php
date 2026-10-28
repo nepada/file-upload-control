@@ -10,11 +10,10 @@ final class FileUploadChunk
 
     use Nette\SmartObject;
 
-    public readonly Nette\Http\FileUpload $fileUpload;
-
-    public readonly ContentRange $contentRange;
-
-    private function __construct(Nette\Http\FileUpload $fileUpload, ContentRange $contentRange)
+    private function __construct(
+        public readonly Nette\Http\FileUpload $fileUpload,
+        public readonly ContentRange $contentRange,
+    )
     {
         if (! $fileUpload->isOk()) {
             throw new \InvalidArgumentException("Expected successful file upload, but upload of '{$fileUpload->getUntrustedName()}' has failed with error {$fileUpload->getError()}.");
@@ -27,9 +26,6 @@ final class FileUploadChunk
                 $fileUpload->getSize(),
             ));
         }
-
-        $this->fileUpload = $fileUpload;
-        $this->contentRange = $contentRange;
     }
 
     public static function completeUpload(Nette\Http\FileUpload $fileUpload): self
@@ -37,7 +33,10 @@ final class FileUploadChunk
         return new self($fileUpload, ContentRange::ofSize($fileUpload->getSize()));
     }
 
-    public static function partialUpload(Nette\Http\FileUpload $fileUpload, ContentRange $contentRange): self
+    public static function partialUpload(
+        Nette\Http\FileUpload $fileUpload,
+        ContentRange $contentRange,
+    ): self
     {
         return new self($fileUpload, $contentRange);
     }
