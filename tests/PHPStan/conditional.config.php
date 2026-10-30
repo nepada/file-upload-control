@@ -14,7 +14,7 @@ if (InstalledVersions::satisfies(new VersionParser(), 'nette/component-model', '
     ];
 }
 
-if (! InstalledVersions::satisfies(new VersionParser(), 'nette/forms', '<=3.2.8')) {
+if (InstalledVersions::satisfies(new VersionParser(), 'nette/forms', '>3.2.8 <3.3.1')) {
     $config['parameters']['ignoreErrors'][] = [
         'message' => '~^Parameter \\#2 \\$callback of static method Nette\\\\Forms\\\\Container\\:\\:extensionMethod\\(\\) expects callable\\(Nette\\\\Forms\\\\Container\\)\\: mixed, Closure\\(Nette\\\\Forms\\\\Container, int\\|string, Nette\\\\Utils\\\\Html\\|string\\|null\\=\\)\\: Nepada\\\\FileUploadControl\\\\FileUploadControl given\\.$~',
         'path' => __DIR__ . '/../../src/Bridges/FileUploadControlForms/ExtensionMethodRegistrator.php',
@@ -22,14 +22,25 @@ if (! InstalledVersions::satisfies(new VersionParser(), 'nette/forms', '<=3.2.8'
     ];
 
     $config['parameters']['ignoreErrors'][] = [
+        'message' => '#^Parameter \\#1 \\$validator of method Nette\\\\Forms\\\\Rules\\:\\:addRule\\(\\) expects \\(callable\\(Nette\\\\Forms\\\\Control.*\\)\\: bool\\)\\|string, Closure\\(Nepada\\\\FileUploadControl\\\\Validation\\\\FakeUploadControl\\)\\: bool given\\.$#',
+        'path' => __DIR__ . '/../../src/FileUploadControl/FileUploadControl.php',
+        'count' => 1,
+    ];
+}
+
+if (! InstalledVersions::satisfies(new VersionParser(), 'nette/forms', '<=3.2.8')) {
+    $config['parameters']['ignoreErrors'][] = [
         'message' => '#^Parameter \\#1 \\$class \\(class\\-string\\<T of Nette\\\\Bridges\\\\ApplicationLatte\\\\Template\\>\\|null\\) of method Nepada\\\\FileUploadControl\\\\FileUploadControl\\:\\:createTemplate\\(\\) should be contravariant with parameter \\$class \\(class\\-string\\<Nette\\\\Application\\\\UI\\\\Template\\>\\|null\\) of method Nette\\\\Application\\\\UI\\\\Control\\:\\:createTemplate\\(\\)$#',
         'path' => __DIR__ . '/../../src/FileUploadControl/FileUploadControl.php',
         'count' => 1,
     ];
+}
 
+if (InstalledVersions::satisfies(new VersionParser(), 'nette/forms', '>=3.3.1')) {
     $config['parameters']['ignoreErrors'][] = [
-        'message' => '#^Parameter \\#1 \\$validator of method Nette\\\\Forms\\\\Rules\\:\\:addRule\\(\\) expects \\(callable\\(Nette\\\\Forms\\\\Control.*\\)\\: bool\\)\\|string, Closure\\(Nepada\\\\FileUploadControl\\\\Validation\\\\FakeUploadControl\\)\\: bool given\\.$#',
-        'path' => __DIR__ . '/../../src/FileUploadControl/FileUploadControl.php',
+        'message' => '#^Casting to never something that\'s already never\.$#',
+        'identifier' => 'cast.useless',
+        'path' => __DIR__ . '/../../src/Bridges/FileUploadControlForms/ExtensionMethodRegistrator.php',
         'count' => 1,
     ];
 }
